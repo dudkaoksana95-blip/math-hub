@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>НМТ ТРЕНАЖЕР: КЛАСИФІКАЦІЯ ДІЙСНИХ ЧИСЕЛ</title>
+    <style>
+        :root { --main: #1e40af; --accent: #3b82f6; --bg: #f1f5f9; --success: #10b981; --danger: #ef4444; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); padding: 20px; color: #1e293b; }
+        .container { max-width: 850px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        
+        /* Математика */
+        .math { font-family: "Times New Roman", serif; font-style: italic; font-weight: bold; }
+        .sqrt { border-top: 2px solid black; padding-top: 1px; margin-left: -2px; }
+        
+        /* Гейміфікація */
+        .track { width: 100%; height: 8px; background: #e2e8f0; border-radius: 4px; margin: 20px 0; position: relative; }
+        #turtle { position: absolute; top: -14px; left: 0; font-size: 24px; transition: 0.5s; transform: scaleX(-1); }
+        
+        .q-block { margin-bottom: 20px; padding: 15px; border-left: 4px solid var(--accent); background: #f8fafc; border-radius: 0 8px 8px 0; }
+        .opt-btn { display: block; width: 100%; padding: 14px; margin: 10px 0; border: 1px solid #cbd5e0; border-radius: 8px; cursor: pointer; background: white; transition: 0.2s; text-align: left; font-size: 16px; font-family: 'Segoe UI', sans-serif; }
+        .opt-btn:hover:not(:disabled) { background: #e2e8f0; border-color: var(--main); }
+
+        #timer { font-size: 1.5em; color: var(--danger); font-weight: bold; text-align: right; }
+        .section-title { background: #e2e8f0; padding: 10px 15px; border-radius: 6px; margin: 20px 0 15px 0; font-weight: bold; color: var(--main); }
+        #feedback { margin: 15px 0; font-weight: 600; font-size: 1.1em; min-height: 24px; }
+        
+        .no-print { display: block; }
+        @media print { 
+            .no-print { display: none !important; } 
+            .container { box-shadow: none; border: none; padding: 0; } 
+        }
+        
+        input[type="text"] { padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; width: 100%; box-sizing: border-box; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Екран входу -->
+    <div id="start">
+        <h1>📐 НМТ-Симулятор: "Числові множини"</h1>
+        <p>Визначте, до якої найменшої множини належить результат виразу. Час: 20 хв.</p>
+        <input type="text" id="name" placeholder="Прізвище та Ім'я учня" style="margin-bottom:20px;">
+        <button onclick="run()" style="width:100%; padding:18px; background:var(--main); color:white; border:none; border-radius:10px; cursor:pointer; font-weight:bold; font-size: 1.1em;">ПОЧАТИ ТЕСТУВАННЯ</button>
+    </div>
+
+    <!-- Екран тестування -->
+    <div id="quiz" style="display:none">
+        <div id="timer" class="no-print">20:00</div>
+        <div class="track no-print"><div id="turtle">🐢</div></div>
+        <div class="section-title" id="q-counter">Завдання 1 з 12</div>
+        
+        <div class="q-block">
+            <h3 id="question-text" style="margin-top: 5px; color: #1e293b;"></h3>
+            <div id="options-box"></div>
+        </div>
+        
+        <div id="feedback"></div>
+        
+        <button id="next-btn" onclick="nextQuestion()" style="display:none; width:100%; padding:16px; background:var(--main); color:white; border:none; border-radius:10px; cursor:pointer; font-weight:bold; font-size: 1.05em; margin-top: 15px;" class="no-print">Наступне завдання ➔</button>
+    </div>
+
+    <!-- Протокол результатів -->
+    <div id="results" style="display:none">
+        <h2>Протокол результатів тестування</h2>
+        <div id="res-info" style="margin: 10px 0; font-size: 1.1em;"></div>
+        <h1 id="grade-12" style="color: var(--main); font-size: 2.2em; margin: 15px 0;"></h1>
+        <p id="raw-score" style="font-size: 1.1em; font-weight: bold;"></p>
+        <div id="err-list" style="margin-top: 20px;"></div>
+        <button onclick="window.print()" class="no-print" style="margin-top:25px; padding:15px 25px; background:var(--success); color:white; border:none; border-radius:10px; cursor:pointer; font-weight:bold; font-size: 1.05em; width: 100%;">Зберегти результат (PDF / Друк)</button>
+    </div>
+</div>
+
+<script>
+const questions = [
+    { q: "Число <span class='math'>log<sub>5</sub>25</span> належить до множини:", a: ["Натуральних чисел", "Цілих від'ємних чисел", "Ірраціональних чисел", "Раціональних дробових"], c: 0, t: "Логарифми" },
+    { q: "Число <span class='math'>cos(&pi;)</span> належить до множини:", a: ["Натуральних чисел", "Цілих від'ємних чисел", "Ірраціональних чисел", "Додатних раціональних"], c: 1, t: "Тригонометрія" },
+    { q: "Число <span class='math'>√<span class='sqrt'>2</span></span> належить до множини:", a: ["Натуральних чисел", "Раціональних чисел", "Ірраціональних чисел", "Цілих чисел"], c: 2, t: "Корені" },
+    { q: "Число <span class='math'>(1/3)<sup>-1</sup></span> належить до множини:", a: ["Натуральних чисел", "Раціональних дробових", "Ірраціональних чисел", "Від'ємних чисел"], c: 0, t: "Степені" },
+    { q: "Число <span class='math'>sin(45&deg;)</span> належить до множини:", a: ["Раціональних чисел", "Ірраціональних чисел", "Натуральних чисел", "Цілих чисел"], c: 1, t: "Тригонометрія" },
+    { q: "Число <span class='math'>log<sub>2</sub>3</span> належить до множини:", a: ["Цілих чисел", "Раціональних чисел", "Ірраціональних чисел", "Натуральних чисел"], c: 2, t: "Логарифми" },
+    { q: "Число <span class='math'>(-8)<sup>1/3</sup></span> належить до множини:", a: ["Цілих від'ємних чисел", "Натуральних чисел", "Ірраціональних чисел", "Не існує серед дійсних"], c: 0, t: "Степінь з дробовим показником" },
+    { q: "Число <span class='math'>tg(&pi;/4)</span> належить до множини:", a: ["Ірраціональних чисел", "Раціональних дробових", "Натуральних чисел", "Від'ємних чисел"], c: 2, t: "Тригонометрія" },
+    { q: "Число <span class='math'>√<span class='sqrt'>0,09</span></span> належить до множини:", a: ["Натуральних чисел", "Цілих чисел", "Раціональних дробових чисел", "Ірраціональних чисел"], c: 2, t: "Корені" },
+    { q: "Число <span class='math'>5<sup>log<sub>5</sub>0,2</sup></span> належить до множини:", a: ["Раціональних дробових", "Цілих чисел", "Натуральних чисел", "Ірраціональних чисел"], c: 0, t: "Логарифмічні тотожності" },
+    { q: "Число <span class='math'>(-1)<sup>100</sup></span> належить до множини:", a: ["Цілих від'ємних чисел", "Натуральних чисел", "Ірраціональних чисел", "Числа 0"], c: 1, t: "Степені" },
+    { q: "Число <span class='math'>&pi; + 1</span> належить до множини:", a: ["Раціональних чисел", "Цілих чисел", "Ірраціональних чисел", "Натуральних чисел"], c: 2, t: "Дійсні числа" }
+];
+
+let currentIdx = 0, score = 0, timerInterval, mistakeTopics = [];
+
+function run() {
+    const studentName = document.getElementById('name').value.trim();
+    if(!studentName) return alert("Будь ласка, введіть Прізвище та Ім'я учня!");
+    
+    document.getElementById('start').style.display = 'none';
+    document.getElementById('quiz').style.display = 'block';
+    
+    // Перемішуємо питання
+    questions.sort(() => Math.random() - 0.5);
+    renderQuestion();
+    startTimer(1200); // 20 хвилин
+}
+
+function renderQuestion() {
+    const q = questions[currentIdx];
+    document.getElementById('q-counter').innerText = `Завдання ${currentIdx + 1} з ${questions.length}`;
+    document.getElementById('question-text').innerHTML = q.q;
+    
+    const box = document.getElementById('options-box');
+    box.innerHTML = '';
+    document.getElementById('feedback').innerText = '';
+    document.getElementById('next-btn').style.display = 'none';
+
+    q.a.forEach((opt, oi) => {
+        const btn = document.createElement('button');
+        btn.className = 'opt-btn';
+        btn.innerHTML = opt;
+        btn.onclick = () => checkAnswer(oi, btn);
+        box.appendChild(btn);
+    });
+}
+
+function checkAnswer(choice, btn) {
+    const q = questions[currentIdx];
+    const allBtns = document.querySelectorAll('.opt-btn');
+    allBtns.forEach(b => b.disabled = true);
+
+    if(choice === q.correct) {
+        score++;
+        btn.style.borderColor = "var(--success)";
+        btn.style.background = "#f0fff4";
+        document.getElementById('feedback').innerText = "✅ Вірно!";
+        document.getElementById('feedback').style.color = "var(--success)";
+    } else {
+        btn.style.borderColor = "var(--danger)";
+        btn.style.background = "#fff5f5";
+        document.getElementById('feedback').innerHTML = `❌ Помилка. Правильна відповідь: <b>${q.a[q.correct]}</b>`;
+        document.getElementById('feedback').style.color = "var(--danger)";
+        mistakeTopics.push(q.topic);
+    }
+
+    // Рух черепашки
+    document.getElementById('turtle').style.left = (score / questions.length * 90) + "%";
+    document.getElementById('next-btn').style.display = 'block';
+}
+
+function nextQuestion() {
+    currentIdx++;
+    if(currentIdx < questions.length) {
+        renderQuestion();
+    } else {
+        clearInterval(timerInterval);
+        calculate();
+    }
+}
+
+function calculate() {
+    document.getElementById('quiz').style.display = 'none';
+    document.getElementById('results').style.display = 'block';
+    
+    const g12 = Math.round((score / questions.length) * 12);
+    
+    document.getElementById('res-info').innerHTML = `<b>Учень:</b> ${document.getElementById('name').value}<br><b>Дата:</b> ${new Date().toLocaleDateString()}`;
+    document.getElementById('grade-12').innerText = `Оцінка: ${g12} / 12`;
+    document.getElementById('raw-score').innerText = `Правильних відповідей: ${score} із ${questions.length}`;
+    
+    const errList = document.getElementById('err-list');
+    if(mistakeTopics.length > 0) {
+        const uniqueTopics = [...new Set(mistakeTopics)];
+        errList.innerHTML = "<div style='background: #fff5f5; padding: 15px; border-radius: 8px; border-left: 4px solid var(--danger);'><b>Теми для повторення:</b><ul>" + uniqueTopics.map(t => `<li>${t}</li>`).join('') + "</ul></div>";
+    } else {
+        errList.innerHTML = "<div style='background: #f0fff4; padding: 15px; border-radius: 8px; border-left: 4px solid var(--success); color: var(--success); font-weight: bold;'>Чудовий результат! Ви ідеально засвоїли тему.</div>";
+    }
+}
+
+function startTimer(sec) {
+    const el = document.getElementById('timer');
+    timerInterval = setInterval(() => {
+        sec--;
+        let m = Math.floor(sec/60), s = sec%60;
+        el.innerText = `${m}:${s<10?'0'+s:s}`;
+        if(sec <= 0) {
+            clearInterval(timerInterval);
+            calculate();
+        }
+    }, 1000);
+}
+</script>
+</body>
+</html>
