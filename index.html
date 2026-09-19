@@ -492,7 +492,13 @@
             filtered.forEach(item => {
                 const card = document.createElement('div');
                 card.className = 'card';
-                card.onclick = () => openModal(item);
+               card.onclick = () => {
+    if (item.link) {
+        window.open(item.link, '_blank');
+    } else {
+        openModal(item);
+    }
+};
 
                 const subjClass = item.subject === 'algebra' ? 'badge-algebra' : 'badge-geometry';
                 const subjText = item.subject === 'algebra' ? 'Алгебра' : 'Геометрія';
