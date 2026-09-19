@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Перпендикулярність прямої та площини | Тренажер 10 клас</title>
+    <title>Інтерактивна дошка: Перпендикулярність | Тренажер 10 клас</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -18,7 +18,6 @@
             --border-color: #e2e8f0;
             --radius-lg: 20px;
             --radius-md: 12px;
-            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
             --shadow-md: 0 4px 20px -2px rgba(0,0,0,0.05);
         }
 
@@ -36,6 +35,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
             padding: 2rem 1rem;
         }
 
@@ -45,8 +45,63 @@
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-lg);
-            padding: 2rem;
+            padding: 2.5rem;
             box-shadow: var(--shadow-md);
+            text-align: center;
+        }
+
+        .welcome-screen h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .welcome-screen p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .name-input {
+            max-width: 400px;
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border-radius: 30px;
+            border: 1px solid var(--border-color);
+            outline: none;
+            font-size: 1rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            background: #f8fafc;
+        }
+
+        .name-input:focus {
+            border-color: var(--accent-blue);
+            background: white;
+        }
+
+        .btn-primary {
+            background: var(--accent-blue);
+            color: white;
+            border: none;
+            padding: 0.85rem 2rem;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-primary:hover {
+            background: #2563eb;
+        }
+
+        .quiz-screen {
+            text-align: left;
         }
 
         .quiz-header {
@@ -146,21 +201,6 @@
             justify-content: flex-end;
         }
 
-        .btn-next {
-            background: var(--text-primary);
-            color: white;
-            border: none;
-            padding: 0.75rem 1.75rem;
-            border-radius: 30px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .btn-next:hover {
-            background: #334155;
-        }
-
         .results-box {
             text-align: left;
             padding: 1rem 0;
@@ -208,23 +248,14 @@
 <body>
 
     <div class="container" id="app-container">
-        <div class="quiz-header">
-            <span id="student-name">Учень: пп</span>
-            <span>Залишилось: <span class="timer" id="timer">10:00</span></span>
-            <span>Бали: <span id="current-score">0</span> / 12</span>
-        </div>
-
-        <div class="static-progress-bar">
-            <span class="task-counter" id="progress-text">Завдання 1 з 12</span>
-            <i class="fa-solid fa-flag-checkered" style="color: var(--text-secondary);"></i>
-        </div>
-
-        <div id="quiz-body">
-            <div class="task-card-title" id="task-number-label">Завдання 1 з 12</div>
-            <div class="question-text" id="question-text">Завантаження завдання...</div>
-            <div class="options-list" id="options-list"></div>
-            <div class="actions">
-                <button class="btn-next" id="next-btn" onclick="handleNext()" style="display: none;">Далі</button>
+        <div class="welcome-screen" id="welcome-screen">
+            <h1><i class="fa-solid fa-triangle-triangles" style="color: var(--accent-blue);"></i> Інтерактивна дошка: Перпендикулярність</h1>
+            <p>Тема: Перпендикулярність прямої та площини (10 клас)</p>
+            <div>
+                <input type="text" id="student-input-name" class="name-input" placeholder="Введіть ваше ім'я та прізвище" autocomplete="off">
+            </div>
+            <div>
+                <button class="btn-primary" onclick="startQuiz()">Розпочати тестування (30 хв)</button>
             </div>
         </div>
     </div>
@@ -298,10 +329,50 @@
             }
         ];
 
+        let studentName = "";
         let currentIndex = 0;
         let score = 0;
         let selectedOption = null;
         let isAnswered = false;
+        let timerInterval;
+        let timeLeft = 1800; // 30 хвилин (30 * 60 секунд)
+
+        function startQuiz() {
+            const inputVal = document.getElementById('student-input-name').value.trim();
+            if (!inputVal) {
+                alert("Будь ласка, введіть ваше ім'я та прізвище!");
+                return;
+            }
+            studentName = inputVal;
+
+            const container = document.getElementById('app-container');
+            container.innerHTML = `
+                <div class="quiz-screen">
+                    <div class="quiz-header">
+                        <span id="student-display">Учень: ${studentName}</span>
+                        <span>Залишилось: <span class="timer" id="timer">30:00</span></span>
+                        <span>Бали: <span id="current-score">0</span> / 12</span>
+                    </div>
+
+                    <div class="static-progress-bar">
+                        <span class="task-counter" id="progress-text">Завдання 1 з 12</span>
+                        <i class="fa-solid fa-flag-checkered" style="color: var(--text-secondary);"></i>
+                    </div>
+
+                    <div id="quiz-body">
+                        <div class="task-card-title" id="task-number-label">Завдання 1 з 12</div>
+                        <div class="question-text" id="question-text"></div>
+                        <div class="options-list" id="options-list"></div>
+                        <div class="actions">
+                            <button class="btn-primary" id="next-btn" onclick="handleNext()" style="display: none;">Далі</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            loadQuestion();
+            startTimer();
+        }
 
         function loadQuestion() {
             isAnswered = false;
@@ -357,16 +428,35 @@
             }
 
             currentIndex++;
-            document.getElementById('next-btn').innerText = currentIndex < questions.length ? 'Наступне завдання' : 'Завершити тест';
-            document.getElementById('next-btn').onclick = () => {
+            const nextBtn = document.getElementById('next-btn');
+            nextBtn.innerText = currentIndex < questions.length ? 'Наступне завдання' : 'Завершити тест';
+            nextBtn.onclick = () => {
                 if (currentIndex < questions.length) {
-                    document.getElementById('next-btn').innerText = 'Далі';
-                    document.getElementById('next-btn').onclick = handleNext;
+                    nextBtn.innerText = 'Далі';
+                    nextBtn.onclick = handleNext;
                     loadQuestion();
                 } else {
+                    clearInterval(timerInterval);
                     showResults();
                 }
             };
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    showResults();
+                    return;
+                }
+                timeLeft--;
+                let mins = Math.floor(timeLeft / 60);
+                let secs = timeLeft % 60;
+                const timerEl = document.getElementById('timer');
+                if (timerEl) {
+                    timerEl.innerText = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+                }
+            }, 1000);
         }
 
         function getRecommendation(score) {
@@ -386,7 +476,7 @@
             document.getElementById('app-container').innerHTML = `
                 <div class="results-box">
                     <h2>Тест завершено!</h2>
-                    <p style="color: var(--text-secondary); text-align: center; margin-bottom: 0.5rem;">Учень: пп</p>
+                    <p style="color: var(--text-secondary); text-align: center; margin-bottom: 0.5rem;">Учень: ${studentName}</p>
                     <div class="results-score">${score} / 12 балів</div>
                     
                     <div class="recommendation-card">
@@ -394,25 +484,10 @@
                         <p>${recommendationText}</p>
                     </div>
 
-                    <button class="btn-next" onclick="location.reload()" style="margin: 0 auto; display: block;">Пройти знову</button>
+                    <button class="btn-primary" onclick="location.reload()" style="margin: 0 auto; display: block;">Пройти знову</button>
                 </div>
             `;
         }
-
-        let timeLeft = 600;
-        const timerInterval = setInterval(() => {
-            if (timeLeft <= 0) {
-                clearInterval(timerInterval);
-                showResults();
-                return;
-            }
-            timeLeft--;
-            let mins = Math.floor(timeLeft / 60);
-            let secs = timeLeft % 60;
-            document.getElementById('timer').innerText = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
-        }, 1000);
-
-        loadQuestion();
     </script>
 </body>
 </html>
