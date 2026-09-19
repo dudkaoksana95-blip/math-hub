@@ -200,19 +200,6 @@
             border-color: #cbd5e1;
         }
 
-        .card-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: var(--radius-md);
-            background: #f1f5f9;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.25rem;
-            margin-bottom: 1.25rem;
-            color: var(--text-primary);
-        }
-
         .card-badges {
             display: flex;
             gap: 6px;
@@ -434,36 +421,36 @@
                 type: "theory",
                 content: "<b>Основні аксіоми:</b><br>1. Через будь-які три точки, що не лежать на одній прямій, можна провести площину і до того ж тільки одну.<br>2. Якщо дві точки прямої належать площині, то й уся пряма належить цій площині."
             },
-           {
-        id: 6,
-        title: "Показникові рівняння",
-        desc: "Тренажер підвищеної складності: заміна змінної, винесення за дужки, модулі та ОДЗ.",
-        grade: "grade11",
-        subject: "algebra",
-        gradeLabel: "11 клас",
-        type: "trainer",
-        link: "exponential-trainer.html"
-    },
             {
-        id: 9,
-        title: "НМТ Тренажер: Логарифми",
-        desc: "Тренажер підвищеної складності: властивості, рівняння, нерівності та відповідності.",
-        grade: "grade11",
-        subject: "algebra",
-        gradeLabel: "11 клас / НМТ",
-        type: "trainer",
-        link: "logarithms-trainer.html"
-    }, 
+                id: 6,
+                title: "Показникові рівняння",
+                desc: "Тренажер підвищеної складності: заміна змінної, винесення за дужки, модулі та ОДЗ.",
+                grade: "grade11",
+                subject: "algebra",
+                gradeLabel: "11 клас",
+                type: "trainer",
+                link: "exponential-trainer.html"
+            },
             {
-        id: 10,
-        title: "НМТ Тренажер: Класифікація дійсних чисел",
-        desc: "Інтерактивний тренажер з числовими множинами, таймером та протоколом результатів.",
-        grade: "grade11",
-        subject: "algebra",
-        gradeLabel: "11 клас / НМТ",
-        type: "trainer",
-        link: "numbers-trainer.html"
-    },   
+                id: 9,
+                title: "НМТ Тренажер: Логарифми",
+                desc: "Тренажер підвищеної складності: властивості, рівняння, нерівності та відповідності.",
+                grade: "grade11",
+                subject: "algebra",
+                gradeLabel: "11 клас / НМТ",
+                type: "trainer",
+                link: "logarithms-trainer.html"
+            },
+            {
+                id: 10,
+                title: "НМТ Тренажер: Класифікація дійсних чисел",
+                desc: "Інтерактивний тренажер з числовими множинами, таймером та протоколом результатів.",
+                grade: "grade11",
+                subject: "algebra",
+                gradeLabel: "11 клас / НМТ",
+                type: "trainer",
+                link: "numbers-trainer.html"
+            },
             {
                 id: 7,
                 title: "Многогранники: Призма та Піраміда",
@@ -485,17 +472,17 @@
                 task: "Обчисліть log₂8 + log₃9:",
                 options: ["5", "6", "4", "3"],
                 correct: 0
-            } 
+            },
             {
-        id: 11,
-        title: "НМТ Тренажер: Практичні логарифми",
-        desc: "Прикладні задачі з фізики, хімії, біології та фінансів: таймер, анімація та протокол результатів.",
-        grade: "grade11",
-        subject: "algebra",
-        gradeLabel: "11 клас / НМТ",
-        type: "trainer",
-        link: "logarithm-practical.html"
-    },   
+                id: 11,
+                title: "НМТ Тренажер: Практичні логарифми",
+                desc: "Прикладні задачі з фізики, хімії, біології та фінансів: таймер, анімація та протокол результатів.",
+                grade: "grade11",
+                subject: "algebra",
+                gradeLabel: "11 клас / НМТ",
+                type: "trainer",
+                link: "logarithm-practical.html"
+            }
         ];
 
         let activeGrade = 'all';
@@ -522,13 +509,13 @@
             filtered.forEach(item => {
                 const card = document.createElement('div');
                 card.className = 'card';
-               card.onclick = () => {
-    if (item.link) {
-        window.open(item.link, '_blank');
-    } else {
-        openModal(item);
-    }
-};
+                card.onclick = () => {
+                    if (item.link) {
+                        window.open(item.link, '_blank');
+                    } else {
+                        openModal(item);
+                    }
+                };
 
                 const subjClass = item.subject === 'algebra' ? 'badge-algebra' : 'badge-geometry';
                 const subjText = item.subject === 'algebra' ? 'Алгебра' : 'Геометрія';
