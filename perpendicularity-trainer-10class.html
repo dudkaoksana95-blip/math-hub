@@ -66,7 +66,6 @@
             font-weight: 600;
         }
 
-        /* Статична панель без анімації */
         .static-progress-bar {
             background: #f1f5f9;
             border: 1px solid var(--border-color);
@@ -163,20 +162,46 @@
         }
 
         .results-box {
-            text-align: center;
-            padding: 2rem 0;
+            text-align: left;
+            padding: 1rem 0;
         }
 
         .results-box h2 {
-            margin-bottom: 1rem;
+            text-align: center;
+            margin-bottom: 0.5rem;
             font-size: 1.75rem;
         }
 
         .results-score {
-            font-size: 2.5rem;
+            text-align: center;
+            font-size: 2.25rem;
             font-weight: 700;
             color: var(--accent-blue);
             margin-bottom: 1.5rem;
+        }
+
+        .recommendation-card {
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .recommendation-card h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .recommendation-card p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
         }
     </style>
 </head>
@@ -189,7 +214,6 @@
             <span>Бали: <span id="current-score">0</span> / 12</span>
         </div>
 
-        <!-- Статичний блок замість анімації -->
         <div class="static-progress-bar">
             <span class="task-counter" id="progress-text">Завдання 1 з 12</span>
             <i class="fa-solid fa-flag-checkered" style="color: var(--text-secondary);"></i>
@@ -308,7 +332,6 @@
             btnElement.classList.add('selected');
             selectedOption = idx;
 
-            // Миттєва перевірка або після натискання — тут одразу фіксуємо вибір і показуємо "Далі"
             document.getElementById('next-btn').style.display = 'block';
         }
 
@@ -346,19 +369,36 @@
             };
         }
 
+        function getRecommendation(score) {
+            if (score === 12) {
+                return "Чудовий результат! Ви повністю засвоїли тему «Перпендикулярність прямої та площини», упевнено володієте властивостями похилих і проєкцій. Продовжуйте в тому ж дусі!";
+            } else if (score >= 9) {
+                return "Дуже добрий результат! Ви непогано орієнтуєтеся в темі, проте зверніть увагу на складніші задачі на зв'язок між довжинами похилих та їхніми проєкціями.";
+            } else if (score >= 5) {
+                return "Задовільний результат. Рекомендуємо повторити теорему про три перпендикуляри, означення перпендикулярності прямої і площини, а також уважніше розв'язувати задачі на прямокутний трикутник у просторі.";
+            } else {
+                return "Тема засвоєна слабко. Варто уважно опрацювати теоретичний матеріал параграфа за підручником, розібрати базові приклади на перпендикуляр і похилу з учителем чи однокласниками та спробувати пройти тренажер знову.";
+            }
+        }
+
         function showResults() {
+            const recommendationText = getRecommendation(score);
             document.getElementById('app-container').innerHTML = `
                 <div class="results-box">
                     <h2>Тест завершено!</h2>
-                    <p style="color: var(--text-secondary); margin-bottom: 1rem;">Результат учня (пп)</p>
+                    <p style="color: var(--text-secondary); text-align: center; margin-bottom: 0.5rem;">Учень: пп</p>
                     <div class="results-score">${score} / 12 балів</div>
-                    <p style="margin-bottom: 2rem;">Дякуємо за проходження тренажера з геометрії.</p>
+                    
+                    <div class="recommendation-card">
+                        <h3><i class="fa-solid fa-lightbulb" style="color: #eab308;"></i> Рекомендації за результатами:</h3>
+                        <p>${recommendationText}</p>
+                    </div>
+
                     <button class="btn-next" onclick="location.reload()" style="margin: 0 auto; display: block;">Пройти знову</button>
                 </div>
             `;
         }
 
-        // Таймер (простий зворотний відлік на 10 хвилин)
         let timeLeft = 600;
         const timerInterval = setInterval(() => {
             if (timeLeft <= 0) {
