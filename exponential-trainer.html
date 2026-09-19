@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Тренажер з алгебри (11 клас): Показникові рівняння</title>
+    <title>НМТ-Симулятор: Показникові рівняння (Підвищена складність, 11 клас)</title>
     <style>
         :root {
             --primary-color: #2c3e50;
             --accent-color: #2980b9;
             --success-color: #27ae60;
             --danger-color: #c0392b;
-            --bg-color: #f8f9fa; 
+            --bg-color: #f8f9fa;
         }
 
         body {
@@ -18,7 +18,7 @@
             background-color: var(--bg-color);
             color: #333;
             margin: 0;
-            padding: 20px; 
+            padding: 20px;
         }
 
         .container {
@@ -42,195 +42,420 @@
             margin-bottom: 25px;
         }
 
-        .header-panel {
+        .screen {
+            display: none;
+        }
+        .screen.active {
+            display: block;
+        }
+
+        #start-screen {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        .input-group {
+            margin: 20px 0;
+        }
+        .input-group label {
+            font-size: 1.1rem;
+            display: block;
+            margin-bottom: 10px;
+        }
+        .input-group input {
+            padding: 12px;
+            font-size: 1rem;
+            width: 60%;
+            max-width: 350px;
+            border: 2px solid #bdc3c7;
+            border-radius: 6px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .input-group input:focus {
+            border-color: var(--accent-color);
+        }
+
+        .test-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: #ecf0f1;
+            background: #eef2f3;
             padding: 12px 20px;
             border-radius: 8px;
-            margin-bottom: 25px;
-            font-weight: 600;
+            margin-bottom: 20px;
+            font-weight: bold;
         }
-
         .timer {
             color: var(--danger-color);
-            font-size: 1.1rem;
+            font-size: 1.2rem;
         }
 
-        .task-card {
-            border: 1px solid #e0e0e0;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            background: #fafafa;
-        }
-
-        .task-title {
-            font-weight: 600;
-            font-size: 1.05rem;
-            margin-bottom: 15px;
-            color: var(--primary-color);
-        }
-
-        .options-group {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .option-label {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 15px;
+        .question-card {
             background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+        .question-title {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        .options-list label {
+            display: block;
+            padding: 10px 12px;
+            margin: 8px 0;
+            background: #f9f9f9;
             border: 1px solid #dcdde1;
             border-radius: 6px;
             cursor: pointer;
             transition: all 0.2s;
         }
-
-        .option-label:hover {
+        .options-list label:hover {
             background: #f1f2f6;
             border-color: var(--accent-color);
         }
+        .options-list input {
+            margin-right: 10px;
+        }
 
-        .btn-submit {
-            display: block;
-            width: 100%;
-            background-color: var(--success-color);
+        .explanation {
+            margin-top: 12px;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            display: none;
+            line-height: 1.4;
+        }
+        .explanation.correct-exp {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .explanation.incorrect-exp {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .btn {
+            background-color: var(--accent-color);
             color: white;
             border: none;
-            padding: 15px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            border-radius: 8px;
+            padding: 12px 25px;
+            font-size: 1rem;
+            border-radius: 6px;
             cursor: pointer;
-            margin-top: 30px;
-            transition: background 0.2s;
+            transition: background 0.3s;
+            display: block;
+            margin: 20px auto 0 auto;
+        }
+        .btn:hover {
+            background-color: #1b4f72;
         }
 
-        .btn-submit:hover {
-            background-color: #219653;
-        }
-
-        .result-box {
-            margin-top: 25px;
+        .protocol-box {
+            background: #fcfcfc;
+            border: 2px dashed #bdc3c7;
             padding: 20px;
             border-radius: 8px;
-            text-align: center;
-            font-size: 1.2rem;
-            font-weight: bold;
-            display: none;
+            margin-top: 20px;
+        }
+        .protocol-item {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 0.95rem;
+        }
+        .recommendations {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e8f4f8;
+            border-left: 5px solid var(--accent-color);
+            border-radius: 4px;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>Показникові рівняння</h1>
-    <div class="subtitle">Тренажер підвищеної складності (11 клас)</div>
-
-    <div class="header-panel">
-        <div>Завдання: <span id="current-progress">1 / 5</span></div>
-        <div class="timer">⏱ Залишилось: <span id="time-left">40:00</span></div>
+    <!-- ЕКРАН 1: Введення імені -->
+    <div id="start-screen" class="screen active">
+        <h1>НМТ-Симулятор з математики</h1>
+        <p class="subtitle">Тема: «Показникові рівняння» (Рівень складності: НМТ / Поглиблений)</p>
+        <div class="input-group">
+            <label for="student-name">Введіть ваше Прізвище та Ім'я:</label>
+            <input type="text" id="student-name" placeholder="наприклад, Шевченко Іван" autocomplete="off">
+        </div>
+        <button class="btn" onclick="startTest()">Розпочати тестування</button>
     </div>
 
-    <div id="quiz-container">
-        <!-- Сюди динамічно завантажуватимуться завдання -->
+    <!-- ЕКРАН 2: Сам тест -->
+    <div id="test-screen" class="screen">
+        <h1>НМТ-Симулятор: Показникові рівняння</h1>
+        
+        <div class="test-header">
+            <div id="display-user-name">Учень: </div>
+            <div class="timer" id="timer-display">Час: 40:00</div>
+        </div>
+
+        <div id="questions-container"></div>
+
+        <button class="btn" onclick="finishTest()">Готово</button>
     </div>
 
-    <button class="btn-submit" id="submit-btn" onclick="checkResults()">Завершити тест і перевірити</button>
+    <!-- ЕКРАН 3: Протокол та результати -->
+    <div id="result-screen" class="screen">
+        <h1>Протокол роботи учня</h1>
+        <p class="subtitle" id="protocol-student-info"></p>
+        
+        <div style="text-align: center; font-size: 1.3rem; margin-bottom: 20px;">
+            <b>Результат: <span id="score-display">0</span> / 10</b>
+        </div>
 
-    <div id="result-box" class="result-box"></div>
+        <div class="recommendations" id="recommendations-box"></div>
+
+        <h3>Детальний протокол відповідей:</h3>
+        <div class="protocol-box" id="protocol-list"></div>
+
+        <button class="btn" onclick="location.reload()">Пройти знову (нові варіанти)</button>
+    </div>
 </div>
 
 <script>
-    const tasks = [
-        {
-            id: 1,
-            question: "Розв'яжіть рівняння: 2<sup>x+3</sup> = 16",
-            options: ["x = 1", "x = 2", "x = 3", "x = 0"],
-            correct: 0
-        },
-        {
-            id: 2,
-            question: "Знайдіть корінь рівняння: 3<sup>2x - 4</sup> = 9",
-            options: ["x = 1", "x = 2", "x = 3", "x = 4"],
-            correct: 2
-        },
-        {
-            id: 3,
-            question: "Розв'яжіть рівняння: 5<sup>x</sup> + 5<sup>x+1</sup> = 150",
-            options: ["x = 1", "x = 2", "x = 3", "x = 4"],
-            correct: 1
-        },
-        {
-            id: 4,
-            question: "Знайдіть суму коренів рівняння: 4<sup>x</sup> - 5·2<sup>x</sup> + 4 = 0",
-            options: ["0", "1", "2", "3"],
-            correct: 2
-        },
-        {
-            id: 5,
-            question: "Розв'яжіть рівняння: (1/3)<sup>x-2</sup> = 27",
-            options: ["x = -1", "x = 0", "x = 1", "x = 2"],
-            correct: 0
-        }
-    ];
-
+    let studentName = "";
+    let timer;
+    let timeLeft = 40 * 60;
+    let currentQuestions = [];
     let userAnswers = {};
 
-    function renderQuiz() {
-        const container = document.getElementById('quiz-container');
-        let html = '';
-        tasks.forEach((task, index) => {
-            html += `
-                <div class="task-card">
-                    <div class="task-title">Завдання ${index + 1}: ${task.question}</div>
-                    <div class="options-group">
-            `;
-            task.options.forEach((opt, optIdx) => {
-                html += `
-                    <label class="option-label">
-                        <input type="radio" name="task_${task.id}" value="${optIdx}" onchange="userAnswers[${task.id}] = ${optIdx}">
+    function randInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function startTest() {
+        const nameInput = document.getElementById("student-name").value.trim();
+        if (!nameInput) {
+            alert("Будь ласка, введіть своє Прізвище та Ім'я!");
+            return;
+        }
+        studentName = nameInput;
+        document.getElementById("display-user-name").innerText = `Учень: ${studentName}`;
+
+        document.getElementById("start-screen").classList.remove("active");
+        document.getElementById("test-screen").classList.add("active");
+
+        generateUniqueQuestions();
+        renderQuestions();
+        startTimer();
+    }
+
+    function generateUniqueQuestions() {
+        currentQuestions = [];
+        
+        // ЗАВДАННЯ 1: Зведення до основи через складну степінь
+        currentQuestions.push({
+            id: 1,
+            text: `Розв'яжіть рівняння: 4<sup>x - 0.5</sup> = 8<sup>x</sup>`,
+            correct: "-1",
+            explanation: `Подаємо обидві частини через основу 2: (2<sup>2</sup>)<sup>x - 0.5</sup> = (2<sup>3</sup>)<sup>x</sup> => 2<sup>2x - 1</sup> = 2<sup>3x</sup>. Прирівнюємо показники: 2x - 1 = 3x, звідси x = -1.`,
+            options: shuffleArray(["-1", "1", "-0.5", "0.5"])
+        });
+
+        // ЗАВДАННЯ 2: Винесення за дужки з різними показниками
+        let k2 = randInt(2, 5);
+        let x2 = randInt(2, 4);
+        let sumVal2 = Math.pow(2, x2) * (2 + k2);
+        currentQuestions.push({
+            id: 2,
+            text: `Знайдіть корінь рівняння: 2<sup>x+1</sup> + ${k2}·2<sup>x</sup> = ${sumVal2}`,
+            correct: String(x2),
+            explanation: `Винесемо спільний множник 2<sup>x</sup> за дужки: 2<sup>x</sup>(2<sup>1</sup> + ${k2}) = ${sumVal2} => 2<sup>x</sup> · ${2 + k2} = ${sumVal2} => 2<sup>x</sup> = ${sumVal2 / (2 + k2)} = ${Math.pow(2, x2)}. Отже, x = ${x2}.`,
+            options: shuffleArray([String(x2), String(x2 + 1), String(x2 - 1), String(x2 + 2)])
+        });
+
+        // ЗАВДАННЯ 3: Однорідне показникове рівняння 2-го степеня
+        currentQuestions.push({
+            id: 3,
+            text: `Знайдіть суму коренів рівняння: 3·4<sup>x</sup> - 5·6<sup>x</sup> + 2·9<sup>x</sup> = 0`,
+            correct: "1",
+            explanation: `Поділимо обидві частини рівняння на 9<sup>x</sup> > 0: 3·(4/9)<sup>x</sup> - 5·(6/9)<sup>x</sup> + 2 = 0 => 3·((2/3)<sup>x</sup>)<sup>2</sup> - 5·(2/3)<sup>x</sup> + 2 = 0. Зробимо заміну (2/3)<sup>x</sup> = t (t > 0). Отримуємо 3t<sup>2</sup> - 5t + 2 = 0, звідси t<sub>1</sub> = 1, t<sub>2</sub> = 2/3. Повертаючись до заміни: (2/3)<sup>x</sup> = 1 => x<sub>1</sub> = 0; (2/3)<sup>x</sup> = 2/3 => x<sub>2</sub> = 1. Сума коренів: 0 + 1 = 1.`,
+            options: shuffleArray(["1", "0", "2", "-1"])
+        });
+
+        // ЗАВДАННЯ 4: Заміна змінної з відсіканням сторонніх коренів
+        currentQuestions.push({
+            id: 4,
+            text: `Розв'яжіть рівняння: 9<sup>x</sup> - 4·3<sup>x</sup> - 45 = 0`,
+            correct: "2",
+            explanation: `Зробимо заміну 3<sup>x</sup> = t (t > 0). Отримаємо квадратне рівняння t<sup>2</sup> - 4t - 45 = 0. За теоремою Вієта корені: t<sub>1</sub> = 9, t<sub>2</sub> = -5. Оскільки t > 0 за означенням показникової функції, корінь t = -5 сторонній. Залишається 3<sup>x</sup> = 9, звідси x = 2.`,
+            options: shuffleArray(["2", "-5", "9", "3"])
+        });
+
+        // ЗАВДАННЯ 5: Рівняння з коренем у показнику та ОДЗ
+        currentQuestions.push({
+            id: 5,
+            text: `Знайдіть корінь рівняння: 3<sup>√(x - 1)</sup> = 9`,
+            correct: "5",
+            explanation: `Подаємо 9 як 3<sup>2</sup>. Оскільки основи рівні, прирівнюємо показники: √(x - 1) = 2. Підносимо обидві частини до квадрата (враховуючи ОДЗ x - 1 >= 0): x - 1 = 4, звідси x = 5. Перевірка ОДЗ виконується.`,
+            options: shuffleArray(["5", "3", "9", "4"])
+        });
+
+        // ЗАВДАННЯ 6: Раціональний показник із дробом та зміною знака
+        currentQuestions.push({
+            id: 6,
+            text: `Розв'яжіть рівняння: 5<sup>2x - 3</sup> = 1 / 25<sup>x - 1</sup>`,
+            correct: "1.25",
+            explanation: `Праву частину запишемо як степінь з основою 5: 1 / (5<sup>2</sup>)<sup>x - 1</sup> = 5<sup>-2(x - 1)</sup> = 5<sup>-2x + 2</sup>. Прирівнюємо показники: 2x - 3 = -2x + 2 => 4x = 5 => x = 1.25 (або 5/4).`,
+            options: shuffleArray(["1.25", "1", "2.5", "-1.25"])
+        });
+
+        // ЗАВДАННЯ 7: Винесення найменшого степеня за дужки (без логарифмів)
+        currentQuestions.push({
+            id: 7,
+            text: `Знайдіть корінь рівняння: 3<sup>x + 1</sup> + 3<sup>x - 1</sup> = 30`,
+            correct: "2",
+            explanation: `Винесемо за дужки спільний множник з найменшим показником 3<sup>x - 1</sup>: 3<sup>x - 1</sup>(3<sup>2</sup> + 1) = 30 => 3<sup>x - 1</sup>(9 + 1) = 30 => 3<sup>x - 1</sup> · 10 = 30 => 3<sup>x - 1</sup> = 3. Оскільки 3 = 3<sup>1</sup>, прирівнюємо показники: x - 1 = 1, звідси x = 2.`,
+            options: shuffleArray(["2", "1", "3", "0"])
+        });
+
+        // ЗАВДАННЯ 8: Сума коренів складнішого квадратного рівняння через заміну
+        currentQuestions.push({
+            id: 8,
+            text: `Знайдіть суму корені(в) рівняння: 2<sup>2x+1</sup> - 9·2<sup>x</sup> + 4 = 0`,
+            correct: "1",
+            explanation: `Використаємо властивість степеня: 2 · (2<sup>x</sup>)<sup>2</sup> - 9 · 2<sup>x</sup> + 4 = 0. Робимо заміну 2<sup>x</sup> = t (t > 0): 2t<sup>2</sup> - 9t + 4 = 0. Дискримінант D = 81 - 32 = 49. Корені: t<sub>1</sub> = (9 + 7)/4 = 4; t<sub>2</sub> = (9 - 7)/4 = 0.5. Повертаємось до заміни: 2<sup>x</sup> = 4 => x<sub>1</sub> = 2; 2<sup>x</sup> = 0.5 => x<sub>2</sub> = -1. Сума коренів: 2 + (-1) = 1.`,
+            options: shuffleArray(["1", "2.5", "2", "-1"])
+        });
+
+        // ЗАВДАННЯ 9: Модуль у показнику степеня
+        currentQuestions.push({
+            id: 9,
+            text: `Знайдіть добуток коренів рівняння: 3<sup>|x - 1|</sup> = 9`,
+            correct: "-3",
+            explanation: `Оскільки 9 = 3<sup>2</sup>, прирівнюємо показники: |x - 1| = 2. Звідси маємо два випадки: x - 1 = 2 => x<sub>1</sub> = 3, або x - 1 = -2 => x<sub>2</sub> = -1. Добуток коренів: 3 · (-1) = -3.`,
+            options: shuffleArray(["-3", "3", "-2", "2"])
+        });
+
+        // ЗАВДАННЯ 10: Показниково-модульне рівняння з кількома коренями
+        currentQuestions.push({
+            id: 10,
+            text: `Знайдіть суму коренів рівняння: 4<sup>|x - 2|</sup> - 5·2<sup>|x - 2|</sup> + 4 = 0`,
+            correct: "6",
+            explanation: `Зробимо заміну 2<sup>|x - 2|</sup> = t (t > 0). Отримаємо квадратне рівняння t<sup>2</sup> - 5t + 4 = 0, звідси t<sub>1</sub> = 1, t<sub>2</sub> = 4. Повертаємось до заміни: 1) 2<sup>|x - 2|</sup> = 1 => |x - 2| = 0 => x = 2. 2) 2<sup>|x - 2|</sup> = 4 => |x - 2| = 2 => x - 2 = 2 або x - 2 = -2, звідси x = 4 і x = 0. Рівняння має три корені: 0, 2 та 4. Їх сума дорівнює 0 + 2 + 4 = 6.`,
+            options: shuffleArray(["6", "4", "2", "5"])
+        });
+    }
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    function renderQuestions() {
+        const container = document.getElementById("questions-container");
+        container.innerHTML = "";
+
+        currentQuestions.forEach((q, index) => {
+            let optionsHtml = "";
+            q.options.forEach(opt => {
+                optionsHtml += `
+                    <label>
+                        <input type="radio" name="q_${q.id}" value="${opt}" onchange="saveAnswer(${q.id}, '${opt}')">
                         ${opt}
                     </label>
                 `;
             });
-            html += `</div></div>`;
+
+            container.innerHTML += `
+                <div class="question-card" id="card_${q.id}">
+                    <div class="question-title">Завдання ${index + 1} (НМТ-рівень).</div>
+                    <div>${q.text}</div>
+                    <div class="options-list" style="margin-top: 15px;">
+                        ${optionsHtml}
+                    </div>
+                    <div class="explanation" id="exp_${q.id}"></div>
+                </div>
+            `;
         });
-        container.innerHTML = html;
     }
 
-    function checkResults() {
-        let score = 0;
-        tasks.forEach(task => {
-            if (userAnswers[task.id] === task.correct) {
-                score++;
+    function saveAnswer(qId, val) {
+        userAnswers[qId] = val;
+    }
+
+    function startTimer() {
+        timer = setInterval(() => {
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                alert("Час вийшов!");
+                finishTest();
+                return;
             }
-        });
-
-        const resultBox = document.getElementById('result-box');
-        resultBox.style.display = 'block';
-        resultBox.style.background = score >= 4 ? "#d4edda" : "#f8d7da";
-        resultBox.style.color = score >= 4 ? "#155724" : "#721c24";
-        resultBox.innerHTML = `Ваш результат: ${score} з ${tasks.length} балів!`;
+            timeLeft--;
+            let minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            document.getElementById("timer-display").innerText = 
+                `Час: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        }, 1000);
     }
 
-    // Таймер на 40 хвилин
-    let totalSeconds = 40 * 60;
-    setInterval(() => {
-        if (totalSeconds > 0) {
-            totalSeconds--;
-            let m = Math.floor(totalSeconds / 60);
-            let s = totalSeconds % 60;
-            document.getElementById('time-left').innerText = `${m}:${s < 10 ? '0' : ''}${s}`;
-        }
-    }, 1000);
+    function finishTest() {
+        clearInterval(timer);
+        
+        let score = 0;
+        let protocolHtml = "";
 
-    renderQuiz();
+        currentQuestions.forEach((q, index) => {
+            let userAns = userAnswers[q.id] || "Не відповідено";
+            let isCorrect = (userAns === q.correct);
+            if (isCorrect) score++;
+
+            let expBox = document.getElementById(`exp_${q.id}`);
+            expBox.style.display = "block";
+            if (isCorrect) {
+                expBox.className = "explanation correct-exp";
+                expBox.innerHTML = `<b>Вірно!</b> ${q.explanation}`;
+            } else {
+                expBox.className = "explanation incorrect-exp";
+                expBox.innerHTML = `<b>Неправильно.</b> Ваша відповідь: <em>${userAns}</em>. Правильна відповідь: <b>${q.correct}</b>.<br>Пояснення: ${q.explanation}`;
+            }
+
+            protocolHtml += `
+                <div class="protocol-item">
+                    <b>Завдання ${index + 1}:</b> ${q.text.replace(/<sup>(.*?)<\/sup>/g, '^$1')} <br>
+                    Відповідь учня: <b>${userAns}</b> | Правильна відповідь: <b>${q.correct}</b> — 
+                    <span style="color: ${isCorrect ? 'var(--success-color)' : 'var(--danger-color)'}; font-weight: bold;">
+                        ${isCorrect ? 'ПРАВИЛЬНО' : 'ПОМИЛКА'}
+                    </span>
+                </div>
+            `;
+        });
+
+        let recommendationsHtml = "<h3>Рекомендації щодо повторення теми:</h3>";
+        if (score === 10) {
+            recommendationsHtml += "Фантастичний результат! Ви володієте матеріалом на найвищому рівні та готові до найскладніших завдань НМТ з показникових рівнянь.";
+        } else if (score >= 7) {
+            recommendationsHtml += "Дуже добрий рівень! Ви чудово орієнтуєтесь у складних перетвореннях, проте варто переглянути нюанси з ОДЗ, модулями або однорідними рівняннями.";
+        } else {
+            recommendationsHtml += "Тема вимагає серйозного доопрацювання. Рекомендуємо повторити методи заміни змінної (з урахуванням обмежень t > 0), винесення найменших степенів за дужки та врахування області допустимих значень (ОДЗ).";
+        }
+
+        document.getElementById("protocol-student-info").innerText = `Учень: ${studentName} | Витрачено часу: ${Math.floor((40*60 - timeLeft)/60)} хв.`;
+        document.getElementById("score-display").innerText = score;
+        document.getElementById("recommendations-box").innerHTML = recommendationsHtml;
+        document.getElementById("protocol-list").innerHTML = protocolHtml;
+
+        document.getElementById("test-screen").classList.remove("active");
+        document.getElementById("result-screen").classList.add("active");
+        
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 </script>
 
 </body>
