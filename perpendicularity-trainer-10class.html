@@ -3,398 +3,376 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Геометрія 10 клас: Перпендикулярність</title>
+    <title>Перпендикулярність прямої та площини | Тренажер 10 клас</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root { 
-            --primary: #0f172a; 
-            --accent: #0284c7; 
-            --success: #059669; 
-            --error: #dc2626; 
-            --bg-color: #f8fafc;
+        :root {
+            --bg-main: #f8fafc;
             --card-bg: #ffffff;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent-blue: #3b82f6;
+            --accent-green: #22c55e;
+            --accent-red: #ef4444;
             --border-color: #e2e8f0;
+            --radius-lg: 20px;
+            --radius-md: 12px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 20px -2px rgba(0,0,0,0.05);
         }
 
-        body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            background-color: var(--bg-color); 
-            color: var(--primary); 
-            margin: 0; 
-            padding: 20px; 
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
         }
 
-        .container { 
-            max-width: 850px; 
-            margin: 0 auto; 
-            background: var(--card-bg); 
-            padding: 35px; 
-            border-radius: 16px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 750px;
+            width: 100%;
+            background: var(--card-bg);
             border: 1px solid var(--border-color);
-        }
-        
-        #setup-screen, #result-screen { text-align: center; }
-        
-        h1 {
-            color: var(--primary);
-            font-size: 1.8rem;
-            margin-bottom: 10px;
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            box-shadow: var(--shadow-md);
         }
 
-        p.subtitle {
-            color: #64748b;
-            margin-bottom: 25px;
-            font-size: 1.05rem;
-        }
-
-        input[type="text"] { 
-            padding: 14px 18px; 
-            font-size: 1rem; 
-            border-radius: 10px; 
-            border: 2px solid var(--border-color); 
-            width: 70%; 
-            max-width: 380px; 
-            margin-bottom: 20px; 
-            outline: none;
-            transition: border-color 0.3s;
-        }
-        input[type="text"]:focus {
-            border-color: var(--accent);
-        }
-        
-        .header-info { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            margin-bottom: 20px; 
-            font-weight: 600; 
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             background: #f1f5f9;
-            padding: 12px 20px;
-            border-radius: 10px;
-        }
-        #timer { color: var(--error); font-size: 1.1rem; }
-
-        /* Бігова доріжка та Собака */
-        .track { 
-            width: 100%; 
-            height: 60px; 
-            background: #f1f5f9; 
-            border-radius: 30px; 
-            position: relative; 
-            margin: 25px 0; 
-            overflow: hidden; 
-            border: 2px solid var(--border-color); 
-        }
-        #dog { 
-            position: absolute; 
-            left: 0; 
-            top: 50%; 
-            transform: translateY(-50%); 
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            font-size: 36px; 
-        }
-        .finish-line { 
-            position: absolute; 
-            right: 15px; 
-            top: 50%; 
-            transform: translateY(-50%); 
-            font-size: 22px; 
+            padding: 0.75rem 1.25rem;
+            border-radius: var(--radius-md);
+            font-size: 0.95rem;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
         }
 
-        .question-card { 
-            margin-top: 20px; 
-            padding: 24px; 
-            border-left: 6px solid var(--accent); 
-            background: #f8fafc; 
-            border-radius: 0 12px 12px 0;
-            text-align: left;
-        }
-        .question-card h3 {
-            margin-top: 0;
-            color: var(--accent);
-            font-size: 1.1rem;
-        }
-        .question-card p {
-            font-size: 1.15rem;
-            line-height: 1.5;
-        }
-
-        .options { 
-            display: grid; 
-            grid-template-columns: 1fr; 
-            gap: 12px; 
-            margin-top: 20px; 
-        }
-
-        button { 
-            padding: 14px 20px; 
-            cursor: pointer; 
-            border: none; 
-            border-radius: 10px; 
-            background: var(--primary); 
-            color: white; 
-            transition: all 0.2s ease; 
-            font-size: 1rem; 
+        .timer {
+            color: var(--accent-red);
             font-weight: 600;
         }
-        button:hover { 
-            background: #1e293b;
-            transform: translateY(-1px); 
-        }
 
-        .opt-btn {
-            background: #ffffff;
-            color: var(--primary);
-            border: 2px solid var(--border-color);
-            text-align: left;
-            font-weight: normal;
-        }
-        .opt-btn:hover:not(:disabled) {
-            border-color: var(--accent);
-            background: #f0f9ff;
-            transform: none;
-        }
-
-        .btn-ready { 
-            background: var(--success); 
-            margin-top: 25px; 
-            width: 100%; 
-            display: none; 
-        }
-        
-        .feedback { 
-            margin-top: 15px; 
-            padding: 14px; 
-            border-radius: 10px; 
-            display: none; 
-            font-size: 1rem;
-            text-align: left;
-            line-height: 1.4;
-        }
-
-        .report-table { 
-            width: 100%; 
-            border-collapse: collapse; 
-            margin-top: 20px; 
-            text-align: left;
-        }
-        .report-table th, .report-table td { 
-            border: 1px solid var(--border-color); 
-            padding: 12px; 
-        }
-        .report-table th {
+        /* Статична панель без анімації */
+        .static-progress-bar {
             background: #f1f5f9;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 0.75rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
         }
-        
-        @media print {
-            .no-print { display: none; }
-            body { background: white; }
-            .container { box-shadow: none; border: none; padding: 0; }
+
+        .task-counter {
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .task-card-title {
+            color: var(--accent-blue);
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .question-text {
+            font-size: 1.15rem;
+            font-weight: 600;
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+        }
+
+        .option-btn {
+            background: white;
+            border: 1px solid var(--border-color);
+            padding: 1rem 1.25rem;
+            border-radius: var(--radius-md);
+            text-align: left;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: var(--text-primary);
+        }
+
+        .option-btn:hover {
+            border-color: var(--accent-blue);
+            background: #f8fafc;
+        }
+
+        .option-btn.selected {
+            border-color: var(--accent-blue);
+            background: #eff6ff;
+            font-weight: 500;
+        }
+
+        .option-btn.correct {
+            border-color: var(--accent-green);
+            background: #f0fdf4;
+            color: #166534;
+        }
+
+        .option-btn.incorrect {
+            border-color: var(--accent-red);
+            background: #fef2f2;
+            color: #991b1b;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .btn-next {
+            background: var(--text-primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.75rem;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-next:hover {
+            background: #334155;
+        }
+
+        .results-box {
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .results-box h2 {
+            margin-bottom: 1rem;
+            font-size: 1.75rem;
+        }
+
+        .results-score {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-blue);
+            margin-bottom: 1.5rem;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <!-- ЕКРАН НАЛАШТУВАННЯ -->
-    <div id="setup-screen">
-        <h1>📐 Інтерактивна дошка: Перпендикулярність</h1>
-        <p class="subtitle">Тема: Перпендикулярність прямої та площини (10 клас)</p>
-        <img src="https://images.dog.ceo/breeds/terrier-russell/n02094114_1003.jpg" alt="Jack Russell" style="width: 160px; height: 160px; object-fit: cover; border-radius: 50%; margin-bottom: 20px; border: 4px solid #e2e8f0; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
-        <br>
-        <input type="text" id="userName" placeholder="Введіть ваше ім'я та прізвище" autocomplete="off">
-        <br>
-        <button onclick="startGame()" style="background: var(--accent); padding: 14px 30px;">Розпочати тестування (10 хв)</button>
-    </div>
-
-    <!-- ЕКРАН ГРИ -->
-    <div id="game-screen" style="display:none;">
-        <div class="header-info">
-            <div>Учень: <span id="display-name"></span></div>
-            <div id="timer">Залишилось: 10:00</div>
-            <div>Бали: <span id="score">0</span> / 12</div>
+    <div class="container" id="app-container">
+        <div class="quiz-header">
+            <span id="student-name">Учень: пп</span>
+            <span>Залишилось: <span class="timer" id="timer">10:00</span></span>
+            <span>Бали: <span id="current-score">0</span> / 12</span>
         </div>
 
-        <div class="track">
-            <div id="dog">🐕</div>
-            <div class="finish-line">🏁</div>
+        <!-- Статичний блок замість анімації -->
+        <div class="static-progress-bar">
+            <span class="task-counter" id="progress-text">Завдання 1 з 12</span>
+            <i class="fa-solid fa-flag-checkered" style="color: var(--text-secondary);"></i>
         </div>
 
-        <div id="question-container">
-            <div class="question-card" id="q-content"></div>
-            <div class="options" id="opt-container"></div>
-            <div id="feedback" class="feedback"></div>
-        </div>
-
-        <button id="btn-next" class="btn-ready" onclick="nextQuestion()" style="background: var(--accent);">Наступне питання</button>
-        <button id="btn-done" class="btn-ready" onclick="finishGame()">Завершити тест</button>
-    </div>
-
-    <!-- ЕКРАН РЕЗУЛЬТАТІВ -->
-    <div id="result-screen" style="display:none;">
-        <h2>Протокол результатів тестування</h2>
-        <p class="subtitle" id="final-stats"></p>
-        <div id="advice" style="padding: 15px; background: #f0f9ff; border-left: 5px solid var(--accent); border-radius: 6px; margin-bottom: 25px; text-align: left; font-size: 1.05rem;"></div>
-        
-        <h3 style="text-align: left; margin-bottom: 10px;">Звіт про помилки та теми для повторення:</h3>
-        <table class="report-table" id="error-report">
-            <thead>
-                <tr>
-                    <th>Тема</th>
-                    <th>Статус</th>
-                    <th>Рекомендація / Порада</th>
-                </tr>
-            </thead>
-            <tbody id="report-body"></tbody>
-        </table>
-        
-        <div style="margin-top: 30px; display: flex; gap: 15px; justify-content: center;" class="no-print">
-            <button onclick="window.print()" style="background: var(--accent);">Друк результату (PDF)</button>
-            <button onclick="location.reload()" style="background: #64748b;">Спробувати знову</button>
+        <div id="quiz-body">
+            <div class="task-card-title" id="task-number-label">Завдання 1 з 12</div>
+            <div class="question-text" id="question-text">Завантаження завдання...</div>
+            <div class="options-list" id="options-list"></div>
+            <div class="actions">
+                <button class="btn-next" id="next-btn" onclick="handleNext()" style="display: none;">Далі</button>
+            </div>
         </div>
     </div>
-</div>
 
-<script>
-    const allQuestions = [
-        { q: "Якщо пряма перпендикулярна до двох прямих площини, що перетинаються, то вона...", a: ["Перпендикулярна до площини", "Паралельна площині", "Належить площині"], c: 0, t: "Ознака перпендикулярності", e: "За ознакою, пряма має бути перпендикулярна до ДВОХ прямих, що перетинаються." },
-        { q: "Скільки прямих, перпендикулярных до даної площини, можна провести через точку поза цією площиною?", a: ["Жодної", "Одну", "Безліч"], c: 1, t: "Властивості", e: "Через будь-яку точку простору проходить лише одна пряма, перпендикулярна до даної площини." },
-        { q: "Пряма <i>a</i> &perp; &alpha;, пряма <i>b</i> || <i>a</i>. Яке взаємне розміщення прямої <i>b</i> і площини &alpha;?", a: ["b || &alpha;", "b &perp; &alpha;", "b &sub; &alpha;"], c: 1, t: "Властивості", e: "Якщо одна з двох паралельних прямих перпендикулярна до площини, то і друга пряма перпендикулярна до неї." },
-        { q: "Яку фігуру утворюють усі прямі, що проходять через дану точку прямої та перпендикулярні до неї?", a: ["Коло", "Пряму", "Площину"], c: 2, t: "Побудова", e: "Усі прямі, перпендикулярні до даної прямої в даній точці, лежать в одній площині." },
-        { q: "Стовп стоїть на рівній землі. Який кут він утворює з будь-якою прямою, що проходить через його основу в площині землі?", a: ["0&deg;", "45&deg;", "90&deg;"], c: 2, t: "Практичне застосування", e: "Якщо пряма перпендикулярна до площини, вона утворює кут 90&deg; з будь-якою прямою в цій площині." },
-        { q: "Чи може пряма бути перпендикулярною лише до однієї прямої площини і при цьому бути перпендикулярною до самої площини?", a: ["Так", "Ні", "Тільки якщо пряма проходить через центр"], c: 1, t: "Ознака", e: "Ні, цього недостатньо. Пряма може бути похилою." },
-        { q: "У кубі ABCD A<sub>1</sub>B<sub>1</sub>C<sub>1</sub>D<sub>1</sub> ребро AA<sub>1</sub> перпендикулярне до площини...", a: ["ABC", "BB<sub>1</sub>C<sub>1</sub>", "AA<sub>1</sub>D<sub>1</sub>"], c: 0, t: "Стереометрія в кубі", e: "Ребро AA<sub>1</sub> перпендикулярне до грані основи (площина ABC)." },
-        { q: "Якщо пряма <i>m</i> &perp; &alpha; та пряма <i>n</i> &perp; &alpha;, то прямі <i>m</i> і <i>n</i>...", a: ["Минуться", "Перетинаються", "Паралельні"], c: 2, t: "Властивості", e: "Дві прямі, перпендикулярні до однієї і тієї самої площини, паралельні між собою." },
-        { q: "Під час будівництва стіни використовують висок (важок на нитці). Яку властивість він ілюструє?", a: ["Паралельність", "Перпендикулярність до горизонту", "Похилу"], c: 1, t: "Практичне застосування", e: "Нитка виска завжди напрямлена перпендикулярно до горизонтальної площини." },
-        { q: "Дано прямокутник ABCD. Пряма SA &perp; (ABC). Яка з прямих перпендикулярна до AB?", a: ["SB", "SA", "SD"], c: 1, t: "Ознака", e: "Оскільки SA &perp; площині, вона перпендикулярна до будь-якої прямої в ній, включаючи AB." },
-        { q: "Чому дорівнює кут між прямою <i>a</i> та площиною &alpha;, якщо <i>a</i> &perp; &alpha;?", a: ["90&deg;", "180&deg;", "0&deg;"], c: 0, t: "Кути", e: "Пряма, перпендикулярна до площини, утворює з нею прямий кут." },
-        { q: "Відстань від точки до площини — це довжина...", a: ["Похилої", "Перпендикуляра", "Проекції"], c: 1, t: "Відстані", e: "Відстань вимірюється найкоротшим шляхом — по перпендикуляру." },
-        { q: "Пряма <i>l</i> проходить через центр кола і перпендикулярна до двох його діаметрів. Чи перпендикулярна <i>l</i> до площини кола?", a: ["Ні", "Так", "Недостатньо даних"], c: 1, t: "Ознака", e: "Діаметри перетинаються, отже за ознакою пряма перпендикулярна до площини." },
-        { q: "Якщо площина &alpha; &perp; прямій <i>c</i>, а площина &beta; || &alpha;, то...", a: ["&beta; &perp; <i>c</i>", "&beta; || <i>c</i>", "&beta; &sub; <i>c</i>"], c: 0, t: "Властивості", e: "Пряма, перпендикулярна до однієї з двох паралельних площин, перпендикулярна і до іншої." },
-        { q: "Скільки перпендикулярних прямих до площини можна провести через точку на самій площині?", a: ["Безліч", "Дві", "Одну"], c: 2, t: "Властивості", e: "Навіть на самій площині через точку проходить лише один перпендикуляр." }
-    ];
+    <script>
+        const questions = [
+            {
+                question: "Дано прямокутник ABCD. Пряма SA ⊥ (ABC). Яка з прямих перпендикулярна до AB?",
+                options: ["SB", "SA", "SD", "SC"],
+                correct: 1
+            },
+            {
+                question: "Якщо пряма перпендикулярна до двох площин, що перетинаються, то як розміщені ці площини?",
+                options: ["Перпендикулярні", "Паралельні", "Збігаються", "Неможливо визначити"],
+                correct: 1
+            },
+            {
+                question: "З точки поза площиною проведено перпендикуляр і похилу. Довжина перпендикуляра 12 см, а похилої — 13 см. Знайдіть довжину проєкції похилої.",
+                options: ["1 см", "5 см", "25 см", "√313 см"],
+                correct: 1
+            },
+            {
+                question: "Пряма а перпендикулярна до площини α. Скільки площин, перпендикулярних до прямої а, можна провести через точку А поза цією прямою?",
+                options: ["Жодної", "Одну", "Безліч", "Дві"],
+                correct: 1
+            },
+            {
+                question: "Через вершину А прямого кута С трикутника ABC проведено перпендикуляр AK до площини трикутника. Чому дорівнює відстань від точки К до сторони BC?",
+                options: ["АК", "АС", "КС", "АВ"],
+                correct: 2
+            },
+            {
+                question: "Якщо дві прямі, перпендикулярні до площини, різні, то вони:",
+                options: ["Паралельні", "Мимобіжні", "Перетинаються", "Перпендикулярні"],
+                correct: 0
+            },
+            {
+                question: "Кінець похилої лежить на відстані 8 см від площини, а її проєкція дорівнює 6 см. Знайдіть довжину похилої.",
+                options: ["14 см", "10 см", "2 см", "√28 см"],
+                correct: 1
+            },
+            {
+                question: "Площина α перпендикулярна до сторони АВ трикутника ABC. Яке взаємне розміщення площини α і сторони ВС, якщо АВ ⊥ ВС?",
+                options: ["Паралельні", "Перпендикулярні", "Пряма лежить у площині", "Перетинаються під гострим кутом"],
+                correct: 0
+            },
+            {
+                question: "Яке з тверджень про перпендикуляр і похилу є хибним?",
+                options: [
+                    "Перпендикуляр коротший за похилу",
+                    "Більшій похилій відповідає більша проєкція",
+                    "Рівні похилі мають рівні проєкції",
+                    "Довжина проєкції може дорівнювати довжині похилої"
+                ],
+                correct: 3
+            },
+            {
+                question: "Сторона рівностороннього трикутника дорівнює 6 см. Точка поза площиною віддалена від кожної його вершини на 4 см. Знайдіть відстань від точки до площини трикутника.",
+                options: ["1 см", "2 см", "√7 см", "2√3 см"],
+                correct: 1
+            },
+            {
+                question: "Якщо пряма паралельна площині, то відстані від точок прямої до площини:",
+                options: ["Різні", "Дорівнюють нулю", "Однакові", "Збільшуються пропорційно"],
+                correct: 2
+            },
+            {
+                question: "З точки А до площини α проведено дві похилі, довжини яких відносяться як 5:6. Їх проєкції дорівнюють 7 см і 18 см. Знайдіть довжину меншої похилої.",
+                options: ["10 см", "15 см", "20 см", "25 см"],
+                correct: 1
+            }
+        ];
 
-    let selectedQuestions = [];
-    let currentIdx = 0;
-    let score = 0;
-    let timerInterval;
-    let timeLeft = 600;
-    let mistakes = [];
+        let currentIndex = 0;
+        let score = 0;
+        let selectedOption = null;
+        let isAnswered = false;
 
-    function startGame() {
-        const name = document.getElementById('userName').value.trim();
-        if (!name) { alert("Будь ласка, введіть ваше ім'я та прізвище!"); return; }
-        
-        document.getElementById('display-name').innerText = name;
-        document.getElementById('setup-screen').style.display = 'none';
-        document.getElementById('game-screen').style.display = 'block';
-        
-        selectedQuestions = allQuestions.sort(() => 0.5 - Math.random()).slice(0, 12);
-        
-        showQuestion();
-        startTimer();
-    }
+        function loadQuestion() {
+            isAnswered = false;
+            selectedOption = null;
+            document.getElementById('next-btn').style.display = 'none';
 
-    function startTimer() {
-        timerInterval = setInterval(() => {
+            const q = questions[currentIndex];
+            document.getElementById('task-number-label').innerText = `Завдання ${currentIndex + 1} з 12`;
+            document.getElementById('progress-text').innerText = `Завдання ${currentIndex + 1} з 12`;
+            document.getElementById('question-text').innerText = q.question;
+
+            const optionsList = document.getElementById('options-list');
+            optionsList.innerHTML = '';
+
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerText = opt;
+                btn.onclick = () => selectOption(idx, btn);
+                optionsList.appendChild(btn);
+            });
+        }
+
+        function selectOption(idx, btnElement) {
+            if (isAnswered) return;
+            
+            document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+            btnElement.classList.add('selected');
+            selectedOption = idx;
+
+            // Миттєва перевірка або після натискання — тут одразу фіксуємо вибір і показуємо "Далі"
+            document.getElementById('next-btn').style.display = 'block';
+        }
+
+        function handleNext() {
+            if (selectedOption === null || isAnswered) return;
+            isAnswered = true;
+
+            const q = questions[currentIndex];
+            const buttons = document.querySelectorAll('.option-btn');
+
+            buttons.forEach((btn, idx) => {
+                if (idx === q.correct) {
+                    btn.classList.add('correct');
+                } else if (idx === selectedOption) {
+                    btn.classList.add('incorrect');
+                }
+                btn.style.cursor = 'default';
+            });
+
+            if (selectedOption === q.correct) {
+                score++;
+                document.getElementById('current-score').innerText = score;
+            }
+
+            currentIndex++;
+            document.getElementById('next-btn').innerText = currentIndex < questions.length ? 'Наступне завдання' : 'Завершити тест';
+            document.getElementById('next-btn').onclick = () => {
+                if (currentIndex < questions.length) {
+                    document.getElementById('next-btn').innerText = 'Далі';
+                    document.getElementById('next-btn').onclick = handleNext;
+                    loadQuestion();
+                } else {
+                    showResults();
+                }
+            };
+        }
+
+        function showResults() {
+            document.getElementById('app-container').innerHTML = `
+                <div class="results-box">
+                    <h2>Тест завершено!</h2>
+                    <p style="color: var(--text-secondary); margin-bottom: 1rem;">Результат учня (пп)</p>
+                    <div class="results-score">${score} / 12 балів</div>
+                    <p style="margin-bottom: 2rem;">Дякуємо за проходження тренажера з геометрії.</p>
+                    <button class="btn-next" onclick="location.reload()" style="margin: 0 auto; display: block;">Пройти знову</button>
+                </div>
+            `;
+        }
+
+        // Таймер (простий зворотний відлік на 10 хвилин)
+        let timeLeft = 600;
+        const timerInterval = setInterval(() => {
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                showResults();
+                return;
+            }
             timeLeft--;
             let mins = Math.floor(timeLeft / 60);
             let secs = timeLeft % 60;
-            document.getElementById('timer').innerText = `Залишилось: ${mins}:${secs < 10 ? '0' : ''}${secs}`;
-            if (timeLeft <= 0) finishGame();
+            document.getElementById('timer').innerText = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
         }, 1000);
-    }
 
-    function showQuestion() {
-        const q = selectedQuestions[currentIdx];
-        document.getElementById('q-content').innerHTML = `<h3>Завдання ${currentIdx + 1} з 12</h3><p>${q.q}</p>`;
-        const optContainer = document.getElementById('opt-container');
-        optContainer.innerHTML = '';
-        document.getElementById('feedback').style.display = 'none';
-        document.getElementById('btn-next').style.display = 'none';
-
-        q.a.forEach((opt, index) => {
-            const btn = document.createElement('button');
-            btn.className = 'opt-btn';
-            btn.innerHTML = opt;
-            btn.onclick = () => checkAnswer(index);
-            optContainer.appendChild(btn);
-        });
-    }
-
-    function checkAnswer(idx) {
-        const q = selectedQuestions[currentIdx];
-        const feedback = document.getElementById('feedback');
-        feedback.style.display = 'block';
-        const buttons = document.querySelectorAll('#opt-container button');
-        
-        buttons.forEach(b => b.disabled = true);
-
-        if (idx === q.c) {
-            score++;
-            feedback.innerHTML = "✅ <b>Правильно!</b> Чудова робота.";
-            feedback.style.background = "#dcfce7";
-            feedback.style.color = "#166534";
-            document.getElementById('score').innerText = score;
-            moveDog();
-        } else {
-            feedback.innerHTML = `❌ <b>Помилка.</b> Пояснення: ${q.e}`;
-            feedback.style.background = "#fee2e2";
-            feedback.style.color = "#991b1b";
-            mistakes.push({ topic: q.t, text: q.q });
-        }
-
-        if (currentIdx < 11) {
-            document.getElementById('btn-next').style.display = 'block';
-        } else {
-            document.getElementById('btn-done').style.display = 'block';
-        }
-    }
-
-    function moveDog() {
-        const progress = (score / 12) * 88;
-        document.getElementById('dog').style.left = progress + "%";
-    }
-
-    function nextQuestion() {
-        currentIdx++;
-        showQuestion();
-    }
-
-    function finishGame() {
-        clearInterval(timerInterval);
-        document.getElementById('game-screen').style.display = 'none';
-        document.getElementById('result-screen').style.display = 'block';
-        
-        const name = document.getElementById('userName').value;
-        const timeSpent = 600 - timeLeft;
-        const minsSpent = Math.floor(timeSpent / 60);
-        const secsSpent = timeSpent % 60;
-        
-        document.getElementById('final-stats').innerText = `Учень: ${name} | Результат: ${score} з 12 балів | Витрачено часу: ${mins5 = minsSpent}:${secsSpent < 10 ? '0' : ''}${secsSpent}`;
-        
-        let adviceText = "";
-        if (score === 12) adviceText = "🌟 <b>Ідеальний результат!</b> Ви чудово засвоїли тему «Перпендикулярність прямої та площини» та впевнено орієнтуєтеся у властивостях.";
-        else if (score >= 8) adviceText = "👍 <b>Добрий результат!</b> Ви непогано знаєте матеріал, проте варто ще раз переглянути окремі властивості та ознаки.";
-        else adviceText = "📖 <b>Потрібно попрацювати.</b> Рекомендуємо повторити теоретичний параграф підручника щодо перпендикулярності прямих і площин.";
-        document.getElementById('advice').innerHTML = adviceText;
-
-        const reportBody = document.getElementById('report-body');
-        reportBody.innerHTML = '';
-        const uniqueTopics = [...new Set(selectedQuestions.map(q => q.t))];
-        
-        uniqueTopics.forEach(topic => {
-            const topicMistakes = mistakes.filter(m => m.topic === topic);
-            const row = document.createElement('tr');
-            if (topicMistakes.length > 0) {
-                row.innerHTML = `<td style="font-weight:600; color:var(--error);">${topic}</td><td>Потребує уваги</td><td>Зафіксовано помилок у цій категорії: ${topicMistakes.length}. Рекомендуємо повторити теоретичні ознаки.</td>`;
-            } else {
-                row.innerHTML = `<td style="font-weight:600; color:var(--success);">${topic}</td><td>Засвоєно ✅</td><td>Завдання виконано безпомилково. Матеріал засвоєно добре.</td>`;
-            }
-            reportBody.appendChild(row);
-        });
-    }
-</script>
-
+        loadQuestion();
+    </script>
 </body>
 </html>
