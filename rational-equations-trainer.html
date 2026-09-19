@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Дробово-раціональні рівняння</title>
+    <title>Дробово-раціональні рівняння</title>
     <style>
         :root {
             --primary-color: #0369a1;
@@ -207,8 +207,8 @@
 <div class="container">
     <!-- ЕКРАН 1: Введення імені -->
     <div id="start-screen" class="screen active">
-        <h1>НМТ-Симулятор з математики</h1>
-        <p class="subtitle">Тема: «Дробово-раціональні рівняння»</p>
+        <h1>Тренажер з алгебри</h1>
+        <p class="subtitle">8 клас. Тема: «Дробово-раціональні рівняння»</p>
         <div class="input-group">
             <label for="student-name">Введіть ваше Прізвище та Ім'я:</label>
             <input type="text" id="student-name" placeholder="наприклад, Коваленко Олена" autocomplete="off">
@@ -218,7 +218,7 @@
 
     <!-- ЕКРАН 2: Сам тест -->
     <div id="test-screen" class="screen">
-        <h1>НМТ-Симулятор: Раціональні рівняння</h1>
+        <h1>Тренажер: Раціональні рівняння</h1>
         
         <div class="test-header">
             <div id="display-user-name">Учень: </div>
@@ -379,7 +379,7 @@
             let val = document.getElementById(`match_${id}_${i}`).value;
             answers[i] = val !== "" ? parseInt(val) : null;
             if(val !== "") {
-                textSummary.Item `${i+1}-${item.right[val].charAt(0)}`;
+                textSummary.push(`${i+1}-${item.right[val].charAt(0)}`);
             }
         });
         userAnswers[id] = { type: 'match', answer: answers, text: textSummary.join(', ') };
@@ -434,7 +434,6 @@
                     });
                     userDisplayStr = Object.values(uAns.answer).some(v => v !== null) ? "Зроблено зіставлення" : "Не відповідено";
                     if (matchCorrectCount > 0) {
-                        // Якщо всі 3 правильні — 3 бали, частину — пропорційно або за логікою
                         if (matchCorrectCount === 3) earnedPoints = 3;
                         else if (matchCorrectCount === 2) earnedPoints = 2;
                         else earnedPoints = 1;
@@ -478,7 +477,7 @@
         if (totalScore >= 28) {
             recommendationsHtml += "Блискучий результат! Ви чудово орієнтуєтеся в дробово-раціональних рівняннях, знаєте особливості ОДЗ та вмієте розв'язувати завдання підвищеної складності.";
         } else if (totalScore >= 18) {
-            recommendationsHtml += "Добрий рівень знань! Зверніть увагу на знаходження області допустимих значень (ОДЗ) знаменателів та корені, які в них потрапляють і відкидаються.";
+            recommendationsHtml += "Добрий рівень знань! Зверніть увагу на знаходження області допустимих значень (ОДЗ) знаменників та корені, які в них потрапляють і відкидаються.";
         } else {
             recommendationsHtml += "Тема потребує опрацювання. Рекомендуємо повторити алгоритм зведення раціональних дробів до спільного знаменника, винесення за дужки та обов'язкову перевірку коренів на ОДЗ.";
         }
