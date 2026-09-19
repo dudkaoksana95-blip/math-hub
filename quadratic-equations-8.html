@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Квадратні Рівняння: Марафон 8 клас</title>
+    <style>
+        :root { --primary: #4a90e2; --success: #2ecc71; --error: #e74c3c; --classroom: #4285F4; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f0f4f8; display: flex; justify-content: center; padding: 20px; }
+        .container { background: white; width: 100%; max-width: 850px; padding: 40px; border-radius: 25px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
+        
+        #setup-screen, #quiz-screen, #result-screen { display: none; }
+        .active { display: block !important; }
+        .hidden { display: none !important; }
+        
+        /* Стадіон */
+        .stadium { position: relative; height: 100px; background: #e2e8f0; border-radius: 50px; margin: 30px 0; border: 4px solid #cbd5e0; overflow: hidden; }
+        #turtle { 
+            position: absolute; left: 0%; top: 10px; font-size: 60px; 
+            transition: left 1s cubic-bezier(0.45, 0.05, 0.55, 0.95); 
+            z-index: 10; display: inline-block;
+            transform: scaleX(-1); /* Розгортає черепашку головою вперед */
+        }
+        .finish-line { position: absolute; right: 0; width: 25px; height: 100%; background: repeating-linear-gradient(0deg, #000, #000 10px, #fff 10px, #fff 20px); }
+
+        .timer { color: var(--error); font-size: 28px; font-weight: bold; float: right; }
+        .question-card { background: #fff; border: 2px solid #e1e8ed; padding: 25px; border-radius: 15px; margin: 20px 0; position: relative; }
+        
+        input { padding: 12px; border: 2px solid #ced4da; border-radius: 8px; font-size: 18px; outline: none; transition: 0.3s; }
+        input:focus { border-color: var(--primary); box-shadow: 0 0 8px rgba(74,144,226,0.3); }
+        button { padding: 12px 28px; background: var(--primary); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.2s; }
+        button:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        
+        .feedback { margin-top: 15px; font-weight: bold; font-size: 18px; min-height: 27px; }
+        .error-log { background: #fff5f5; border: 1px solid #feb2b2; padding: 20px; border-radius: 12px; margin-top: 20px; }
+        
+        /* Стиль оцінки */
+        .grade-badge { border: 3px solid #eee; padding: 20px; border-radius: 15px; background: #fff; text-align: center; margin-bottom: 20px; }
+        .classroom-info { margin-top: 25px; padding: 15px; background: #e8f0fe; border-radius: 10px; border-left: 5px solid var(--classroom); text-align: left; }
+
+        @media print { .no-print { display: none; } .container { box-shadow: none; border: none; width: 100%; } }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div id="setup-screen" class="active">
+        <h1 style="text-align: center; color: #2c3e50;">🐢 Забіг Квадратних Рівнянь</h1>
+        <div style="text-align: center; margin-top: 40px;">
+            <input type="text" id="student-name" placeholder="Введіть ваше ім'я та прізвище" style="width: 300px;"><br><br>
+            <button onclick="startGame()">Почати тест</button>
+        </div>
+    </div>
+
+    <div id="quiz-screen">
+        <div id="timer">20:00</div>
+        <h3>Учень: <span id="display-name" style="color: var(--primary);"></span></h3>
+        
+        <div class="stadium">
+            <div id="turtle">🐢</div>
+            <div class="finish-line"></div>
+        </div>
+
+        <div class="question-card">
+            <div id="task-text" style="font-size: 24px; margin-bottom: 20px; color: #2c3e50;"></div>
+            <input type="number" id="answer" placeholder="?" onkeypress="if(event.key==='Enter') check()">
+            <button onclick="check()">Відповісти</button>
+            <div id="msg" class="feedback"></div>
+        </div>
+        <div style="color: #7f8c8d;">Завдання: <span id="progress-val">0</span> / 12</div>
+    </div>
+
+    <div id="result-screen">
+        <h2 style="text-align: center;">📊 Звіт про тестування</h2>
+        <div id="report-content"></div>
+        <div id="mistakes-log" class="error-log hidden"></div>
+        
+        <div style="display: flex; gap: 15px; justify-content: center; margin-top: 30px;" class="no-print">
+            <button onclick="window.print()" style="background: #6c757d;">💾 Зберегти результат (PDF)</button>
+            <button onclick="location.reload()" style="background: var(--primary);">🔄 Спробувати знову</button>
+        </div>
+    </div>
+</div>
+
+<script>
+const questionPool = [
+    {q: "Розв'яжіть x<sup>2</sup> - 81 = 0. Введіть додатний корінь.", a: 9, t: "Неповні рівняння (b=0)"},
+    {q: "Знайдіть корінь x<sup>2</sup> - 7x = 0, що не дорівнює 0.", a: 7, t: "Неповні рівняння (c=0)"},
+    {q: "Обчисліть дискримінант D для x<sup>2</sup> - 6x + 5 = 0.", a: 16, t: "Дискримінант"},
+    {q: "Скільки коренів має рівняння x<sup>2</sup> + x + 1 = 0? (0, 1 або 2)", a: 0, t: "Аналіз коренів"},
+    {q: "За теоремою Вієта знайдіть суму коренів: x<sup>2</sup> - 11x + 24 = 0.", a: 11, t: "Теорема Вієта"},
+    {q: "За теоремою Вієта знайдіть добуток коренів: x<sup>2</sup> + 2x - 15 = 0.", a: -15, t: "Теорема Вієта"},
+    {q: "Розв'яжіть x<sup>2</sup> - 4x + 4 = 0. Введіть корінь.", a: 2, t: "Повні рівняння"},
+    {q: "x<sup>2</sup> - 5x + 6 = 0. Введіть більший корінь.", a: 3, t: "Повні рівняння"},
+    {q: "Розв'яжіть 2x<sup>2</sup> = 18. Введіть від'ємний корінь.", a: -3, t: "Неповні рівняння"},
+    {q: "Знайдіть корінь (x-5)<sup>2</sup> = 0.", a: 5, t: "Повні рівняння"},
+    {q: "<b>Задача:</b> Площа квадрата 121 см<sup>2</sup>. Знайдіть його сторону.", a: 11, t: "Прикладні задачі"},
+    {q: "<b>Задача:</b> Добуток двох послідовних додатних чисел 20. Менше число?", a: 4, t: "Прикладні задачі"}
+];
+
+let currentIdx = 0, score = 0, timeLeft = 1200, quizTasks = [], errorTypes = [], timerInterval;
+
+function startGame() {
+    const name = document.getElementById('student-name').value;
+    if(!name) return alert("Будь ласка, введіть ім'я!");
+    document.getElementById('display-name').innerText = name;
+    document.getElementById('setup-screen').classList.remove('active');
+    document.getElementById('quiz-screen').classList.add('active');
+    quizTasks = [...questionPool].sort(() => Math.random() - 0.5);
+    renderQuestion();
+    timerInterval = setInterval(updateTimer, 1000);
+}
+
+function updateTimer() {
+    if(timeLeft <= 0) {
+        clearInterval(timerInterval);
+        endQuiz();
+    } else {
+        timeLeft--;
+        let m = Math.floor(timeLeft/60), s = timeLeft%60;
+        document.getElementById('timer').innerText = `${m}:${s<10?'0':''}${s}`;
+    }
+}
+
+function renderQuestion() {
+    if(currentIdx < 12) {
+        document.getElementById('task-text').innerHTML = quizTasks[currentIdx].q;
+        document.getElementById('answer').value = '';
+        document.getElementById('answer').focus();
+        document.getElementById('progress-val').innerText = currentIdx + 1;
+    } else {
+        endQuiz();
+    }
+}
+
+function check() {
+    const ansField = document.getElementById('answer');
+    if (ansField.value === '') return;
+    const userAns = parseFloat(ansField.value);
+    const correctAns = quizTasks[currentIdx].a;
+    const msg = document.getElementById('msg');
+
+    if(userAns === correctAns) {
+        score++;
+        msg.style.color = "var(--success)";
+        msg.innerText = "Правильно! 🐢 Вперед!";
+        document.getElementById('turtle').style.left = (score * 7.8) + "%";
+    } else {
+        msg.style.color = "var(--error)";
+        msg.innerHTML = `Помилка! Правильна відповідь: ${correctAns}. <br><small>Тема: ${quizTasks[currentIdx].t}</small>`;
+        errorTypes.push(quizTasks[currentIdx].t);
+    }
+    currentIdx++;
+    setTimeout(renderQuestion, 1800);
+}
+
+function endQuiz() {
+    clearInterval(timerInterval);
+    document.getElementById('quiz-screen').classList.remove('active');
+    document.getElementById('result-screen').classList.add('active');
+    
+    const name = document.getElementById('student-name').value;
+    let level = "", color = "";
+    if (score >= 10) { level = "Високий рівень 🌟"; color = "#27ae60"; }
+    else if (score >= 7) { level = "Достатній рівень 👍"; color = "#2980b9"; }
+    else if (score >= 4) { level = "Середній рівень 📈"; color = "#f39c12"; }
+    else { level = "Початковий рівень 📚"; color = "#e74c3c"; }
+
+    document.getElementById('report-content').innerHTML = `
+        <div class="grade-badge" style="border-color: ${color}">
+            <h2 style="margin: 0;">РЕЗУЛЬТАТ ТЕСТУ</h2>
+            <p>Учень: <b>${name}</b></p>
+            <div style="font-size: 54px; font-weight: bold; color: ${color};">${score}</div>
+            <p style="font-size: 20px; margin: 0;">балів (за 12-бальною системою)</p>
+            <p><b>${level}</b></p>
+        </div>
+        <div class="classroom-info">
+            <h4>📥 Як здати роботу в Classroom:</h4>
+            <ol style="font-size: 14px; line-height: 1.5;">
+                <li>Натисніть кнопку <b>"Зберегти результат (PDF)"</b>.</li>
+                <li>У вікні друку виберіть <b>"Зберегти як PDF"</b>.</li>
+                <li>Прикріпіть збережений файл до завдання у Classroom.</li>
+            </ol>
+        </div>
+    `;
+
+    if(errorTypes.length > 0) {
+        const uniqueErrors = [...new Set(errorTypes)];
+        const log = document.getElementById('mistakes-log');
+        log.classList.remove('hidden');
+        log.innerHTML = `<h4>📋 Тобі варто повторити такі теми:</h4><ul>` + 
+                        uniqueErrors.map(e => `<li>${e}</li>`).join('') + `</ul>`;
+    }
+}
+</script>
+</body>
+</html>
