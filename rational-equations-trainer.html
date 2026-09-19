@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>НМТ-Симулятор: Дробово-раціональні рівняння</title>
+    <style>
+        :root {
+            --primary-color: #0369a1;
+            --accent-color: #0284c7;
+            --success-color: #059669;
+            --danger-color: #dc2626;
+            --bg-color: #f8fafc;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 25px;
+        }
+
+        .screen {
+            display: none;
+        }
+        .screen.active {
+            display: block;
+        }
+
+        #start-screen {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        .input-group {
+            margin: 20px 0;
+        }
+        .input-group label {
+            font-size: 1.1rem;
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        .input-group input {
+            padding: 12px;
+            font-size: 1rem;
+            width: 60%;
+            max-width: 350px;
+            border: 2px solid #cbd5e1;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .input-group input:focus {
+            border-color: var(--accent-color);
+        }
+
+        .test-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f1f5f9;
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .timer {
+            color: var(--danger-color);
+            font-size: 1.2rem;
+        }
+
+        /* МАТЕМАТИЧНІ ДРОБИ ТА СТЕПЕНІ */
+        .math { font-family: "Times New Roman", Times, serif; font-style: italic; font-size: 1.2rem; }
+        .frac { display: inline-flex; flex-direction: column; vertical-align: middle; text-align: center; margin: 0 4px; }
+        .frac .num { border-bottom: 1.5px solid currentColor; padding: 0 4px; line-height: 1.1; font-style: italic; }
+        .frac .den { padding: 0 4px; line-height: 1.1; font-style: italic; }
+        .pow { vertical-align: super; font-size: 0.75em; font-style: normal; }
+
+        .question-card {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+        .question-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 12px;
+        }
+
+        .options-list label {
+            display: flex;
+            align-items: center;
+            padding: 10px 12px;
+            margin: 8px 0;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .options-list label:hover {
+            background: #f0f9ff;
+            border-color: var(--accent-color);
+        }
+        .options-list input {
+            margin-right: 12px;
+        }
+        .letter {
+            color: var(--primary-color);
+            font-weight: 900;
+            margin-right: 8px;
+            font-style: normal;
+        }
+
+        /* ВІДПОВІДНОСТІ ТА КОРОТКІ ВІДПОВІДІ */
+        .match-row { background: #f8fafc; padding: 10px; margin-bottom: 8px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #e2e8f0; }
+        select { padding: 8px; border-radius: 6px; width: 45%; font-size: 0.95rem; border: 1px solid #cbd5e1; }
+        .short-input { width: 100%; max-width: 250px; padding: 10px; font-size: 1.2rem; border: 2px solid var(--primary-color); border-radius: 6px; text-align: center; margin-top: 10px; outline: none; }
+
+        .explanation {
+            margin-top: 12px;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            display: none;
+            line-height: 1.4;
+        }
+        .explanation.correct-exp {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .explanation.incorrect-exp {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s;
+            display: block;
+            margin: 20px auto 0 auto;
+            font-weight: bold;
+        }
+        .btn:hover {
+            background-color: var(--accent-color);
+        }
+
+        .protocol-box {
+            background: #fcfcfc;
+            border: 2px dashed #cbd5e1;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .protocol-item {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        .recommendations {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f0f9ff;
+            border-left: 5px solid var(--primary-color);
+            border-radius: 4px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- ЕКРАН 1: Введення імені -->
+    <div id="start-screen" class="screen active">
+        <h1>НМТ-Симулятор з математики</h1>
+        <p class="subtitle">Тема: «Дробово-раціональні рівняння»</p>
+        <div class="input-group">
+            <label for="student-name">Введіть ваше Прізвище та Ім'я:</label>
+            <input type="text" id="student-name" placeholder="наприклад, Коваленко Олена" autocomplete="off">
+        </div>
+        <button class="btn" onclick="startTest()">Розпочати тестування</button>
+    </div>
+
+    <!-- ЕКРАН 2: Сам тест -->
+    <div id="test-screen" class="screen">
+        <h1>НМТ-Симулятор: Раціональні рівняння</h1>
+        
+        <div class="test-header">
+            <div id="display-user-name">Учень: </div>
+            <div class="timer" id="timer-display">Час: 30:00</div>
+        </div>
+
+        <div id="questions-container"></div>
+
+        <button class="btn" onclick="finishTest()">Завершити тест</button>
+    </div>
+
+    <!-- ЕКРАН 3: Протокол та результати -->
+    <div id="result-screen" class="screen">
+        <h1>Протокол роботи учня</h1>
+        <p class="subtitle" id="protocol-student-info"></p>
+        
+        <div style="text-align: center; font-size: 1.3rem; margin-bottom: 20px;">
+            <b>Набрано балів: <span id="score-display">0</span> / 31</b>
+        </div>
+
+        <div class="recommendations" id="recommendations-box"></div>
+
+        <h3>Детальний протокол відповідей:</h3>
+        <div class="protocol-box" id="protocol-list"></div>
+
+        <button class="btn" onclick="location.reload()">Пройти знову</button>
+    </div>
+</div>
+
+<script>
+    const f = (n, d) => `<span class="frac"><span class="num">${n}</span><span class="den">${d}</span></span>`;
+
+    const pool = [
+        // ТЕСТИ (по 1 балу)
+        { id: 1, type: "choice", q: `Розв'яжіть рівняння ${f('16', 'x')} = 4`, opts: ["64", "4", "0,25", "12", "немає"], correctLetter: "Б", correctVal: "4", exp: `4x = 16 => x = 4` },
+        { id: 2, type: "choice", q: `Знайдіть корінь ${f('x - 3', 'x + 5')} = 0`, opts: ["3", "-5", "3; -5", "0", "5"], correctLetter: "А", correctVal: "3", exp: `Чисельник x - 3 = 0 => x = 3 (ОДЗ: x ≠ -5)` },
+        { id: 3, type: "choice", q: `Розв'яжіть ${f('x<span class="pow">2</span> - 16', 'x - 4')} = 0`, opts: ["4", "-4", "±4", "0", "немає"], correctLetter: "Б", correctVal: "-4", exp: `ОДЗ: x ≠ 4. Скорочуємо: x + 4 = 0 => x = -4` },
+        { id: 4, type: "choice", q: `При якому x дріб ${f('2x', '6')} дорівнює 0?`, opts: ["3", "0", "6", "-3", "немає"], correctLetter: "Б", correctVal: "0", exp: `2x = 0 => x = 0` },
+        { id: 5, type: "choice", q: `Рівняння ${f('x - 5', 'x - 5')} = 0 має коренів:`, opts: ["Безліч", "Один", "Жодного", "Два", "Три"], correctLetter: "В", correctVal: "Жодного", exp: `При x = 5 знаменник перетворюється на 0. Коренів немає` },
+        { id: 6, type: "choice", q: `Знайдіть x: ${f('1', 'x')} = ${f('1', '10')}`, opts: ["0,1", "1", "10", "0", "немає"], correctLetter: "В", correctVal: "10", exp: `x = 10` },
+        { id: 7, type: "choice", q: `Розв'яжіть ${f('3x - 12', 'x + 1')} = 0`, opts: ["-1", "4", "12", "0", "3"], correctLetter: "Б", correctVal: "4", exp: `3x - 12 = 0 => x = 4 (ОДЗ: x ≠ -1)` },
+        { id: 8, type: "choice", q: `Знайдіть корінь ${f('x<span class="pow">2</span>', 'x')} = 5`, opts: ["0", "25", "5", "0; 5", "немає"], correctLetter: "В", correctVal: "5", exp: `x = 5 (з урахуванням ОДЗ x ≠ 0)` },
+        { id: 9, type: "choice", q: `Коренем рівняння ${f('20', 'x')} = -4 є:`, opts: ["5", "-5", "80", "-80", "0"], correctLetter: "Б", correctVal: "-5", exp: `-4x = 20 => x = -5` },
+        { id: 10, type: "choice", q: `Знайдіть x: ${f('x', 'x - 4')} = 2`, opts: ["4", "8", "0", "2", "-4"], correctLetter: "Б", correctVal: "8", exp: `x = 2(x - 4) => x = 2x - 8 => x = 8` },
+        { id: 11, type: "choice", q: `Розв'яжіть ${f('x - 1', 'x + 1')} = -1`, opts: ["1", "-1", "0", "немає", "будь-яке"], correctLetter: "В", correctVal: "0", exp: `x - 1 = - (x + 1) => x - 1 = -x - 1 => 2x = 0 => x = 0` },
+        { id: 12, type: "choice", q: `Знайдіть x: ${f('x<span class="pow">2</span> - 3x', 'x - 3')} = 0`, opts: ["3", "0", "0; 3", "-3", "немає"], correctLetter: "Б", correctVal: "0", exp: `ОДЗ: x ≠ 3. Чисельник x(x - 3) = 0 дає x = 0 та x = 3, але 3 виключено через ОДЗ. Залишається x = 0` },
+        { id: 13, type: "choice", q: `Рівняння ${f('10', 'x')} = 0 має коренів:`, opts: ["Жодного", "Один", "Два", "Безліч", "Три"], correctLetter: "А", correctVal: "Жодного", exp: `Чисельник дорівнює 10 і ніколи не дорівнює 0` },
+        { id: 14, type: "choice", q: `Знайдіть x: ${f('2', 'x')} + ${f('3', 'x')} = 5`, opts: ["5", "1", "0,5", "2,5", "0"], correctLetter: "Б", correctVal: "1", exp: `${f('5', 'x')} = 5 => 5 = 5x => x = 1` },
+        { id: 15, type: "choice", q: `Розв'яжіть ${f('x + 2', 'x - 2')} = 3`, opts: ["2", "4", "3", "0", "5"], correctLetter: "Б", correctVal: "4", exp: `x + 2 = 3(x - 2) => x + 2 = 3x - 6 => 2x = 8 => x = 4` },
+        { id: 16, type: "choice", q: `Знайдіть x: ${f('x', 'x + 6')} = ${f('1', '3')}`, opts: ["3", "-6", "2", "0", "4"], correctLetter: "А", correctVal: "3", exp: `3x = x + 6 => 2x = 6 => x = 3` },
+        
+        // ВІДПОВІДНОСТІ (по 3 бали за кожну)
+        {
+            id: 17, type: "match", q: "Встановіть відповідність між рівняннями (1-3) та їх ОДЗ (А-Д):",
+            left: [`1. ${f('1','x(x-2)')}=0`, `2. ${f('1','x+2')}=0`, `3. ${f('1','x-2')}=0`],
+            right: ["А. x ≠ 2", "Б. x ≠ 0 та x ≠ 2", "В. x ≠ -2", "Г. x ≠ 0", "Д. x ∈ R"],
+            ans: {0: 1, 1: 2, 2: 0}, exp: "1-Б, 2-В, 3-А"
+        },
+        {
+            id: 18, type: "match", q: "Встановіть відповідність між рівняннями (1-3) та кількістю їх дійсних коренів (А-Д):",
+            left: [`1. ${f('x-1','x-1')}=0`, `2. ${f('x-1','x+1')}=0`, `3. ${f('x<span class="pow">2</span>-1','x')}=0`],
+            right: ["А. Жодного", "Б. Один", "В. Два", "Г. Три", "Д. Безліч"],
+            ans: {0: 0, 1: 1, 2: 2}, exp: "1-А (немає через ОДЗ), 2-Б (x=1), 3-В (x=1, x=-1)"
+        },
+        {
+            id: 19, type: "match", q: "Встановіть відповідність між рівняннями (1-3) та їх коренями (А-Д):",
+            left: [`1. ${f('4','x')}=1`, `2. ${f('x','4')}=4`, `3. ${f('x','x+5')}=0`],
+            right: ["А. 4", "Б. -4", "В. 16", "Г. 1", "Д. 0"],
+            ans: {0: 0, 1: 2, 2: 4}, exp: "1-А (x=4), 2-В (x=16), 3-Д (x=0)"
+        },
+
+        // ЗАДАЧІ (по 2 бали)
+        { id: 20, type: "short", q: `Розв'яжіть рівняння ${f('x', 'x - 5')} = 2`, correct: "10", maxScore: 2, exp: `x = 2(x - 5) => x = 2x - 10 => x = 10` },
+        { id: 21, type: "short", q: `Знайдіть корінь рівняння ${f('x<span class="pow">2</span> - 2x', 'x - 2')} = 4`, correct: "4", maxScore: 2, exp: `ОДЗ: x ≠ 2. Чисельник x(x - 2) / (x - 2) = 4 => x = 4` },
+        { id: 22, type: "short", q: `Розв'яжіть ${f('x + 2', 'x')} = x. Запишіть суму коренів.`, correct: "1", maxScore: 2, exp: `x + 2 = x² => x² - x - 2 = 0. За теоремою Вієта сума коренів дорівнює 1 (корені 2 і -1, обидва задовольняють ОДЗ x ≠ 0)` }
+    ];
+
+    let studentName = "";
+    let timer;
+    let timeLeft = 30 * 60;
+    let userAnswers = {};
+
+    function startTest() {
+        const nameInput = document.getElementById("student-name").value.trim();
+        if (!nameInput) {
+            alert("Будь ласка, введіть своє Прізвище та Ім'я!");
+            return;
+        }
+        studentName = nameInput;
+        document.getElementById("display-user-name").innerText = `Учень: ${studentName}`;
+
+        document.getElementById("start-screen").classList.remove("active");
+        document.getElementById("test-screen").classList.add("active");
+
+        renderQuestions();
+        startTimer();
+    }
+
+    function renderQuestions() {
+        const container = document.getElementById("questions-container");
+        container.innerHTML = "";
+
+        pool.forEach((item, index) => {
+            let contentHtml = "";
+
+            if (item.type === "choice") {
+                let optsHtml = "";
+                item.opts.forEach((o, i) => {
+                    const letter = ['А','Б','В','Г','Д'][i];
+                    optsHtml += `
+                        <label>
+                            <input type="radio" name="q_${item.id}" value="${letter}" onchange="saveChoiceAnswer(${item.id}, '${letter}', '${o}')">
+                            <span class="letter">${letter}.</span> <span class="math">${o}</span>
+                        </label>
+                    `;
+                });
+                contentHtml = `<div class="options-list">${optsHtml}</div>`;
+            } else if (item.type === "match") {
+                let matchRows = "";
+                item.left.forEach((t, i) => {
+                    matchRows += `
+                        <div class="match-row">
+                            <span class="math">${t}</span>
+                            <select id="match_${item.id}_${i}" onchange="saveMatchAnswer(${item.id})">
+                                <option value="">Оберіть...</option>
+                                ${item.right.map((v, idx)=>`<option value="${idx}">${v}</option>`).join('')}
+                            </select>
+                        </div>
+                    `;
+                });
+                contentHtml = matchRows;
+            } else if (item.type === "short") {
+                contentHtml = `
+                    <input type="text" id="short_${item.id}" class="short-input" placeholder="Введіть число..." oninput="saveShortAnswer(${item.id})">
+                `;
+            }
+
+            container.innerHTML += `
+                <div class="question-card" id="card_${item.id}">
+                    <div class="question-title">Завдання ${index + 1} (${item.type === 'match' ? '3 бали' : (item.type === 'short' ? '2 бали' : '1 бал')})</div>
+                    <div class="math">${item.q}</div>
+                    <div style="margin-top: 12px;">${contentHtml}</div>
+                    <div class="explanation" id="exp_${item.id}"></div>
+                </div>
+            `;
+        });
+    }
+
+    function saveChoiceAnswer(id, letter, val) {
+        userAnswers[id] = { type: 'choice', answer: letter, text: val };
+    }
+
+    function saveMatchAnswer(id) {
+        let answers = {};
+        let textSummary = [];
+        let item = pool.find(q => q.id === id);
+        [0, 1, 2].forEach(i => {
+            let val = document.getElementById(`match_${id}_${i}`).value;
+            answers[i] = val !== "" ? parseInt(val) : null;
+            if(val !== "") {
+                textSummary.Item `${i+1}-${item.right[val].charAt(0)}`;
+            }
+        });
+        userAnswers[id] = { type: 'match', answer: answers, text: textSummary.join(', ') };
+    }
+
+    function saveShortAnswer(id) {
+        let val = document.getElementById(`short_${id}`).value.trim();
+        userAnswers[id] = { type: 'short', answer: val, text: val };
+    }
+
+    function startTimer() {
+        timer = setInterval(() => {
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                alert("Час вийшов!");
+                finishTest();
+                return;
+            }
+            timeLeft--;
+            let minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            document.getElementById("timer-display").innerText = 
+                `Час: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        }, 1000);
+    }
+
+    function finishTest() {
+        clearInterval(timer);
+        
+        let totalScore = 0;
+        let protocolHtml = "";
+
+        pool.forEach((item, index) => {
+            let uAns = userAnswers[item.id];
+            let isCorrect = false;
+            let earnedPoints = 0;
+            let userDisplayStr = "Не відповідено";
+
+            if (item.type === "choice") {
+                if (uAns) {
+                    userDisplayStr = `${uAns.answer} (${uAns.text})`;
+                    if (uAns.answer === item.correctLetter) {
+                        isCorrect = true;
+                        earnedPoints = 1;
+                    }
+                }
+            } else if (item.type === "match") {
+                if (uAns && uAns.answer) {
+                    let matchCorrectCount = 0;
+                    [0, 1, 2].forEach(i => {
+                        if (uAns.answer[i] === item.ans[i]) matchCorrectCount++;
+                    });
+                    userDisplayStr = Object.values(uAns.answer).some(v => v !== null) ? "Зроблено зіставлення" : "Не відповідено";
+                    if (matchCorrectCount > 0) {
+                        // Якщо всі 3 правильні — 3 бали, частину — пропорційно або за логікою
+                        if (matchCorrectCount === 3) earnedPoints = 3;
+                        else if (matchCorrectCount === 2) earnedPoints = 2;
+                        else earnedPoints = 1;
+                        isCorrect = (matchCorrectCount === 3);
+                    }
+                }
+            } else if (item.type === "short") {
+                if (uAns && uAns.answer !== "") {
+                    userDisplayStr = uAns.text;
+                    if (uAns.text === item.correct) {
+                        isCorrect = true;
+                        earnedPoints = 2;
+                    }
+                }
+            }
+
+            totalScore += earnedPoints;
+
+            let expBox = document.getElementById(`exp_${item.id}`);
+            expBox.style.display = "block";
+            if (isCorrect || (earnedPoints > 0 && item.type === 'match')) {
+                expBox.className = "explanation correct-exp";
+                expBox.innerHTML = `<b>${isCorrect ? 'Вірно!' : 'Частково правильно!'}</b> Отримано балів: ${earnedPoints}. Пояснення: ${item.exp}`;
+            } else {
+                expBox.className = "explanation incorrect-exp";
+                expBox.innerHTML = `<b>Помилка.</b> Ваша відповідь: <em>${userDisplayStr}</em>. Правильна відповідь: <b>${item.type === 'choice' ? item.correctLetter + ' (' + item.correctVal + ')' : item.correct}</b>.<br>Пояснення: ${item.exp}`;
+            }
+
+            protocolHtml += `
+                <div class="protocol-item">
+                    <b>Завдання ${index + 1}:</b> ${item.q}<br>
+                    Ваша відповідь: <b>${userDisplayStr}</b> | Отримано балів: <b>${earnedPoints}</b> — 
+                    <span style="color: ${earnedPoints > 0 ? 'var(--success-color)' : 'var(--danger-color)'}; font-weight: bold;">
+                        ${isCorrect ? 'ПРАВИЛЬНО' : (earnedPoints > 0 ? 'ЧАСТКОВО' : 'ПОМИЛКА')}
+                    </span>
+                </div>
+            `;
+        });
+
+        let recommendationsHtml = "<h3>Рекомендації щодо повторення теми:</h3>";
+        if (totalScore >= 28) {
+            recommendationsHtml += "Блискучий результат! Ви чудово орієнтуєтеся в дробово-раціональних рівняннях, знаєте особливості ОДЗ та вмієте розв'язувати завдання підвищеної складності.";
+        } else if (totalScore >= 18) {
+            recommendationsHtml += "Добрий рівень знань! Зверніть увагу на знаходження області допустимих значень (ОДЗ) знаменателів та корені, які в них потрапляють і відкидаються.";
+        } else {
+            recommendationsHtml += "Тема потребує опрацювання. Рекомендуємо повторити алгоритм зведення раціональних дробів до спільного знаменника, винесення за дужки та обов'язкову перевірку коренів на ОДЗ.";
+        }
+
+        document.getElementById("protocol-student-info").innerText = `Учень: ${studentName} | Витрачено часу: ${Math.floor((30*60 - timeLeft)/60)} хв.`;
+        document.getElementById("score-display").innerText = totalScore;
+        document.getElementById("recommendations-box").innerHTML = recommendationsHtml;
+        document.getElementById("protocol-list").innerHTML = protocolHtml;
+
+        document.getElementById("test-screen").classList.remove("active");
+        document.getElementById("result-screen").classList.add("active");
+        
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>
