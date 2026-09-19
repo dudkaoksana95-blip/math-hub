@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест з математики: Раціональні дроби (8 клас)</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        .turtle-icon {
+            transform: scaleX(-1);
+            display: inline-block;
+        }
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            body {
+                background: white !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col items-center justify-start p-4 sm:p-6">
+
+    <!-- Container -->
+    <div class="max-w-3xl w-full bg-white rounded-2xl shadow-xl p-6 sm:p-8 my-4 transition-all">
+
+        <!-- Header / Title -->
+        <div class="text-center mb-6 border-b pb-4">
+            <h1 class="text-2xl sm:text-3xl font-extrabold text-indigo-700">Математичний тест: Раціональні дроби</h1>
+            <p class="text-sm text-slate-500 mt-1">8 клас • Алгебра</p>
+        </div>
+
+        <!-- STEP 1: Registration Screen -->
+        <div id="screen-reg" class="space-y-6">
+            <div class="bg-indigo-50 border border-indigo-100 rounded-xl p-5 text-indigo-900 text-sm leading-relaxed">
+                <p class="font-semibold mb-1">Вітаю! 👋</p>
+                Будь ласка, введіть своє прізвище та ім'я, щоб розпочати тестування. Тест містить 12 завдань. Час виконання обмежений — 30 хвилин. Бажаю успіху!
+            </div>
+            <div class="space-y-4 max-w-md mx-auto">
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Прізвище та ім'я учня/учениці</label>
+                    <input type="text" id="student-name" placeholder="наприклад, Шевченко Андрій" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none text-slate-800">
+                </div>
+                <button onclick="startTest()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-xl shadow-md transition-all cursor-pointer">
+                    Розпочати тест 🚀
+                </button>
+            </div>
+        </div>
+
+        <!-- STEP 2: Test Screen -->
+        <div id="screen-test" class="hidden space-y-6">
+            
+            <!-- Top Bar: Info, Timer, Student -->
+            <div class="flex flex-wrap justify-between items-center bg-slate-100 rounded-xl p-4 gap-4">
+                <div>
+                    <span class="text-xs text-slate-500 block">Учень:</span>
+                    <span id="display-student-name" class="font-bold text-slate-700"></span>
+                </div>
+                <div class="flex items-center gap-6">
+                    <div>
+                        <span class="text-xs text-slate-500 block">Питання:</span>
+                        <span id="question-progress" class="font-bold text-indigo-600 text-lg">1 з 12</span>
+                    </div>
+                    <div class="bg-white px-3 py-1.5 rounded-lg shadow-sm border border-slate-200 flex items-center gap-2">
+                        <span class="text-xs font-medium text-slate-500">⏰ Час:</span>
+                        <span id="timer" class="font-mono font-bold text-rose-600 text-lg">30:00</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gamification: Turtle Track -->
+            <div class="bg-gradient-to-r from-amber-50 to-emerald-50 border border-slate-200 rounded-xl p-4">
+                <div class="flex justify-between items-center mb-1 text-xs font-semibold text-slate-600 uppercase tracking-wider">
+                    <span>Старт</span>
+                    <span>Фініш (12 правильних)</span>
+                </div>
+                <div class="relative w-full h-10 bg-white/80 rounded-lg border border-amber-200 overflow-hidden flex items-center px-2">
+                    <!-- Track line -->
+                    <div class="absolute w-full border-b border-dashed border-slate-300"></div>
+                    <!-- Turtle Emoji -->
+                    <div id="turtle" class="absolute left-2 transition-all duration-500 text-2xl select-none" style="bottom: 4px;">
+                        <span class="turtle-icon">🐢</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question Box -->
+            <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+                <div class="flex justify-between items-center mb-3">
+                    <span id="question-badge" class="inline-block bg-indigo-50 text-indigo-700 text-xs font-semibold px-3 py-1 rounded-full">Тема</span>
+                </div>
+                <h3 id="question-title" class="text-lg font-bold text-slate-800 mb-6"></h3>
+                
+                <!-- Options Grid -->
+                <div id="options-container" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <!-- Dynamically populated options -->
+                </div>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="flex justify-between pt-2">
+                <button id="prev-btn" onclick="prevQuestion()" class="px-5 py-2.5 rounded-xl border border-slate-300 font-medium text-slate-600 hover:bg-slate-100 transition disabled:opacity-40 cursor-pointer">
+                    ← Назад
+                </button>
+                <button id="next-btn" onclick="nextQuestion()" class="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold shadow transition cursor-pointer">
+                    Далі →
+                </button>
+            </div>
+        </div>
+
+        <!-- STEP 3: Results Screen -->
+        <div id="screen-result" class="hidden space-y-6">
+            <div class="text-center space-y-2">
+                <div class="inline-block p-3 bg-emerald-100 text-emerald-600 rounded-full text-3xl mb-1">🏆</div>
+                <h2 class="text-2xl font-bold text-slate-800">Тестування завершено!</h2>
+                <p id="result-student" class="text-slate-600 font-medium"></p>
+            </div>
+
+            <!-- Score Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="bg-indigo-50 border border-indigo-100 rounded-2xl p-5 text-center">
+                    <span class="text-sm font-medium text-indigo-600 block mb-1">Оцінка за 12-бальною шкалою</span>
+                    <span id="score-12" class="text-4xl font-extrabold text-indigo-700">0</span>
+                    <span class="text-indigo-500 text-lg"> / 12</span>
+                </div>
+                <div class="bg-emerald-50 border border-emerald-100 rounded-2xl p-5 text-center">
+                    <span class="text-sm font-medium text-emerald-600 block mb-1">Правильні відповіді</span>
+                    <span id="score-correct" class="text-4xl font-extrabold text-emerald-700">0</span>
+                    <span class="text-emerald-500 text-lg"> / 12</span>
+                </div>
+            </div>
+
+            <!-- Recommendations / Error Report -->
+            <div id="report-section" class="bg-rose-50 border border-rose-100 rounded-2xl p-5 space-y-3">
+                <h4 class="font-bold text-rose-800 flex items-center gap-2">
+                    <span>📌 Рекомендації та теми для повторення:</span>
+                </h4>
+                <ul id="error-list" class="list-disc list-inside text-sm text-rose-900 space-y-1.5">
+                    <!-- Dynamically populated errors -->
+                </ul>
+            </div>
+
+            <!-- Instructions for Google Classroom -->
+            <div class="no-print bg-slate-100 border border-slate-200 rounded-2xl p-5 text-xs sm:text-sm text-slate-600 space-y-2">
+                <p class="font-bold text-slate-700">📎 Як зберегти та здати роботу в Google Classroom:</p>
+                <ol class="list-decimal list-inside space-y-1">
+                    <li>Натисніть кнопку нижче <b>«Зберегти результат (PDF)»</b>.</li>
+                    <li>У вікні друку, що відкриється, у полі «Принтер» (Destination) оберіть <b>«Зберегти як PDF» (Save as PDF)</b> та збережіть файл на пристрій.</li>
+                    <li>Перейдіть до Google Classroom, відкрийте це завдання та натисніть <b>«Додати або створити» → «Файл»</b>, прикріпіть завантажений PDF-файл та здайте роботу.</li>
+                </ol>
+            </div>
+
+            <!-- Print / Save Button -->
+            <div class="no-print flex flex-col sm:flex-row gap-3 pt-2">
+                <button onclick="window.print()" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-xl shadow transition text-center cursor-pointer">
+                    🖨️ Зберегти результат (PDF)
+                </button>
+                <button onclick="location.reload()" class="px-6 py-3 border border-slate-300 font-medium text-slate-600 hover:bg-slate-100 rounded-xl transition text-center cursor-pointer">
+                    Пройти знову 🔄
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Script Logic -->
+    <script>
+        const rawQuestions = [
+            {
+                topic: "Метод групування у чисельнику",
+                text: "Скоротіть дріб: <div class='my-3 text-center text-xl font-bold'>$$\\frac{2a + an - 2b - bn}{5a - 5b}$$</div>",
+                options: [
+                    "$$\\frac{2 + a}{5}$$",
+                    "$$\\frac{2 + n}{5}$$",
+                    "$$\\frac{a + n}{5}$$",
+                    "$$\\frac{n - 2}{5}$$"
+                ],
+                correct: 2
+            },
+            {
+                topic: "Використання формули різниці квадратів",
+                text: "Скоротіть дріб: <div class='my-3 text-center text-xl font-bold'>$$\\frac{x^2 - 25}{x^2 - 10x + 25}$$</div>",
+                options: [
+                    "$$\\frac{x + 5}{x - 5}$$",
+                    "$$\\frac{x - 5}{x + 5}$$",
+                    "$$x + 5$$",
+                    "$$\\frac{1}{x - 5}$$"
+                ],
+                correct: 0
+            },
+            {
+                topic: "Винесення спільного множника за дужки",
+                text: "Скоротіть дріб: <div class='my-3 text-center text-xl font-bold'>$$\\frac{3a + 15b}{9ab}$$</div>",
+                options: [
+                    "$$\\frac{a + 5b}{3b}$$",
+                    "$$\\frac{3 + 15}{9}$$",
+                    "$$\\frac{a + 5}{3ab}$$",
+                    "$$\\frac{1}{3}$$"
+                ],
+                correct: 0
+            },
+            {
+                topic: "Скорочення дробів зі спільним множником у дужках",
+                text: "Скоротіть дріб: <div class='my-3 text-center text-xl font-bold'>$$\\frac{x(a + 5)}{y(a + 5)}$$</div>",
+                options: [
+                    "$$\\frac{x}{y}$$",
+                    "$$\\frac{a + 5}{x}$$",
+                    "$$x + y$$",
+                    "$$\\frac{x(a + 5)}{y}$$"
+                ],
+                correct: 0
+            },
+            {
+                topic: "Використання формули квадрата двочлена",
+                text: "Скоротіть дріб: <div class='my-3 text-center text-xl font-bold'>$$\\frac{x^2 - 4x + 4}{x^2 - 4}$$</div>",
+                options: [
+                    "$$\\frac{x - 2}{x + 2}$$",
+                    "$$\\frac{x + 2}{x - 2}$$",
+                    "$$x - 2$$",
+                    "$$\\frac{1}{x + 2}$$"
+                ],
+                correct: 0
+            },
+            {
+                topic: "Скорочення степенів з однаковою основою",
+                text: "Скоротіть дріб: <div class='my-3 text-center text-xl font-bold'>$$\\frac{a^5 - a^3}{a^4 - a^2}$$</div>",
+                options: [
+                    "$$a$$",
+                    "$$a^2$$",
+                    "$$\\frac{a^3}{a^2}$$",
+                    "$$a - 1$$"
+                ],
+                correct: 0
+            },
+            {
+                topic: "Формули скороченого множення (різниця кубів)",
+                text: "Скоротіть дріб: <div class='my-3 text-center text-xl font-bold'>$$\\frac{m^3 + 27}{m^2 - 3m + 9}$$</div>",
+                options: [
+                    "$$m + 3$$",
+                    "$$m - 3$$",
+                    "$$\\frac{1}{m + 3}$$",
+                    "$$m + 9$$"
+                ],
+                correct: 0
+            },
+            {
+                topic: "Розкладання чисельника і знаменника на множники",
+                text: "Скоротіть дріб: <div class='my-3 text-center text-xl font-bold'>$$\\frac{4a + 12b}{16ab}$$</div>",
+                options: [
+                    "$$\\frac{a + 3b}{4ab}$$",
+                    "$$\\frac{4 + 12}{16}$$",
+                    "$$\\frac{a + 3}{4b}$$",
+                    "$$\\frac{3b}{4a}$$"
+                ],
+                correct: 0
+            },
+            {
+                topic: "Властивості протилежних виразів у дужках",
+                text: "Скоротіть дріб: <div class='my-3 text-center text-xl font-bold'>$$\\frac{a(b - 4)}{c(4 - b)}$$</div>",
+                options: [
+                    "- $$\\frac{a}{c}$$",
+                    "$$\\frac{a}{c}$$",
+                    "- $$\\frac{a(b-4)}{c}$$",
+                    "$$\\frac{a}{c(b-4)}$$"
+                ],
+                correct: 0
+            },
+            {
+                topic: "Винесення спільного чисельного множника",
+                text: "Скоротіть дріб: <div class='my-3 text-center text-xl font-bold'>$$\\frac{6a - 6b}{8(a - b)}$$</div>",
+                options: [
+                    "$$\\frac{3}{4}$$",
+                    "$$\\frac{3a}{4}$$",
+                    "$$\\frac{3}{4(a-b)}$$",
+                    "$$\\frac{3(a-b)}{4}$$"
+                ],
+                correct: 0
+            },
+            {
+                topic: "Скорочення різниці квадратів у знаменнику",
+                text: "Скоротіть дріб: <div class='my-3 text-center text-xl font-bold'>$$\\frac{7y - 14}{y^2 - 4}$$</div>",
+                options: [
+                    "$$\\frac{7}{y + 2}$$",
+                    "$$\\frac{7}{y - 2}$$",
+                    "$$7(y - 2)$$",
+                    "$$\\frac{7y}{y - 2}$$"
+                ],
+                correct: 0
+            },
+            {
+                topic: "Скорочення степенів з однаковою основою",
+                text: "Скоротіть дріб: <div class='my-3 text-center text-xl font-bold'>$$\\frac{3(n - 4)^2}{n - 4}$$</div>",
+                options: [
+                    "$$3(n - 4)$$",
+                    "$$\\frac{3}{n - 4}$$",
+                    "$$3$$",
+                    "$$\\frac{1}{n - 4}$$"
+                ],
+                correct: 0
+            }
+        ];
+
+        let questions = [];
+        let currentIndex = 0;
+        let userAnswers = [];
+        let studentName = "";
+        let timerInterval;
+        let timeLeft = 30 * 60; // 30 minutes in seconds
+
+        function renderMath(html) {
+            return html.replace(/\$\$([\s\S]*?)\$\$/g, (match, formula) => {
+                // Clean up any double spaces or formatting in formula
+                let clean = formula.trim();
+                // Replace simple fractions \frac{a}{b} with styled fraction blocks
+                clean = clean.replace(/\\frac\{([^}]+)\}\{([^}]+)\}/g, '<span class="inline-flex flex-col align-middle text-center mx-1"><span class="border-b border-slate-700 px-1">$1</span><span class="px-1">$2</span></span>');
+                return `<span class="inline-block">${clean}</span>`;
+            });
+        }
+
+        function startTest() {
+            const nameInput = document.getElementById("student-name");
+            studentName = nameInput.value.trim();
+            if (!studentName) {
+                alert("Будь ласка, введіть ваше прізвище та ім'я!");
+                nameInput.focus();
+                return;
+            }
+
+            // Shuffle questions and their options
+            questions = rawQuestions.map(q => {
+                // Copy options with original indices
+                let opts = q.options.map((opt, idx) => ({ opt, originalIdx: idx }));
+                // Shuffle options
+                opts.sort(() => Math.random() - 0.5);
+                let newCorrect = opts.findIndex(o => o.originalIdx === q.correct);
+                return {
+                    topic: q.topic,
+                    text: q.text,
+                    options: opts.map(o => o.opt),
+                    correct: newCorrect
+                };
+            }).sort(() => Math.random() - 0.5);
+
+            userAnswers = new Array(questions.length).fill(null);
+
+            document.getElementById("display-student-name").innerText = studentName;
+            document.getElementById("screen-reg").classList.add("hidden");
+            document.getElementById("screen-test").classList.remove("hidden");
+
+            loadQuestion();
+            startTimer();
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                let minutes = Math.floor(timeLeft / 60);
+                let seconds = timeLeft % 60;
+                document.getElementById("timer").innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    finishTest();
+                }
+            }, 1000);
+        }
+
+        function loadQuestion() {
+            const q = questions[currentIndex];
+            document.getElementById("question-progress").innerText = `${currentIndex + 1} з ${questions.length}`;
+            document.getElementById("question-badge").innerText = q.topic;
+            document.getElementById("question-title").innerHTML = renderMath(q.text);
+
+            const optionsContainer = document.getElementById("options-container");
+            optionsContainer.innerHTML = "";
+
+            q.options.forEach((opt, idx) => {
+                const isSelected = userAnswers[currentIndex] === idx;
+                const btn = document.createElement("div");
+                btn.className = `p-4 rounded-xl border-2 cursor-pointer transition flex items-center gap-3 ${isSelected ? 'border-indigo-600 bg-indigo-50/50 font-medium' : 'border-slate-200 hover:border-indigo-300 bg-white'}`;
+                btn.innerHTML = `
+                    <input type="radio" name="option" ${isSelected ? 'checked' : ''} class="w-4 h-4 text-indigo-600 focus:ring-indigo-500">
+                    <div class="text-slate-800">${renderMath(opt)}</div>
+                `;
+                btn.onclick = () => selectOption(idx);
+                optionsContainer.appendChild(btn);
+            });
+
+            document.getElementById("prev-btn").disabled = currentIndex === 0;
+            const nextBtn = document.getElementById("next-btn");
+            if (currentIndex === questions.length - 1) {
+                nextBtn.innerText = "Завершити тест ✅";
+            } else {
+                nextBtn.innerText = "Далі →";
+            }
+
+            updateTurtle();
+        }
+
+        function selectOption(idx) {
+            userAnswers[currentIndex] = idx;
+            loadQuestion();
+        }
+
+        function nextQuestion() {
+            if (currentIndex < questions.length - 1) {
+                currentIndex++;
+                loadQuestion();
+            } else {
+                clearInterval(timerInterval);
+                finishTest();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                loadQuestion();
+            }
+        }
+
+        function countCorrectAnswers() {
+            let correct = 0;
+            questions.forEach((q, i) => {
+                if (userAnswers[i] === q.correct) correct++;
+            });
+            return correct;
+        }
+
+        function updateTurtle() {
+            let correctCount = countCorrectAnswers();
+            let percentage = (correctCount / questions.length) * 100;
+            // Cap between 2% and 92% so it stays on track
+            let trackPosition = Math.min(Math.max(percentage, 2), 92);
+            document.getElementById("turtle").style.left = `${trackPosition}%`;
+        }
+
+        function finishTest() {
+            document.getElementById("screen-test").classList.add("hidden");
+            document.getElementById("screen-result").classList.remove("hidden");
+
+            let correctCount = countCorrectAnswers();
+            let score12 = correctCount; // 1 question = 1 point, max 12
+
+            document.getElementById("result-student").innerText = `Учень: ${studentName}`;
+            document.getElementById("score-correct").innerText = correctCount;
+            document.getElementById("score-12").innerText = score12;
+
+            // Generate Error Report / Recommendations
+            let errorList = document.getElementById("error-list");
+            errorList.innerHTML = "";
+
+            let incorrectTopics = [];
+            questions.q = questions.forEach((q, i) => {
+                if (userAnswers[i] !== q.correct) {
+                    incorrectTopics.push(q.topic);
+                }
+            });
+
+            if (incorrectTopics.length === 0) {
+                document.getElementById("report-section").innerHTML = `
+                    <h4 class="font-bold text-emerald-800 flex items-center gap-2"><span>🎉 Чудовий результат!</span></h4>
+                    <p class="text-sm text-emerald-900">Ви відповіли правильно на всі запитання без помилок. Ви чудово засвоїли тему «Раціональні дроби»!</p>
+                `;
+            } else {
+                let uniqueTopics = [...new Set(incorrectTopics)];
+                uniqueTopics.forEach(topic => {
+                    let li = document.createElement("li");
+                    li.innerText = `Повторіть тему: «${topic}»`;
+                    errorList.appendChild(li);
+                });
+            }
+        }
+    </script>
+</body>
+</html>
