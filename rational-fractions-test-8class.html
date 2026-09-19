@@ -225,7 +225,6 @@
             background: #f8fafc;
         }
 
-        /* Стилі результатів та розбору */
         .results-summary-card {
             background: var(--accent-green-bg);
             border: 1px solid rgba(34, 197, 94, 0.3);
@@ -403,7 +402,7 @@
 
     <main>
         <div class="test-card" id="app-container">
-            <!-- Динамічний вміст тесту або результатів -->
+            <!-- Динамічний вміст тесту -->
         </div>
     </main>
 
@@ -417,7 +416,7 @@
                 id: 1,
                 topic: "Формула різниці кубів",
                 question: "Скоротіть дріб:",
-                expression: "(x³ + 2x + 8) / (x³ - 27)",
+                expression: "(x<sup>3</sup> + 2x + 8) / (x<sup>3</sup> - 27)",
                 options: ["1 / (x - 3)", "(x + 2) / (x - 3)", "1 / (x + 3)", "(x - 2) / (x + 3)"],
                 correct: 0
             },
@@ -433,8 +432,8 @@
                 id: 3,
                 topic: "Скорочення степенів зі схожою основою",
                 question: "Спростіть вираз:",
-                expression: "(a⁵ - a⁴) / (a⁴ - a³)",
-                options: ["a²", "a - 1", "a", "a³ / a²"],
+                expression: "(a<sup>5</sup> - a<sup>4</sup>) / (a<sup>4</sup> - a<sup>3</sup>)",
+                options: ["a<sup>2</sup>", "a - 1", "a", "a<sup>3</sup> / a<sup>2</sup>"],
                 correct: 2
             },
             {
@@ -449,7 +448,7 @@
                 id: 5,
                 topic: "Використання формули різниці квадратів",
                 question: "Скоротіть дріб:",
-                expression: "(x² - 25) / (x² - 10x + 25)",
+                expression: "(x<sup>2</sup> - 25) / (x<sup>2</sup> - 10x + 25)",
                 options: ["(x - 5) / (x + 5)", "(x + 5) / (x - 5)", "1 / (x - 5)", "x + 5"],
                 correct: 1
             },
@@ -457,24 +456,24 @@
                 id: 6,
                 topic: "Різниця квадратів у чисельнику та різниця степенів у знаменнику",
                 question: "Скоротіть дріб:",
-                expression: "(x² - 4) / (x³ - 2x²)",
-                options: ["(x + 2) / x²", "1 / x", "(x - 2) / x", "2 / x²"],
+                expression: "(x<sup>2</sup> - 4) / (x<sup>3</sup> - 2x<sup>2</sup>)",
+                options: ["(x + 2) / x<sup>2</sup>", "1 / x", "(x - 2) / x", "2 / x<sup>2</sup>"],
                 correct: 0
             },
             {
                 id: 7,
                 topic: "Скорочення дробів зі степенями",
                 question: "Спростіть вираз:",
-                expression: "(y⁶ - y⁴) / (y⁴ - y²)",
-                options: ["y²", "y", "y³", "1"],
+                expression: "(y<sup>6</sup> - y<sup>4</sup>) / (y<sup>4</sup> - y<sup>2</sup>)",
+                options: ["y<sup>2</sup>", "y", "y<sup>3</sup>", "1"],
                 correct: 0
             },
             {
                 id: 8,
                 topic: "Формула суми кубів та скорочення",
                 question: "Скоротіть дріб:",
-                expression: "(x³ + 8) / (x² - 2x + 4)",
-                options: ["x - 2", "x + 2", "1 / (x + 2)", "(x + 2)²"],
+                expression: "(x<sup>3</sup> + 8) / (x<sup>2</sup> - 2x + 4)",
+                options: ["x - 2", "x + 2", "1 / (x + 2)", "(x + 2)<sup>2</sup>"],
                 correct: 1
             },
             {
@@ -497,7 +496,7 @@
                 id: 11,
                 topic: "Метод групування у чисельнику",
                 question: "Скоротіть дріб:",
-                expression: "(2a + ab + 2b - b²) / (5a - 5b)",
+                expression: "(2a + ab + 2b - b<sup>2</sup>) / (5a - 5b)",
                 options: ["(2 + b) / 5", "(2 - b) / 5", "(a + 2b) / 5", "(2 + a) / 5"],
                 correct: 0
             },
@@ -505,7 +504,7 @@
                 id: 12,
                 topic: "Скорочення степенів із однаковою основою",
                 question: "Скоротіть дріб:",
-                expression: "(3(y - 4)²) / (y - 4)",
+                expression: "(3(y - 4)<sup>2</sup>) / (y - 4)",
                 options: ["3(y - 4)", "3 / (y - 4)", "y - 4", "3"],
                 correct: 0
             }
@@ -590,7 +589,6 @@
                 }
             });
 
-            // Розрахунок за 12-бальною шкалою
             const grade12 = Math.round((correctCount / questions.length) * 11) + (correctCount > 0 ? 1 : 0);
 
             let recommendationsHtml = '';
@@ -686,7 +684,6 @@
             renderQuestion();
         }
 
-        // Запуск під час завантаження
         renderQuestion();
     </script>
 </body>
