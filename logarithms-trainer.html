@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>НМТ ТРЕНАЖЕР: ЛОГАРИФМИ (v2)</title>
+    <style>
+        :root { --main: #1e40af; --accent: #3b82f6; --bg: #f1f5f9; --success: #10b981; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); padding: 20px; color: #1e293b; }
+        .container { max-width: 850px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .math { font-family: "Times New Roman", serif; font-style: italic; font-weight: bold; }
+        
+        .track { width: 100%; height: 8px; background: #e2e8f0; border-radius: 4px; margin: 20px 0; position: relative; }
+        #turtle { position: absolute; top: -14px; left: 0; font-size: 24px; transition: 0.5s; transform: scaleX(-1); }
+        
+        .q-block { margin-bottom: 25px; padding: 15px; border-left: 4px solid var(--accent); background: #f8fafc; border-radius: 0 8px 8px 0; }
+        .opts { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-top: 10px; }
+        .opt-btn { padding: 10px; border: 1px solid #cbd5e0; border-radius: 6px; cursor: pointer; background: white; transition: 0.2s; }
+        .selected { background: var(--main) !important; color: white; border-color: var(--main); }
+
+        .match-row { display: flex; align-items: center; margin: 10px 0; gap: 15px; background: #fff; padding: 10px; border-radius: 6px; border: 1px solid #e2e8f0; }
+        .match-options-text { font-size: 0.9em; margin-bottom: 10px; padding-left: 10px; color: #475569; }
+        select { padding: 8px; border-radius: 5px; border: 1px solid #3b82f6; cursor: pointer; font-weight: bold; }
+
+        #timer { font-size: 1.5em; color: #ef4444; font-weight: bold; text-align: right; }
+        .section-title { background: #e2e8f0; padding: 10px 15px; border-radius: 6px; margin: 30px 0 15px 0; font-weight: bold; color: var(--main); }
+        .no-print { display: block; }
+        @media print { .no-print { display: none !important; } .container { box-shadow: none; border: none; } }
+        input[type="text"] { padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; width: 100%; box-sizing: border-box; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div id="start">
+        <h1>📐 НМТ-Симулятор: "Логарифми"</h1>
+        <p>Введіть дані для початку тестування. Час: 60 хв.</p>
+        <input type="text" id="name" placeholder="Прізвище та Ім'я учня" style="margin-bottom:20px;">
+        <button onclick="run()" style="width:100%; padding:18px; background:var(--main); color:white; border:none; border-radius:10px; cursor:pointer; font-weight:bold;">ПОЧАТИ</button>
+    </div>
+
+    <div id="quiz" style="display:none">
+        <div id="timer" class="no-print">60:00</div>
+        <div class="track no-print"><div id="turtle">🐢</div></div>
+        <div id="content"></div>
+        <button onclick="calculate()" style="width:100%; padding:20px; background:var(--success); color:white; border:none; border-radius:12px; cursor:pointer; font-weight:bold; margin-top:30px;">ЗДАТИ РОБОТУ</button>
+    </div>
+
+    <div id="results" style="display:none">
+        <h2>Протокол результатів</h2>
+        <div id="res-info"></div>
+        <h1 id="grade-12"></h1>
+        <p id="raw-score"></p>
+        <div id="err-list"></div>
+        <button onclick="window.print()" class="no-print" style="margin-top:20px; padding:12px 25px;">Зберегти PDF</button>
+    </div>
+</div>
+
+<script>
+// Дані тестів
+const poolS = [
+    {q: "Обчисліть: log<sub>3</sub>54 - log<sub>3</sub>2", o: ["log<sub>3</sub>52", "27", "3", "9", "2"], c: 2, t: "Віднімання логарифмів"},
+    {q: "Знайдіть значення log<sub>2</sub>√8", o: ["3", "1.5", "4", "2", "0.5"], c: 1, t: "Логарифм кореня"},
+    {q: "Розв'яжіть: log<sub>0,5</sub>x = -2", o: ["1", "-1", "0.25", "4", "2"], c: 3, t: "Рівняння (основа менше 1)"},
+    {q: "Яке число найбільше?", o: ["log<sub>2</sub>5", "log<sub>2</sub>3", "log<sub>2</sub>0.5", "log<sub>2</sub>1", "log<sub>2</sub>2"], c: 0, t: "Порівняння логарифмів"},
+    {q: "Спростіть: 7<sup>log<sub>7</sub>3</sup>", o: ["7", "3", "1", "log<sub>7</sub>21", "21"], c: 1, t: "Основна тотожність"},
+    {q: "Область визначення y = log<sub>5</sub>(-x):", o: ["x > 0", "x < 0", "x ≠ 0", "R", "x > 5"], c: 1, t: "ОДЗ (-x)"},
+    {q: "Обчисліть: lg 1000", o: ["1", "2", "3", "10", "100"], c: 2, t: "Десятковий логарифм"},
+    {q: "log<sub>a</sub>b + log<sub>a</sub>c дорівнює:", o: ["log<sub>a</sub>(b+c)", "log<sub>a</sub>(bc)", "log<sub>a</sub>(b/c)", "log<sub>a</sub>b * log<sub>a</sub>c", "b+c"], c: 1, t: "Додавання логарифмів"},
+    {q: "log<sub>4</sub>x = 0.5. Знайдіть x:", o: ["1", "4", "2", "16", "0.5"], c: 2, t: "Дробовий степінь"},
+    {q: "log<sub>3</sub>x < 0 при x:", o: ["x < 1", "0 < x < 1", "x < 0", "x > 1", "x = 1"], c: 1, t: "Нерівності (a>1)"},
+    {q: "Знайдіть x: log<sub>x</sub>81 = 4", o: ["9", "3", "4", "81", "2"], c: 1, t: "Основа логарифма"},
+    {q: "Значення log<sub>5</sub>(1/25) дорівнює:", o: ["2", "-2", "5", "0.2", "-5"], c: 1, t: "Від'ємний степінь"},
+    {q: "Обчисліть: log<sub>π</sub>π", o: ["0", "1", "π", "3.14", "не існує"], c: 1, t: "Властивість log(a)a"},
+    {q: "log<sub>2</sub>(x-3) визначений при:", o: ["x > 0", "x > 3", "x < 3", "x = 3", "x > -3"], c: 1, t: "ОДЗ аргументу"},
+    {q: "Спростіть: log<sub>2</sub>4 + log<sub>2</sub>8", o: ["5", "6", "12", "log<sub>2</sub>12", "2"], c: 0, t: "Сума значень"}
+];
+
+const poolM = [
+    {q: "Установіть відповідність між виразом та його значенням:", 
+     l: ["1. log<sub>2</sub>16", "2. log<sub>16</sub>2", "3. log<sub>2</sub>(1/16)"], 
+     r: ["А. 0.25", "Б. 4", "В. -4", "Г. -0.25", "Д. 8"], 
+     c: [1, 0, 2]},
+    {q: "Установіть відповідність між рівнянням та його коренем:", 
+     l: ["1. log<sub>3</sub>x = 2", "2. log<sub>x</sub>9 = 2", "3. log<sub>9</sub>x = 0.5"], 
+     r: ["А. 3", "Б. 9", "В. 1", "Г. 81", "Д. 0"], 
+     c: [1, 0, 0]},
+    {q: "Установіть відповідність між властивістю та її записом:", 
+     l: ["1. log<sub>a</sub>x<sup>n</sup>", "2. log<sub>a</sub>x - log<sub>a</sub>y", "3. log<sub>a</sub>x + log<sub>a</sub>y"], 
+     r: ["А. log(x/y)", "Б. n log x", "В. log(x+y)", "Г. log(xy)", "Д. x<sup>n</sup>"], 
+     c: [1, 0, 3]}
+];
+
+const poolH = [
+    {q: "Знайдіть суму цілих розв'язків нерівності: log<sub>0.5</sub>(x-1) > -2", c: "9"},
+    {q: "Обчисліть: log<sub>3</sub>2 &bull; log<sub>4</sub>3 &bull; log<sub>5</sub>4 &bull; log<sub>2</sub>5", c: "1"},
+    {q: "Знайдіть СУМУ коренів рівняння: log<sub>2</sub>(x<sup>2</sup>-x) = 1", c: "1"},
+    {q: "Обчисліть: 5<sup>log<sub>25</sub>16</sup>", c: "4"}
+];
+
+let ansS = [], ansM = [[],[],[]], ansH = [];
+
+function run() {
+    if(!document.getElementById('name').value) return alert("Введіть ім'я");
+    document.getElementById('start').style.display='none';
+    document.getElementById('quiz').style.display='block';
+    render();
+    startTimer(3600);
+}
+
+function render() {
+    const cont = document.getElementById('content');
+    cont.innerHTML = "<div class='section-title'>ЧАСТИНА 1: Тести (№1-15)</div>";
+    poolS.forEach((item, i) => {
+        cont.innerHTML += `<div class="q-block"><p><b>${i+1}.</b> ${item.q}</p><div class="opts">` + 
+            item.o.map((o,oi) => `<button class="opt-btn" id="s-${i}-${oi}" onclick="setS(${i},${oi})">${o}</button>`).join('') + 
+            `</div></div>`;
+    });
+
+    cont.innerHTML += "<div class='section-title'>ЧАСТИНА 2: Відповідності (№16-18)</div>";
+    poolM.forEach((item, i) => {
+        let optionsHTML = item.r.map(txt => `<li>${txt}</li>`).join('');
+        cont.innerHTML += `<div class="q-block" style="background:#fff7ed"><b>№${i+16}</b>. ${item.q}
+            <ul class="match-options-text">${optionsHTML}</ul>` + 
+            item.l.map((left, li) => `
+                <div class="match-row">
+                    <span><b>${left}</b></span> ➔ 
+                    <select onchange="setM(${i},${li},this.value)">
+                        <option value="">?</option>
+                        <option value="0">А</option>
+                        <option value="1">Б</option>
+                        <option value="2">В</option>
+                        <option value="3">Г</option>
+                        <option value="4">Д</option>
+                    </select>
+                </div>
+            `).join('') + `</div>`;
+    });
+
+    cont.innerHTML += "<div class='section-title'>ЧАСТИНА 3: Короткі відповіді (№19-22)</div>";
+    poolH.forEach((item, i) => {
+        cont.innerHTML += `<div class="q-block" style="background:#f0fdf4"><b>№${i+19}</b>. ${item.q}<br><br>` + 
+            `<input type="text" oninput="ansH[${i}]=this.value" placeholder="Введіть число"></div>`;
+    });
+}
+
+function setS(qi, oi) {
+    ansS[qi] = oi;
+    document.querySelectorAll(`[id^="s-${qi}-"]`).forEach(b => b.classList.remove('selected'));
+    document.getElementById(`s-${qi}-${oi}`).classList.add('selected');
+    updateTurtle();
+}
+
+function setM(mi, li, val) {
+    ansM[mi][li] = val === "" ? undefined : parseInt(val);
+    updateTurtle();
+}
+
+function updateTurtle() {
+    let sCount = ansS.filter(x => x!==undefined).length;
+    let mCount = ansM.flat().filter(x => x!==undefined).length / 3;
+    document.getElementById('turtle').style.left = ((sCount + mCount) / 18 * 90) + "%";
+}
+
+function calculate() {
+    let score = 0;
+    let errors = [];
+
+    poolS.forEach((q, i) => { if(ansS[i] === q.c) score++; else errors.push(q.t); });
+
+    poolM.forEach((m, i) => {
+        m.c.forEach((cor, li) => { if(ansM[i][li] === cor) score++; });
+    });
+
+    poolH.forEach((h, i) => { if(ansH[i] && ansH[i].trim() == h.c) score += 2; });
+
+    const g12 = Math.round((score / 32) * 12);
+    document.getElementById('quiz').style.display='none';
+    document.getElementById('results').style.display='block';
+    document.getElementById('res-info').innerHTML = `<b>Учень:</b> ${document.getElementById('name').value}<br><b>Дата:</b> ${new Date().toLocaleDateString()}`;
+    document.getElementById('grade-12').innerText = `Оцінка: ${g12} / 12`;
+    document.getElementById('raw-score').innerText = `Набрано балів НМТ: ${score} з 32`;
+    document.getElementById('err-list').innerHTML = "<b>Теми для повторення:</b><ul>" + [...new Set(errors)].map(e => `<li>${e}</li>`).join('') + "</ul>";
+}
+
+function startTimer(sec) {
+    const el = document.getElementById('timer');
+    setInterval(() => {
+        sec--;
+        let m = Math.floor(sec/60), s = sec%60;
+        el.innerText = `${m}:${s<10?'0'+s:s}`;
+        if(sec <= 0) calculate();
+    }, 1000);
+}
+</script>
+</body>
+</html>
