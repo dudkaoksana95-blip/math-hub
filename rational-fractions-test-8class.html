@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Раціональні дроби та степені — Підсумковий тренажер | Математичний Хаб</title>
+    <title>Тест: Раціональні дроби | Математичний Хаб</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -12,11 +12,9 @@
             --card-bg: #ffffff;
             --text-primary: #0f172a;
             --text-secondary: #475569;
-            --accent-blue: #3b82f6;
             --accent-green: #22c55e;
-            --accent-green-bg: #f0fdf4;
-            --accent-red-bg: #fef2f2;
-            --accent-red: #ef4444;
+            --accent-green-light: #f0fdf4;
+            --accent-blue: #3b82f6;
             --border-color: #e2e8f0;
             --radius-lg: 20px;
             --radius-md: 12px;
@@ -45,645 +43,333 @@
             background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--border-color);
-            padding: 1rem 1.5rem;
             position: sticky;
             top: 0;
             z-index: 100;
         }
 
-        .header-content {
-            max-width: 850px;
+        .header-container {
+            max-width: 900px;
             margin: 0 auto;
+            padding: 1rem 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .back-link {
-            text-decoration: none;
-            color: var(--text-secondary);
-            font-weight: 500;
-            font-size: 0.9rem;
+        .logo {
             display: flex;
             align-items: center;
-            gap: 6px;
-            transition: color 0.2s;
+            gap: 12px;
+            font-weight: 700;
+            font-size: 1.15rem;
+            color: var(--text-primary);
+            text-decoration: none;
         }
 
-        .back-link:hover {
-            color: var(--text-primary);
+        .logo-icon {
+            background: var(--text-primary);
+            color: white;
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.95rem;
         }
 
         main {
-            max-width: 850px;
-            width: 100%;
-            margin: 2rem auto;
-            padding: 0 1rem;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
             flex: 1;
+            width: 100%;
         }
 
-        .test-card {
+        .card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-lg);
-            padding: 2.5rem;
-            box-shadow: var(--shadow-md);
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
             margin-bottom: 2rem;
         }
 
-        .test-header-top {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .test-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 0.25rem;
-        }
-
-        .test-subtitle {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        .progress-bar-container {
-            background: #e2e8f0;
-            height: 8px;
-            border-radius: 4px;
-            margin-bottom: 1.5rem;
-            overflow: hidden;
-        }
-
-        .progress-bar-fill {
-            background: var(--accent-blue);
-            height: 100%;
-            width: 0%;
-            transition: width 0.3s ease;
-        }
-
-        .question-meta {
+        .card-badges {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.85rem;
+            gap: 6px;
+            margin-bottom: 0.75rem;
+        }
+
+        .badge {
+            font-size: 0.75rem;
             font-weight: 600;
+            padding: 0.25rem 0.6rem;
+            border-radius: 20px;
+            background: #f1f5f9;
             color: var(--text-secondary);
-            margin-bottom: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
 
-        .question-title-text {
-            font-size: 1.15rem;
+        .badge-grade { background: #e0f2fe; color: #0369a1; }
+        .badge-algebra { background: #fef3c7; color: #b45309; }
+
+        .card-title {
+            font-size: 1.25rem;
             font-weight: 600;
             margin-bottom: 1rem;
+            line-height: 1.4;
         }
 
-        .math-box {
-            background: #f8fafc;
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            padding: 1.5rem;
-            text-align: center;
-            font-size: 1.35rem;
-            font-weight: 600;
+        .card-desc {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
             margin-bottom: 1.5rem;
-            letter-spacing: 0.5px;
         }
 
-        .options-grid {
-            display: grid;
-            gap: 0.75rem;
-            margin-bottom: 2rem;
-        }
-
-        .option-btn {
-            background: white;
+        .task-option {
+            display: block;
+            width: 100%;
+            text-align: left;
+            padding: 0.85rem 1rem;
+            margin: 0.5rem 0;
             border: 1px solid var(--border-color);
             border-radius: var(--radius-md);
-            padding: 1rem 1.25rem;
-            font-size: 1rem;
-            font-weight: 500;
-            text-align: left;
+            background: white;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.2s;
+            font-size: 0.95rem;
             color: var(--text-primary);
         }
 
-        .option-btn:hover {
+        .task-option:hover {
             background: #f8fafc;
-            border-color: #cbd5e1;
-        }
-
-        .option-btn.selected {
-            background: #eff6ff;
             border-color: var(--accent-blue);
-            color: #1d4ed8;
         }
 
-        .test-footer-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-top: 1px solid var(--border-color);
-            padding-top: 1.5rem;
+        .task-option.correct {
+            background: var(--accent-green-light);
+            border-color: var(--accent-green);
+            color: #15803d;
+            font-weight: 600;
         }
 
-        .btn {
+        .task-option.wrong {
+            background: #fef2f2;
+            border-color: #ef4444;
+            color: #b91c1c;
+        }
+
+        .btn-primary {
             background: var(--text-primary);
             color: white;
             border: none;
             padding: 0.75rem 1.5rem;
-            border-radius: var(--radius-md);
+            border-radius: 30px;
             font-weight: 600;
-            font-size: 0.95rem;
             cursor: pointer;
-            transition: background 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-        }
-
-        .btn:hover {
-            background: #334155;
-        }
-
-        .btn:disabled {
-            background: #cbd5e1;
-            cursor: not-allowed;
-        }
-
-        .btn-outline {
-            background: white;
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
-        }
-
-        .btn-outline:hover {
-            background: #f8fafc;
-        }
-
-        .results-summary-card {
-            background: var(--accent-green-bg);
-            border: 1px solid rgba(34, 197, 94, 0.3);
-            border-radius: var(--radius-lg);
-            padding: 2rem;
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .results-heading {
-            font-size: 1.35rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            color: #166534;
-        }
-
-        .results-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            max-width: 400px;
-            margin: 1.5rem auto 0 auto;
-        }
-
-        .result-box-item {
-            background: white;
-            border: 1px solid rgba(34, 197, 94, 0.2);
-            padding: 1rem;
-            border-radius: var(--radius-md);
-        }
-
-        .result-box-label {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            color: var(--text-secondary);
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-        }
-
-        .result-box-value {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-
-        .recommendations-box {
-            background: #fefce8;
-            border: 1px solid #fde047;
-            border-radius: var(--radius-md);
-            padding: 1.25rem 1.5rem;
-            margin-bottom: 2rem;
-            text-align: left;
-        }
-
-        .recommendations-title {
-            font-weight: 600;
+            transition: opacity 0.2s;
             font-size: 0.95rem;
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #854d0e;
+            margin-top: 1rem;
         }
 
-        .recommendations-list {
-            list-style-type: disc;
-            margin-left: 1.25rem;
-            font-size: 0.9rem;
-            color: #713f12;
+        .btn-primary:hover {
+            opacity: 0.9;
         }
 
-        .review-section-title {
-            font-size: 1.15rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        .review-card {
-            background: white;
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .review-card.correct-card {
-            border-left: 4px solid var(--accent-green);
-        }
-
-        .review-card.incorrect-card {
-            border-left: 4px solid var(--accent-red);
-            background: #fffdfd;
-        }
-
-        .review-header {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-            margin-bottom: 0.75rem;
-        }
-
-        .review-math {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin: 0.5rem 0 1rem 0;
-            padding: 0.75rem;
-            background: #f8fafc;
-            border-radius: 8px;
-            text-align: center;
-        }
-
-        .classroom-box {
-            background: #f8fafc;
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-lg);
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .classroom-title {
-            font-weight: 600;
-            font-size: 0.95rem;
-            margin-bottom: 0.75rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .classroom-instructions {
+        .progress-info {
             font-size: 0.85rem;
             color: var(--text-secondary);
-            line-height: 1.6;
-            margin-left: 1.25rem;
-            margin-bottom: 1.25rem;
-        }
-
-        .classroom-instructions li {
-            margin-bottom: 0.3rem;
-        }
-
-        @media print {
-            header, .classroom-box, .test-footer-nav, .btn {
-                display: none !important;
-            }
-            body {
-                background: white;
-            }
-            .test-card {
-                box-shadow: none;
-                border: none;
-                padding: 0;
-            }
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         footer {
-            text-align: center;
+            border-top: 1px solid var(--border-color);
             padding: 1.5rem;
+            text-align: center;
             color: var(--text-secondary);
             font-size: 0.875rem;
             background: white;
-            border-top: 1px solid var(--border-color);
-            margin-top: auto;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="header-content">
-            <a href="index.html" class="back-link">
-                <i class="fa-solid fa-arrow-left"></i> На головну
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon"><i class="fa-solid fa-shapes"></i></div>
+                <span>Математичний Хаб</span>
             </a>
-            <span style="font-weight: 600; font-size: 0.9rem; color: var(--text-secondary);">8 клас · Алгебра</span>
+            <div style="font-size: 0.875rem; color: var(--text-secondary); font-weight: 500;">
+                Дудка Оксана Анатоліївна
+            </div>
         </div>
     </header>
 
     <main>
-        <div class="test-card" id="app-container">
+        <div class="card" id="test-container">
             <!-- Динамічний вміст тесту -->
         </div>
     </main>
 
     <footer>
-        <p>© 2026 Математичний Хаб. Дудка Оксана Анатоліївна</p>
+        <p>© 2026 Математичний Хаб. Авторські матеріали з математики.</p>
     </footer>
 
     <script>
         const questions = [
             {
-                id: 1,
-                topic: "Формула різниці кубів",
-                question: "Скоротіть дріб:",
-                expression: "(x<sup>3</sup> + 2x + 8) / (x<sup>3</sup> - 27)",
-                options: ["1 / (x - 3)", "(x + 2) / (x - 3)", "1 / (x + 3)", "(x - 2) / (x + 3)"],
-                correct: 0
-            },
-            {
-                id: 2,
-                topic: "Винесення спільного множника за дужки",
-                question: "Скоротіть дріб:",
-                expression: "(2ax + 8y) / (12xy)",
-                options: ["(ax + 4) / 6xy", "(x + 4y) / 6xy", "(ax + 4y) / 6xy", "(x + 4) / 6y"],
+                task: "Знайдіть допустимі значення змінної у виразі: 5 / (x - 3)",
+                options: ["x будь-яке число", "x ≠ 3", "x ≠ -3", "x = 3"],
                 correct: 1
             },
             {
-                id: 3,
-                topic: "Скорочення степенів зі схожою основою",
-                question: "Спростіть вираз:",
-                expression: "(a<sup>5</sup> - a<sup>4</sup>) / (a<sup>4</sup> - a<sup>3</sup>)",
-                options: ["a<sup>2</sup>", "a - 1", "a", "a<sup>3</sup> / a<sup>2</sup>"],
+                task: "Скоротіть дріб: 3a² / 6a³",
+                options: ["1 / (2a)", "2 / a", "2a", "1 / (3a)"],
+                correct: 0
+            },
+            {
+                task: "Виконайте додавання: 2x / 7 + 3x / 7",
+                options: ["5x / 14", "5x² / 7", "5x / 7", "5x"],
                 correct: 2
             },
             {
-                id: 4,
-                topic: "Скорочення дробів зі спільним множником у дужках",
-                question: "Скоротіть дріб:",
-                expression: "(x(3+k)) / (y(3+k))",
-                options: ["x / y", "3 / (x + y)", "x / 3", "k / y"],
-                correct: 0
-            },
-            {
-                id: 5,
-                topic: "Використання формули різниці квадратів",
-                question: "Скоротіть дріб:",
-                expression: "(x<sup>2</sup> - 25) / (x<sup>2</sup> - 10x + 25)",
-                options: ["(x - 5) / (x + 5)", "(x + 5) / (x - 5)", "1 / (x - 5)", "x + 5"],
+                task: "Подайте у вигляді дробу вираз: a² / (a - b) - b² / (a - b)",
+                options: ["a - b", "a + b", "1", "(a + b) / (a - b)"],
                 correct: 1
             },
             {
-                id: 6,
-                topic: "Різниця квадратів у чисельнику та різниця степенів у знаменнику",
-                question: "Скоротіть дріб:",
-                expression: "(x<sup>2</sup> - 4) / (x<sup>3</sup> - 2x<sup>2</sup>)",
-                options: ["(x + 2) / x<sup>2</sup>", "1 / x", "(x - 2) / x", "2 / x<sup>2</sup>"],
+                task: "Виконайте множення дробів: (2x / 3y) · (9y² / 4x²)",
+                options: ["3y / (2x)", "2x / (3y)", "6xy / 12", "3 / 2"],
                 correct: 0
             },
             {
-                id: 7,
-                topic: "Скорочення дробів зі степенями",
-                question: "Спростіть вираз:",
-                expression: "(y<sup>6</sup> - y<sup>4</sup>) / (y<sup>4</sup> - y<sup>2</sup>)",
-                options: ["y<sup>2</sup>", "y", "y<sup>3</sup>", "1"],
-                correct: 0
-            },
-            {
-                id: 8,
-                topic: "Формула суми кубів та скорочення",
-                question: "Скоротіть дріб:",
-                expression: "(x<sup>3</sup> + 8) / (x<sup>2</sup> - 2x + 4)",
-                options: ["x - 2", "x + 2", "1 / (x + 2)", "(x + 2)<sup>2</sup>"],
+                task: "Виконайте ділення: (5a / b²) : (10a² / b)",
+                options: ["2a / b", "1 / (2ab)", "2b / a", "2ab"],
                 correct: 1
             },
             {
-                id: 9,
-                topic: "Властивості протилежних виразів у дужках",
-                question: "Скоротіть дріб:",
-                expression: "a(b - c) / c(c - b)",
-                options: ["a / c", "-a / c", "a / (c - b)", "-1"],
+                task: "Спростіть вираз: (x² - 9) / (x + 3)",
+                options: ["x + 3", "x - 3", "x - 9", "3"],
                 correct: 1
             },
             {
-                id: 10,
-                topic: "Винесення спільного чисельного множника",
-                question: "Скоротіть дріб:",
-                expression: "(9a - 9b) / 8(a - b)",
-                options: ["9 / 8", "1 / 8", "8 / 9", "(a - b) / 8"],
+                task: "Знайдіть значення виразу 2 / (x - 2) + 1 / (x + 2), якщо x = 4",
+                options: ["3 / 4", "5 / 12", "1", "1 / 2"],
+                correct: 1
+            },
+            {
+                task: "Який дріб тотожно рівний дробу -a / (b - c)?",
+                options: ["a / (b - c)", "a / (c - b)", "-a / (-b + c)", "a / (b + c)"],
+                correct: 1
+            },
+            {
+                task: "Виконайте піднесення до степеня: (2x² / y³)³",
+                options: ["6x⁶ / y⁹", "8x⁵ / y⁶", "8x⁶ / y⁹", "2x⁶ / y⁹"],
+                correct: 2
+            },
+            {
+                task: "Спростіть вираз: 4x / (x - 2) - 8 / (x - 2)",
+                options: ["4", "4x", "4 / (x - 2)", "1"],
                 correct: 0
             },
             {
-                id: 11,
-                topic: "Метод групування у чисельнику",
-                question: "Скоротіть дріб:",
-                expression: "(2a + ab + 2b - b<sup>2</sup>) / (5a - 5b)",
-                options: ["(2 + b) / 5", "(2 - b) / 5", "(a + 2b) / 5", "(2 + a) / 5"],
-                correct: 0
-            },
-            {
-                id: 12,
-                topic: "Скорочення степенів із однаковою основою",
-                question: "Скоротіть дріб:",
-                expression: "(3(y - 4)<sup>2</sup>) / (y - 4)",
-                options: ["3(y - 4)", "3 / (y - 4)", "y - 4", "3"],
-                correct: 0
+                task: "Розв'яжіть рівняння: (x² - 4) / (x - 2) = 0",
+                options: ["2", "-2", "2 та -2", "коренів немає"],
+                correct: 1
             }
         ];
 
-        let currentIdx = 0;
-        let userAnswers = new Array(questions.length).fill(null);
-
-        const container = document.getElementById('app-container');
+        let currentIndex = 0;
+        let score = 0;
+        let answered = false;
 
         function renderQuestion() {
-            const q = questions[currentIdx];
-            const progressPercent = ((currentIdx + 1) / questions.length) * 100;
+            const q = questions[currentIndex];
+            const container = document.getElementById('test-container');
 
             container.innerHTML = `
-                <div class="test-header-top">
-                    <div class="test-title">Раціональні дроби та степені</div>
-                    <div class="test-subtitle">Підсумковий тренажер-перетворення виразів та скорочення дробів</div>
+                <div class="card-badges">
+                    <span class="badge badge-grade">8 клас</span>
+                    <span class="badge badge-algebra">Алгебра</span>
                 </div>
-                
-                <div class="progress-bar-container">
-                    <div class="progress-bar-fill" style="width: ${progressPercent}%;"></div>
-                </div>
-
-                <div class="question-meta">
-                    <span>Завдання ${currentIdx + 1} із ${questions.length} (+1 бал)</span>
-                    <span>${q.topic}</span>
-                </div>
-
-                <div class="question-title-text">${q.question}</div>
-                <div class="math-box">${q.expression}</div>
-
-                <div class="options-grid">
-                    ${q.options.map((opt, i) => `
-                        <button class="option-btn ${userAnswers[currentIdx] === i ? 'selected' : ''}" onclick="selectOption(${i})">
-                            ${opt}
-                        </button>
+                <div class="progress-info">Запитання ${currentIndex + 1} із ${questions.length}</div>
+                <div class="card-title">${q.task}</div>
+                <div id="options-box">
+                    ${q.options.map((opt, idx) => `
+                        <button class="task-option" onclick="checkAnswer(${idx})">${opt}</button>
                     `).join('')}
                 </div>
-
-                <div class="test-footer-nav">
-                    <button class="btn btn-outline" onclick="prevQuestion()" ${currentIdx === 0 ? 'disabled' : ''}>
-                        <i class="fa-solid fa-arrow-left"></i> Назад
-                    </button>
-                    <button class="btn" onclick="nextQuestion()">
-                        ${currentIdx === questions.length - 1 ? 'Завершити тест' : 'Далі'} <i class="fa-solid fa-arrow-right"></i>
-                    </button>
-                </div>
+                <div id="action-container"></div>
             `;
+            answered = false;
         }
 
-        function selectOption(optionIndex) {
-            userAnswers[currentIdx] = optionIndex;
-            renderQuestion();
-        }
+        function checkAnswer(selectedIndex) {
+            if (answered) return;
+            answered = true;
 
-        function prevQuestion() {
-            if (currentIdx > 0) {
-                currentIdx--;
-                renderQuestion();
-            }
-        }
+            const q = questions[currentIndex];
+            const buttons = document.querySelectorAll('.task-option');
 
-        function nextQuestion() {
-            if (currentIdx < questions.length - 1) {
-                currentIdx++;
-                renderQuestion();
-            } else {
-                showResults();
-            }
-        }
-
-        function showResults() {
-            let correctCount = 0;
-            let incorrectTopics = new Set();
-
-            questions.forEach((q, idx) => {
-                if (userAnswers[idx] === q.correct) {
-                    correctCount++;
-                } else {
-                    incorrectTopics.add(q.topic);
+            buttons.forEach((btn, idx) => {
+                btn.style.cursor = 'default';
+                if (idx === q.correct) {
+                    btn.classList.add('correct');
+                } else if (idx === selectedIndex) {
+                    btn.classList.add('wrong');
                 }
             });
 
-            const grade12 = Math.round((correctCount / questions.length) * 11) + (correctCount > 0 ? 1 : 0);
-
-            let recommendationsHtml = '';
-            if (incorrectTopics.size > 0) {
-                let topicsList = Array.from(incorrectTopics).map(t => `<li>${t}</li>`).join('');
-                recommendationsHtml = `
-                    <div class="recommendations-box">
-                        <div class="recommendations-title"><i class="fa-solid fa-triangle-exclamation"></i> Рекомендації та теми для повторення:</div>
-                        <ul class="recommendations-list">${topicsList}</ul>
-                    </div>
-                `;
-            } else {
-                recommendationsHtml = `
-                    <div class="recommendations-box" style="background: var(--accent-green-bg); border-color: rgba(34,197,94,0.3);">
-                        <div class="recommendations-title" style="color: #166534;"><i class="fa-solid fa-circle-check"></i> Чудовий результат!</div>
-                        <div style="font-size: 0.9rem; color: #15803d;">Ви бездоганно впоралися з усіма завданнями тесту!</div>
-                    </div>
-                `;
+            if (selectedIndex === q.correct) {
+                score++;
             }
 
-            let reviewCardsHtml = questions.map((q, idx) => {
-                const isCorrect = userAnswers[idx] === q.correct;
-                const userAnsText = userAnswers[idx] !== null ? q.options[userAnswers[idx]] : 'Не відповідено';
-                const correctAnsText = q.options[q.correct];
+            const actionContainer = document.getElementById('action-container');
+            const isLast = currentIndex === questions.length - 1;
 
-                return `
-                    <div class="review-card ${isCorrect ? 'correct-card' : 'incorrect-card'}">
-                        <div class="review-header">
-                            <span>Завдання ${idx + 1}. Провідна тема: ${q.topic}</span>
-                            <span style="color: ${isCorrect ? 'var(--accent-green)' : 'var(--accent-red)'}; font-weight: 700;">
-                                ${isCorrect ? '+1 бал' : '0 балів'}
-                            </span>
-                        </div>
-                        <div style="font-size: 0.95rem; font-weight: 500; margin-bottom: 0.5rem;">${q.question}</div>
-                        <div class="review-math">${q.expression}</div>
-                        <div style="font-size: 0.9rem; margin-top: 0.5rem;">
-                            <strong>Ваша відповідь:</strong> <span style="color: ${isCorrect ? 'var(--accent-green)' : 'var(--accent-red)'};">${userAnsText}</span>
-                        </div>
-                        ${!isCorrect ? `
-                            <div style="font-size: 0.9rem; margin-top: 0.25rem;">
-                                <strong>Правильна відповідь:</strong> <span style="color: var(--accent-green);">${correctAnsText}</span>
-                            </div>
-                        ` : ''}
-                    </div>
-                `;
-            }).join('');
+            actionContainer.innerHTML = `
+                <button class="btn-primary" onclick="${isLast ? 'showResults()' : 'nextQuestion()'}">
+                    ${isLast ? 'Переглянути результати' : 'Наступне запитання'}
+                </button>
+            `;
+        }
+
+        function nextQuestion() {
+            currentIndex++;
+            renderQuestion();
+        }
+
+        function showResults() {
+            const container = document.getElementById('test-container');
+            let grade12 = Math.round((score / questions.length) * 11 + 1);
+            if (grade12 > 12) grade12 = 12;
 
             container.innerHTML = `
-                <div class="results-summary-card">
-                    <div class="results-heading">Тестування завершено!</div>
-                    <div style="color: var(--text-secondary); font-size: 0.9rem;">Перевірка знань з теми «Раціональні дроби»</div>
-                    
-                    <div class="results-grid">
-                        <div class="result-box-item">
-                            <div class="result-box-label">Бали (12-бальна шкала)</div>
-                            <div class="result-box-value">${grade12} / 12</div>
-                        </div>
-                        <div class="result-box-item">
-                            <div class="result-box-label">Правильні відповіді</div>
-                            <div class="result-box-value">${correctCount} / ${questions.length}</div>
-                        </div>
-                    </div>
+                <div class="card-badges">
+                    <span class="badge badge-grade">8 клас</span>
+                    <span class="badge badge-algebra">Алгебра</span>
                 </div>
-
-                ${recommendationsHtml}
-
-                <div class="classroom-box">
-                    <div class="classroom-title"><i class="fa-solid fa-circle-info"></i> Як зберегти результати та надіслати в Google Classroom:</div>
-                    <ol class="classroom-instructions">
-                        <li>Натисніть кнопку <strong>«Зберегти результат (PDF)»</strong> нижче.</li>
-                        <li>У вікні друку, що відкриється, у полі «Принтер (Destination)» виберіть <strong>«Зберегти як PDF» (Save as PDF)</strong>.</li>
-                        <li>Збережіть файл на свій пристрій (бажано перейменувавши його, вказавши своє прізвище).</li>
-                        <li>Зайдіть у Google Classroom, прикріпіть цей збережений PDF-файл у завданні «Домашня робота» та натисніть «Здати».</li>
-                    </ol>
-                    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                        <button class="btn" onclick="window.print()">
-                            <i class="fa-solid fa-file-pdf"></i> Зберегти результат (PDF)
-                        </button>
-                        <button class="btn btn-outline" onclick="restartTest()">
-                            <i class="fa-solid fa-rotate-right"></i> Пройти знову
-                        </button>
-                    </div>
+                <div class="card-title">Тест завершено!</div>
+                <div class="card-desc">
+                    Ви правильно відповіли на <b>${score}</b> із <b>${questions.length}</b> завдань.<br>
+                    Оцінка за 12-бальною шкалою: <b style="color: var(--accent-green);">${grade12} балів</b>
                 </div>
-
-                <div class="review-section-title">Детальний розгляд завдань:</div>
-                <div>${reviewCardsHtml}</div>
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <a href="index.html" class="btn-primary" style="text-decoration: none; display: inline-block;">Повернутися до Хабу</a>
+                    <button class="btn-primary" onclick="restartTest()" style="background: white; color: var(--text-primary); border: 1px solid var(--border-color);">Пройти знову</button>
+                </div>
             `;
         }
 
         function restartTest() {
-            currentIdx = 0;
-            userAnswers = new Array(questions.length).fill(null);
+            currentIndex = 0;
+            score = 0;
             renderQuestion();
         }
 
