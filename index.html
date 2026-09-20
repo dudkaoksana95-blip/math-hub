@@ -308,7 +308,7 @@
 
     <header>
         <div class="header-container">
-            <a href="#" class="logo">
+            <a href="index.html" class="logo">
                 <div class="logo-icon"><i class="fa-solid fa-shapes"></i></div>
                 <span>Математичний Хаб</span>
             </a>
@@ -366,16 +366,6 @@
     <script>
         const itemsData = [
             {
-                id: 1,
-                title: "Додавання раціональних дробів з однаковими знаменниками",
-                desc: "Тренажер додавання, віднімання та скорочення раціональних дробів.",
-                grade: "grade8",
-                subject: "algebra",
-                gradeLabel: "8 клас",
-                type: "trainer",
-                link: "ratsionalni-vyrazy.html"
-            },
-            {
                 id: 15,
                 title: "Скорочення раціональних виразів",
                 desc: "Інтерактивний тест із 12 завдань на скорочення раціональних дробів з винесенням за дужки, формулами та групуванням.",
@@ -386,9 +376,19 @@
                 link: "rational-expressions-reduction.html"
             },
             {
+                id: 1,
+                title: "Додавання раціональних дробів з однаковими знаменниками",
+                desc: "Тренажер додавання, віднімання та скорочення раціональних дробів.",
+                grade: "grade8",
+                subject: "algebra",
+                gradeLabel: "8 клас",
+                type: "trainer",
+                link: "ratsionalni-vyrazy.html"
+            },
+            {
                 id: 13,
                 title: "Тренажер: Дробово-раціональні рівняння",
-                desc: "Інтерактивний практикум на розв'язування раціональних рівнянь з урахуванням ОДЗ.",
+                desc: "Інтерактивний практикум на розв'язування раціональних рівнянь з урахуванням ОДЗ та таймером.",
                 grade: "grade8",
                 subject: "algebra",
                 gradeLabel: "8 клас",
@@ -406,70 +406,6 @@
                 link: "quadratic-equations-8.html"
             },
             {
-                id: 2,
-                title: "Чотирикутники та їх властивості",
-                desc: "Властивості паралелограма, ромба, прямокутника та трапеції.",
-                grade: "grade8",
-                subject: "geometry",
-                gradeLabel: "8 клас",
-                type: "theory",
-                content: "<b>Паралелограм:</b> протилежні сторони та кути рівні, діагоналі точкою перетину діляться навпіл.<br><br><b>Ромб:</b> усі сторони рівні, діагоналі перпендикулярні."
-            },
-            {
-                id: 3,
-                title: "Квадратична функція та її графік",
-                desc: "Знаходження вершин параболи, нулів функції та проміжків знакосталості.",
-                grade: "grade9",
-                subject: "algebra",
-                gradeLabel: "9 клас",
-                type: "trainer",
-                task: "Знайдіть абсцису вершини параболи y = x² - 6x + 8:",
-                options: ["x = 3", "x = -3", "x = 6", "x = 0"],
-                correct: 0
-            },
-            {
-                id: 4,
-                title: "Степінь n-го степеня та арифм. корінь",
-                desc: "Властивості коренів та перетворення виразів зі степенями.",
-                grade: "grade10",
-                subject: "algebra",
-                gradeLabel: "10 клас",
-                type: "trainer",
-                task: "Обчисліть значення виразу ∛27 + ∜16:",
-                options: ["5", "7", "6", "12"],
-                correct: 0
-            },
-            {
-                id: 5,
-                title: "Вступ до стереометрії",
-                desc: "Аксіоми стереометрії, взаємне розміщення прямих і площин у просторі.",
-                grade: "grade10",
-                subject: "geometry",
-                gradeLabel: "10 клас",
-                type: "theory",
-                content: "<b>Основні аксіоми:</b><br>1. Через будь-які три точки, що не лежать на одній прямій, можна провести площину і до того ж тільки одну.<br>2. Якщо дві точки прямої належать площині, то й уся пряма належить цій площині."
-            },
-            {
-                id: 14,
-                title: "Перпендикулярність прямої та площини",
-                desc: "Тест із таймером і протоколом результатів.",
-                grade: "grade10",
-                subject: "geometry",
-                gradeLabel: "10 клас",
-                type: "trainer",
-                link: "perpendicularity-trainer-10class.html"
-            },
-            {
-                id: 6,
-                title: "Показникові рівняння",
-                desc: "Тренажер підвищеної складності: заміна змінної, винесення за дужки, модулі та ОДЗ.",
-                grade: "grade11",
-                subject: "algebra",
-                gradeLabel: "11 клас",
-                type: "trainer",
-                link: "exponential-trainer.html"
-            },
-            {
                 id: 9,
                 title: "НМТ Тренажер: Логарифми",
                 desc: "Тренажер підвищеної складності: властивості, рівняння, нерівності та відповідності.",
@@ -478,48 +414,6 @@
                 gradeLabel: "11 клас / НМТ",
                 type: "trainer",
                 link: "logarithms-trainer.html"
-            },
-            {
-                id: 10,
-                title: "НМТ Тренажер: Класифікація дійсних чисел",
-                desc: "Інтерактивний тренажер з числовими множинами, таймером та протоколом результатів.",
-                grade: "grade11",
-                subject: "algebra",
-                gradeLabel: "11 клас / НМТ",
-                type: "trainer",
-                link: "numbers-trainer.html"
-            },
-            {
-                id: 7,
-                title: "Многогранники: Призма та Піраміда",
-                desc: "Формули площі поверхні та об'ємів призми й піраміди.",
-                grade: "grade11",
-                subject: "geometry",
-                gradeLabel: "11 клас",
-                type: "theory",
-                content: "<b>Призма:</b> V = S_основи · h<br><b>Піраміда:</b> V = (1/3) · S_основи · h"
-            },
-            {
-                id: 8,
-                title: "НМТ Тренажер: Комплексний тест",
-                desc: "Підсумковий експрес-тест за програмою НМТ з алгебри та геометрії.",
-                grade: "nmt",
-                subject: "algebra",
-                gradeLabel: "НМТ",
-                type: "trainer",
-                task: "Обчисліть log₂8 + log₃9:",
-                options: ["5", "6", "4", "3"],
-                correct: 0
-            },
-            {
-                id: 11,
-                title: "НМТ Тренажер: Практичні логарифми",
-                desc: "Прикладні задачі з фізики, хімії, біології та фінансів: таймер, анімація та протокол результатів.",
-                grade: "grade11",
-                subject: "algebra",
-                gradeLabel: "11 клас / НМТ",
-                type: "trainer",
-                link: "logarithm-practical.html"
             }
         ];
 
@@ -573,48 +467,6 @@
                 `;
                 container.appendChild(card);
             });
-        }
-
-        function openModal(item) {
-            const modal = document.getElementById('interactive-modal');
-            const content = document.getElementById('modal-content');
-
-            if (item.type === 'trainer') {
-                content.innerHTML = `
-                    <div class="badge badge-grade" style="display:inline-block; margin-bottom: 0.5rem;">${item.gradeLabel}</div>
-                    <h2 style="margin-bottom: 1rem;">${item.title}</h2>
-                    <p style="margin-bottom: 1.5rem; font-weight: 500;">${item.task}</p>
-                    <div id="options-box">
-                        ${item.options.map((opt, idx) => `
-                            <button class="task-option" onclick="checkAnswer(${idx}, ${item.correct})">${opt}</button>
-                        `).join('')}
-                    </div>
-                    <div id="result-box" style="margin-top: 1rem; font-weight: 600;"></div>
-                `;
-            } else {
-                content.innerHTML = `
-                    <div class="badge badge-grade" style="display:inline-block; margin-bottom: 0.5rem;">${item.gradeLabel}</div>
-                    <h2 style="margin-bottom: 1rem;">${item.title}</h2>
-                    <div style="line-height: 1.6; color: var(--text-primary); background: #f8fafc; padding: 1rem; border-radius: 12px;">
-                        ${item.content}
-                    </div>
-                `;
-            }
-
-            modal.style.display = 'flex';
-        }
-
-        function checkAnswer(selected, correct) {
-            const resBox = document.getElementById('result-box');
-            if (selected === correct) {
-                resBox.innerHTML = `<span style="color: var(--accent-green);"><i class="fa-solid fa-circle-check"></i> Правильно! Чудова робота!</span>`;
-            } else {
-                resBox.innerHTML = `<span style="color: #ef4444;"><i class="fa-solid fa-circle-xmark"></i> Неправильно. Спробуйте ще раз!</span>`;
-            }
-        }
-
-        function closeModal() {
-            document.getElementById('interactive-modal').style.display = 'none';
         }
 
         document.getElementById('grade-filters').addEventListener('click', (e) => {
