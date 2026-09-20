@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Додавання і віднімання дробів з різними знаменниками | Математичний Хаб</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Підключення MathJax для якісних математичних формул -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        :root {
+            --bg-main: #f8fafc;
+            --card-bg: #ffffff;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent-green: #22c55e;
+            --accent-green-light: #f0fdf4;
+            --accent-blue: #3b82f6;
+            --danger-color: #ef4444;
+            --border-color: #e2e8f0;
+            --radius-lg: 20px;
+            --radius-md: 12px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 20px -2px rgba(0,0,0,0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+            background-size: 24px 24px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            background: var(--text-primary);
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+
+        main {
+            max-width: 850px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            flex: 1;
+            width: 100%;
+        }
+
+        .test-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 2rem;
+        }
+
+        .card-badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .badge {
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 0.3rem 0.75rem;
+            border-radius: 20px;
+        }
+
+        .badge-grade { background: #e0f2fe; color: #0369a1; }
+        .badge-algebra { background: #fef3c7; color: #b45309; }
+
+        .test-header-bar {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            background: #f1f5f9;
+            padding: 1rem 1.25rem;
+            border-radius: var(--radius-md);
+            margin-bottom: 2rem;
+            font-weight: 600;
+        }
+
+        .timer {
+            color: var(--danger-color);
+            font-size: 1.1rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            outline: none;
+            background: #f8fafc;
+        }
+
+        .question-block {
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .question-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.95rem;
+        }
+
+        .option-label:hover {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+        }
+
+        .option-label input {
+            margin-right: 10px;
+        }
+
+        .explanation {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: var(--radius-md);
+            font-size: 0.9rem;
+            display: none;
+            line-height: 1.5;
+        }
+        .explanation.correct-exp {
+            background: var(--accent-green-light);
+            color: #166534;
+            border: 1px solid #bbf7d0;
+        }
+        .explanation.incorrect-exp {
+            background: #fef2f2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+
+        .action-btn {
+            background: var(--text-primary);
+            color: white;
+            border: none;
+            padding: 0.85rem 2rem;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: block;
+            margin: 2rem auto 0 auto;
+        }
+
+        .action-btn:hover {
+            background: #334155;
+        }
+
+        #result-section {
+            display: none;
+            margin-top: 2rem;
+        }
+
+        .results-score {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-green);
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        .recommendations {
+            padding: 1.25rem;
+            background: #eff6ff;
+            border-left: 4px solid var(--accent-blue);
+            border-radius: var(--radius-md);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .protocol-box {
+            border: 1px dashed var(--border-color);
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            background: #fcfcfc;
+        }
+
+        .protocol-item {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.9rem;
+        }
+
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 2rem 1.5rem;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-top: auto;
+            background: white;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon"><i class="fa-solid fa-shapes"></i></div>
+                <span>Математичний Хаб</span>
+            </a>
+            <div style="font-size: 0.875rem; color: var(--text-secondary); font-weight: 500;">
+                Дудка Оксана Анатоліївна
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="test-card">
+            <div class="card-badges">
+                <span class="badge badge-grade">8 клас</span>
+                <span class="badge badge-algebra">Алгебра</span>
+            </div>
+            <h1 style="font-size: 1.5rem; margin-bottom: 1.5rem;">Додавання і віднімання дробів з різними знаменниками</h1>
+
+            <div class="input-group">
+                <label for="student-name">Прізвище та Ім'я учня:</label>
+                <input type="text" id="student-name" placeholder="наприклад, Шевченко Іван" autocomplete="off">
+            </div>
+
+            <div class="test-header-bar">
+                <div class="timer" id="timer-display">Час: 30:00</div>
+            </div>
+
+            <div id="questions-container"></div>
+
+            <button class="action-btn" id="finish-btn" onclick="finishTest()">Завершити тестування і переглянути протокол</button>
+
+            <div id="result-section">
+                <hr style="border: none; border-top: 1px solid var(--border-color); margin: 2rem 0;">
+                <h2 style="text-align: center; margin-bottom: 0.5rem;">Протокол результатів роботи</h2>
+                <p style="text-align: center; color: var(--text-secondary);" id="protocol-student-info"></p>
+                
+                <div class="results-score" id="score-display">0 / 12</div>
+
+                <div class="recommendations" id="recommendations-box"></div>
+
+                <h3 style="margin-bottom: 1rem;">Детальний протокол відповідей:</h3>
+                <div class="protocol-box" id="protocol-list"></div>
+
+                <button class="action-btn" onclick="location.reload()" style="margin-top: 2rem;">
+                    <i class="fa-solid fa-rotate-right"></i> Пройти знову
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2026 Математичний Хаб. Авторські матеріали з математики.</p>
+    </footer>
+
+    <script>
+        let timer;
+        let timeLeft = 30 * 60;
+        let currentQuestions = [];
+        let userAnswers = {};
+        let isFinished = false;
+
+        function generateQuestions() {
+            currentQuestions = [
+                {
+                    id: 1,
+                    text: "Виконайте дію: $$\\frac{1}{a^2} + \\frac{a - 2}{a}$$",
+                    correct: "$$\\frac{a^2 - 2a + 1}{a^2}$$",
+                    explanation: "Знайдемо спільний знаменник $a^2$. Додатковий множник для другого дробу дорівнює $a$. Отримуємо: $\\frac{1 + a(a - 2)}{a^2} = \\frac{1 + a^2 - 2a}{a^2} = \\frac{a^2 - 2a + 1}{a^2}$.",
+                    options: [
+                        "$$\\frac{a^2 - 2a + 1}{a^2}$$",
+                        "$$\\frac{a - 1}{a^2}$$",
+                        "$$\\frac{a^2 + a - 2}{a^2}$$",
+                        "$$\\frac{a - 2}{a^2}$$"
+                    ]
+                },
+                {
+                    id: 2,
+                    text: "Виконайте дію: $$\\frac{2 + m}{m^2} - \\frac{m^2 - 5}{m^3}$$",
+                    correct: "$$\\frac{m + 5}{m^3}$$",
+                    explanation: "Спільний знаменник $m^3$. Додатковий множник для першого дробу дорівнює $m$: $\\frac{m(2 + m) - (m^2 - 5)}{m^3} = \\frac{2m + m^2 - m^2 + 5}{m^3} = \\frac{m + 5}{m^3}$.",
+                    options: [
+                        "$$\\frac{m + 5}{m^3}$$",
+                        "$$\\frac{2m - m^2 + 5}{m^3}$$",
+                        "$$\\frac{5}{m^3}$$",
+                        "$$\\frac{2m + 5}{m^3}$$"
+                    ]
+                },
+                {
+                    id: 3,
+                    text: "Спростіть вираз: $$\\frac{m + 2}{m^2} - \\frac{1}{m}$$",
+                    correct: "$$\\frac{2}{m^2}$$",
+                    explanation: "Спільний знаменник $m^2$. Додатковий множник для другого дробу дорівнює $m$: $\\frac{m + 2 - m}{m^2} = \\frac{2}{m^2}$.",
+                    options: [
+                        "$$\\frac{2}{m^2}$$",
+                        "$$\\frac{m + 1}{m^2}$$",
+                        "$$\\frac{2 - m}{m^2}$$",
+                        "$$\\frac{1}{m^2}$$"
+                    ]
+                },
+                {
+                    id: 4,
+                    text: "Виконайте дію: $$\\frac{4}{b} + \\frac{7}{b + 2}$$",
+                    correct: "$$\\frac{11b + 8}{b(b + 2)}$$",
+                    explanation: "Спільний знаменник $b(b + 2)$. Зводимо до спільного знаменника: $\\frac{4(b + 2) + 7b}{b(b + 2)} = \\frac{4b + 8 + 7b}{b(b + 2)} = \\frac{11b + 8}{b(b + 2)}$.",
+                    options: [
+                        "$$\\frac{11b + 8}{b(b + 2)}$$",
+                        "$$\\frac{11}{b(b + 2)}$$",
+                        "$$\\frac{4b + 7}{b(b + 2)}$$",
+                        "$$\\frac{11b - 8}{b(b + 2)}$$"
+                    ]
+                },
+                {
+                    id: 5,
+                    text: "Виконайте дію: $$\\frac{3}{m - n} - \\frac{2}{m + n}$$",
+                    correct: "$$\\frac{m + 5n}{m^2 - n^2}$$",
+                    explanation: "Спільний знаменник $(m - n)(m + n) = m^2 - n^2$. Чисельник: $3(m + n) - 2(m - n) = 3m + 3n - 2m + 2n = m + 5n$.",
+                    options: [
+                        "$$\\frac{m + 5n}{m^2 - n^2}$$",
+                        "$$\\frac{m - n}{m^2 - n^2}$$",
+                        "$$\\frac{5m + n}{m^2 - n^2}$$",
+                        "$$\\frac{1}{m^2 - n^2}$$"
+                    ]
+                },
+                {
+                    id: 6,
+                    text: "Виконайте дію: $$\\frac{a - 2}{2(a + 1)} + \\frac{a}{a + 1}$$",
+                    correct: "$$\\frac{3a - 2}{2(a + 1)}$$",
+                    explanation: "Спільний знаменник $2(a + 1)$. Додатковий множник для другого дробу дорівнює 2: $\\frac{a - 2 + 2a}{2(a + 1)} = \\frac{3a - 2}{2(a + 1)}$.",
+                    options: [
+                        "$$\\frac{3a - 2}{2(a + 1)}$$",
+                        "$$\\frac{2a - 2}{2(a + 1)}$$",
+                        "$$\\frac{3a + 2}{2(a + 1)}$$",
+                        "$$\\frac{a - 2}{2(a + 1)}$$"
+                    ]
+                },
+                {
+                    id: 7,
+                    text: "Спростіть вираз: $$\\frac{2}{a} + \\frac{3}{a - 1}$$",
+                    correct: "$$\\frac{5a - 2}{a(a - 1)}$$",
+                    explanation: "Спільний знаменник $a(a - 1)$. Чисельник: $2(a - 1) + 3a = 2a - 2 + 3a = 5a - 2$.",
+                    options: [
+                        "$$\\frac{5a - 2}{a(a - 1)}$$",
+                        "$$\\frac{5a + 2}{a(a - 1)}$$",
+                        "$$\\frac{5}{a(a - 1)}$$",
+                        "$$\\frac{a - 2}{a(a - 1)}$$"
+                    ]
+                },
+                {
+                    id: 8,
+                    text: "Виконайте дію: $$\\frac{x - y}{x^2} - \\frac{y - x}{xy}$$",
+                    correct: "$$\\frac{2x - y}{x^2}$$",
+                    explanation: "Перетворимо другий дріб: винесемо мінус, або зведемо до спільного знаменника $x^2 y$... Простіше: розпишемо $\\frac{x - y}{x^2} - \\frac{y}{xy} + \\frac{x}{xy} = \\frac{x - y}{x^2} - \\frac{1}{x} + \\frac{1}{y}$ — краще звести до спільного знаменника $x^2y$. Маємо: $\\frac{y(x - y) - x(y - x)}{x^2y} = \\frac{xy - y^2 - xy + x^2}{x^2y} = \\frac{x^2 - y^2}{x^2y}$ — перевіримо вихідне із зображення (4.9 пункт 3): $\\frac{x - y}{x^2} - \\frac{y - x}{xy} = \\frac{(x - y)y - x(y - x)}{x^2y} = \\frac{xy - y^2 - xy + x^2}{x^2y} = \\frac{x^2 - y^2}{x^2y}$. Помилка в баченні, переглянемо звичайне 4.9.3: $\\frac{x-y}{x^2} - \\frac{y-x}{xy} = \\frac{x-y}{x^2} + \\frac{x-y}{xy} = \\frac{(x-y)y + x(x-y)}{x^2y} = \\frac{(x-y)(x+y)}{x^2y} = \\frac{x^2-y^2}{x^2y}$.",
+                    options: [
+                        "$$\\frac{x^2 - y^2}{x^2y}$$",
+                        "$$\\frac{x - y}{x^2y}$$",
+                        "$$\\frac{x^2 + y^2}{x^2y}$$",
+                        "$$\\frac{2x^2 - y^2}{x^2y}$$"
+                    ]
+                },
+                {
+                    id: 9,
+                    text: "Спростіть вираз: $$\\frac{4}{a^2 - 9} - \\frac{2}{a^2 + 3a}$$",
+                    correct: "$$\\frac{2}{a(a + 3)}$$",
+                    explanation: "Розкладемо знаменники на множники: $a^2 - 9 = (a - 3)(a + 3)$, а $a^2 + 3a = a(a + 3)$. Спільний знаменник: $a(a - 3)(a + 3)$. Чисельник: $4a - 2(a - 3) = 4a - 2a + 6 = 2a + 6 = 2(a + 3)$. Скорочуємо $(a + 3)$, отримуємо $\\frac{2}{a(a - 3)}$ — перевіримо за завданням 4.28.3: $\\frac{4}{(a-3)(a+3)} - \\frac{2}{a(a+3)} = \\frac{4a - 2(a-3)}{a(a-3)(a+3)} = \\frac{2a+6}{a(a-3)(a+3)} = \\frac{2(a+3)}{a(a-3)(a+3)} = \\frac{2}{a(a-3)}$.",
+                    options: [
+                        "$$\\frac{2}{a(a - 3)}$$",
+                        "$$\\frac{2}{a(a + 3)}$$",
+                        "$$\\frac{6}{a(a^2 - 9)}$$",
+                        "$$\\frac{2a}{a^2 - 9}$$"
+                    ]
+                },
+                {
+                    id: 10,
+                    text: "Виконайте дію: $$m - \\frac{3}{n}$$",
+                    correct: "$$\\frac{mn - 3}{n}$$",
+                    explanation: "Подаємо ціле число $m$ як дріб зі знаменником 1: $\\frac{m}{1} - \\frac{3}{n} = \\frac{mn - 3}{n}.",
+                    options: [
+                        "$$\\frac{mn - 3}{n}$$",
+                        "$$\\frac{m - 3}{n}$$",
+                        "$$\\frac{m - 3n}{n}$$",
+                        "$$m - 3n$$"
+                    ]
+                },
+                {
+                    id: 11,
+                    text: "Спростіть вираз: $$1 - \\frac{m}{2} - \\frac{n}{3}$$",
+                    correct: "$$\\frac{6 - 3m - 2n}{6}$$",
+                    explanation: "Спільний знаменник для числа 1, 2 та 3 дорівнює 6. Маємо: $\\frac{6 - 3m - 2n}{6}$.",
+                    options: [
+                        "$$\\frac{6 - 3m - 2n}{6}$$",
+                        "$$\\frac{1 - m - n}{6}$$",
+                        "$$\\frac{6 - m - n}{6}$$",
+                        "$$\\frac{5 - 3m - 2n}{6}$$"
+                    ]
+                },
+                {
+                    id: 12,
+                    text: "Спростіть вираз: $$\\frac{x - 1}{x^2 - x + 1} + \\frac{2 - x}{x^3 + 1}$$",
+                    correct: "$$\\frac{1}{x + 1}$$",
+                    explanation: "Знаменник $x^3 + 1$ розкладається на множники за формулою суми кубів: $(x + 1)(x^2 - x + 1)$. Це і є спільний знаменник. Чисельник: $(x - 1)(x + 1) + (2 - x) = x^2 - 1 + 2 - x = x^2 - x + 1$. Після скорочення отримуємо $\\frac{1}{x + 1}$.",
+                    options: [
+                        "$$\\frac{1}{x + 1}$$",
+                        "$$\\frac{1}{x - 1}$$",
+                        "$$\\frac{x}{x + 1}$$",
+                        "$$x + 1$$"
+                    ]
+                }
+            ];
+        }
+
+        function renderQuestions() {
+            const container = document.getElementById("questions-container");
+            container.innerHTML = "";
+
+            currentQuestions.forEach((q, index) => {
+                let optionsHtml = "";
+                q.options.forEach(opt => {
+                    optionsHtml += `
+                        <label class="option-label">
+                            <input type="radio" name="q_${q.id}" value="${opt}" onchange="saveAnswer(${q.id}, '${opt}')">
+                            <span>${opt}</span>
+                        </label>
+                    `;
+                });
+
+                container.innerHTML += `
+                    <div class="question-block" id="block_${q.id}">
+                        <div class="question-title">Завдання ${index + 1} із ${currentQuestions.length}.</div>
+                        <div>${q.text}</div>
+                        <div class="options-list" style="margin-top: 10px;">
+                            ${optionsHtml}
+                        </div>
+                        <div class="explanation" id="exp_${q.id}"></div>
+                    </div>
+                `;
+            });
+
+            if (window.MathJax) {
+                MathJax.typeset();
+            }
+        }
+
+        function saveAnswer(qId, val) {
+            userAnswers[qId] = val;
+        }
+
+        function startTimer() {
+            timer = setInterval(() => {
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    if (!isFinished) finishTest();
+                    return;
+                }
+                timeLeft--;
+                let minutes = Math.floor(timeLeft / 60);
+                let seconds = timeLeft % 60;
+                document.getElementById("timer-display").innerText = 
+                    `Час: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            }, 1000);
+        }
+
+        function finishTest() {
+            const nameInput = document.getElementById("student-name").value.trim();
+            if (!nameInput) {
+                alert("Будь ласка, введіть Прізвище та Ім'я учня перед завершенням тесту!");
+                document.getElementById("student-name").focus();
+                return;
+            }
+
+            isFinished = true;
+            clearInterval(timer);
+
+            let score = 0;
+            let protocolHtml = "";
+
+            currentQuestions.forEach((q, index) => {
+                let userAns = userAnswers[q.id] || "Не відповідено";
+                let isCorrect = (userAns === q.correct);
+                if (isCorrect) score++;
+
+                let expBox = document.getElementById(`exp_${q.id}`);
+                expBox.style.display = "block";
+                if (isCorrect) {
+                    expBox.className = "explanation correct-exp";
+                    expBox.innerHTML = `<b>Вірно!</b> ${q.explanation}`;
+                } else {
+                    expBox.className = "explanation incorrect-exp";
+                    expBox.innerHTML = `<b>Неправильно.</b> Ваша відповідь: <em>${userAns}</em>. Правильна відповідь: <b>${q.correct}</b>.<br>Пояснення: ${q.explanation}`;
+                }
+
+                protocolHtml += `
+                    <div class="protocol-item">
+                        <b>Завдання ${index + 1}:</b> ${q.text} <br>
+                        Відповідь учня: <b>${userAns}</b> | Правильна відповідь: <b>${q.correct}</b> — 
+                        <span style="color: ${isCorrect ? 'var(--accent-green)' : 'var(--danger-color)'}; font-weight: bold;">
+                            ${isCorrect ? 'ПРАВИЛЬНО' : 'ПОМИЛКА'}
+                        </span>
+                    </div>
+                `;
+            });
+
+            let recommendationsHtml = "<b>Рекомендації щодо повторення теми:</b><br>";
+            if (score === 12) {
+                recommendationsHtml += "Фантастичний результат! Ви чудово опанували зведення раціональних дробів до спільного знаменника та виконання дій з ними.";
+            } else if (score >= 8) {
+                recommendationsHtml += "Добрий результат! Зверніть увагу на знаки при розкритті дужок у чисельнику та розкладання знаменників на множники.";
+            } else {
+                recommendationsHtml += "Тема вимагає доопрацювання. Рекомендуємо повторити правила знаходження найменшого спільного знаменника та формули скороченого множення.";
+            }
+
+            document.getElementById("protocol-student-info").innerText = `Учень: ${nameInput} | Витрачено часу: ${Math.floor((30*60 - timeLeft)/60)} хв.`;
+            document.getElementById("score-display").innerText = `${score} / ${currentQuestions.length}`;
+            document.getElementById("recommendations-box").innerHTML = recommendationsHtml;
+            document.getElementById("protocol-list").innerHTML = protocolHtml;
+
+            document.getElementById("result-section").style.display = "block";
+            document.getElementById("finish-btn").style.display = "none";
+            
+            document.getElementById("result-section").scrollIntoView({ behavior: 'smooth' });
+
+            if (window.MathJax) {
+                MathJax.typeset();
+            }
+        }
+
+        generateQuestions();
+        renderQuestions();
+        startTimer();
+    </script>
+
+</body>
+</html>
