@@ -204,7 +204,6 @@
             display: flex;
             gap: 6px;
             margin-bottom: 0.75rem;
-            flex-wrap: wrap;
         }
 
         .badge {
@@ -424,9 +423,8 @@
                 title: "Показникові рівняння та тренажер",
                 desc: "Тренажер для підготовки до НМТ та повторення показникові рівняння.",
                 grade: "nmt",
-                grade11: true,
                 subject: "algebra",
-                gradeLabel: "11 клас · НМТ",
+                gradeLabel: "НМТ Підготовка",
                 type: "trainer",
                 link: "exponential-trainer.html"
             },
@@ -435,9 +433,8 @@
                 title: "Логарифми: Практикум та тренажери",
                 desc: "Комплекс завдань для опрацювання властивостей логарифмів.",
                 grade: "nmt",
-                grade11: true,
                 subject: "algebra",
-                gradeLabel: "11 клас · НМТ",
+                gradeLabel: "НМТ Підготовка",
                 type: "trainer",
                 link: "logarithms-trainer.html"
             },
@@ -446,9 +443,8 @@
                 title: "НМТ Тренажер: Трикутники",
                 desc: "Теореми синусів, косинусів та площа трикутника (22 завдання).",
                 grade: "nmt",
-                grade11: true,
                 subject: "geometry",
-                gradeLabel: "11 клас · НМТ",
+                gradeLabel: "НМТ Підготовка",
                 type: "trainer",
                 link: "тренажер трикутник.index.html"
             }
@@ -464,14 +460,7 @@
             container.innerHTML = '';
 
             const filtered = itemsData.filter(item => {
-                let matchGrade = true;
-                if (activeGrade !== 'all') {
-                    if (activeGrade === 'grade11') {
-                        matchGrade = item.grade === 'grade11' || item.grade11 === true || item.grade === 'nmt';
-                    } else {
-                        matchGrade = item.grade === activeGrade;
-                    }
-                }
+                const matchGrade = activeGrade === 'all' || item.grade === activeGrade;
                 const matchSubject = activeSubject === 'all' || item.subject === activeSubject;
                 const matchSearch = item.title.toLowerCase().includes(searchVal) || item.desc.toLowerCase().includes(searchVal);
                 return matchGrade && matchSubject && matchSearch;
