@@ -414,6 +414,16 @@
                 gradeLabel: "11 клас / НМТ",
                 type: "trainer",
                 link: "logarithms-trainer.html"
+            },
+            {
+                id: 2,
+                title: "Чотирикутники та їх властивості",
+                desc: "Властивості паралелограма, ромба, прямокутника та трапеції.",
+                grade: "grade8",
+                subject: "geometry",
+                gradeLabel: "8 клас",
+                type: "theory",
+                content: "<b>Паралелограм:</b> протилежні сторони та кути рівні, діагоналі точкою перетину діляться навпіл.<br><br><b>Ромб:</b> усі сторони рівні, діагоналі перпендикулярні."
             }
         ];
 
@@ -467,6 +477,23 @@
                 `;
                 container.appendChild(card);
             });
+        }
+
+        function openModal(item) {
+            const modal = document.getElementById('interactive-modal');
+            const content = document.getElementById('modal-content');
+            content.innerHTML = `
+                <div class="badge badge-grade" style="display:inline-block; margin-bottom: 0.5rem;">${item.gradeLabel}</div>
+                <h2 style="margin-bottom: 1rem;">${item.title}</h2>
+                <div style="line-height: 1.6; color: var(--text-primary); background: #f8fafc; padding: 1rem; border-radius: 12px;">
+                    ${item.content}
+                </div>
+            `;
+            modal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('interactive-modal').style.display = 'none';
         }
 
         document.getElementById('grade-filters').addEventListener('click', (e) => {
