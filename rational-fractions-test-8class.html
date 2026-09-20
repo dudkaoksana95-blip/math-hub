@@ -6,6 +6,11 @@
     <title>Тест: Раціональні дроби | Математичний Хаб</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Підключення MathJax для гарних математичних формул і дробів -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
     <style>
         :root {
             --bg-main: #f8fafc;
@@ -49,7 +54,7 @@
         }
 
         .header-container {
-            max-width: 900px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 1rem 1.5rem;
             display: flex;
@@ -62,7 +67,7 @@
             align-items: center;
             gap: 12px;
             font-weight: 700;
-            font-size: 1.15rem;
+            font-size: 1.25rem;
             color: var(--text-primary);
             text-decoration: none;
         }
@@ -70,129 +75,146 @@
         .logo-icon {
             background: var(--text-primary);
             color: white;
-            width: 34px;
-            height: 34px;
+            width: 36px;
+            height: 36px;
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.95rem;
+            font-size: 1rem;
         }
 
         main {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 2rem 1.5rem;
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
             flex: 1;
             width: 100%;
         }
 
-        .card {
+        .test-card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-lg);
-            padding: 2rem;
-            box-shadow: var(--shadow-sm);
-            margin-bottom: 2rem;
+            padding: 2.5rem;
+            box-shadow: var(--shadow-md);
         }
 
         .card-badges {
             display: flex;
-            gap: 6px;
-            margin-bottom: 0.75rem;
+            gap: 8px;
+            margin-bottom: 1rem;
         }
 
         .badge {
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             font-weight: 600;
-            padding: 0.25rem 0.6rem;
+            padding: 0.3rem 0.75rem;
             border-radius: 20px;
-            background: #f1f5f9;
-            color: var(--text-secondary);
         }
 
         .badge-grade { background: #e0f2fe; color: #0369a1; }
         .badge-algebra { background: #fef3c7; color: #b45309; }
 
-        .card-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            line-height: 1.4;
-        }
-
-        .card-desc {
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-            line-height: 1.5;
-            margin-bottom: 1.5rem;
-        }
-
-        .task-option {
-            display: block;
-            width: 100%;
-            text-align: left;
-            padding: 0.85rem 1rem;
-            margin: 0.5rem 0;
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            background: white;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-size: 0.95rem;
-            color: var(--text-primary);
-        }
-
-        .task-option:hover {
-            background: #f8fafc;
-            border-color: var(--accent-blue);
-        }
-
-        .task-option.correct {
-            background: var(--accent-green-light);
-            border-color: var(--accent-green);
-            color: #15803d;
-            font-weight: 600;
-        }
-
-        .task-option.wrong {
-            background: #fef2f2;
-            border-color: #ef4444;
-            color: #b91c1c;
-        }
-
-        .btn-primary {
-            background: var(--text-primary);
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 30px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: opacity 0.2s;
-            font-size: 0.95rem;
-            margin-top: 1rem;
-        }
-
-        .btn-primary:hover {
-            opacity: 0.9;
-        }
-
         .progress-info {
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             color: var(--text-secondary);
-            font-weight: 600;
+            font-weight: 500;
             margin-bottom: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
+        .question-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            line-height: 1.5;
+            color: var(--text-primary);
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .option-btn {
+            background: white;
+            border: 1px solid var(--border-color);
+            padding: 1rem 1.25rem;
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: var(--text-primary);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .option-btn:hover:not(:disabled) {
+            border-color: #cbd5e1;
+            background: #f8fafc;
+            transform: translateY(-1px);
+        }
+
+        .option-btn.correct {
+            background: var(--accent-green-light);
+            border-color: var(--accent-green);
+            color: #166534;
+            font-weight: 600;
+        }
+
+        .option-btn.incorrect {
+            background: #fef2f2;
+            border-color: #ef4444;
+            color: #991b1b;
+        }
+
+        .action-btn {
+            background: var(--text-primary);
+            color: white;
+            border: none;
+            padding: 0.85rem 1.75rem;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .action-btn:hover {
+            background: #334155;
+        }
+
+        .action-btn:disabled {
+            background: #cbd5e1;
+            cursor: not-allowed;
+        }
+
+        .results-container {
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .results-score {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent-green);
+            margin-bottom: 1rem;
+        }
+
         footer {
             border-top: 1px solid var(--border-color);
-            padding: 1.5rem;
+            padding: 2rem 1.5rem;
             text-align: center;
             color: var(--text-secondary);
             font-size: 0.875rem;
+            margin-top: auto;
             background: white;
         }
     </style>
@@ -212,8 +234,8 @@
     </header>
 
     <main>
-        <div class="card" id="test-container">
-            <!-- Динамічний вміст тесту -->
+        <div class="test-card" id="test-container">
+            <!-- Контент динамічно генерується скриптом -->
         </div>
     </main>
 
@@ -224,73 +246,138 @@
     <script>
         const questions = [
             {
-                task: "Знайдіть допустимі значення змінної у виразі: 5 / (x - 3)",
-                options: ["x будь-яке число", "x ≠ 3", "x ≠ -3", "x = 3"],
+                question: "Знайдіть допустимі значення змінної у виразі: $$\\frac{5}{x - 3}$$",
+                options: [
+                    "x — будь-яке число",
+                    "x ≠ 3",
+                    "x ≠ -3",
+                    "x = 3"
+                ],
                 correct: 1
             },
             {
-                task: "Скоротіть дріб: 3a² / 6a³",
-                options: ["1 / (2a)", "2 / a", "2a", "1 / (3a)"],
+                question: "Скоротіть дріб: $$\\frac{3a^2}{6a}$$",
+                options: [
+                    "$$\\frac{a}{2}$$",
+                    "$$2a$$",
+                    "$$\\frac{2}{a}$$",
+                    "$$3a$$"
+                ],
                 correct: 0
             },
             {
-                task: "Виконайте додавання: 2x / 7 + 3x / 7",
-                options: ["5x / 14", "5x² / 7", "5x / 7", "5x"],
-                correct: 2
-            },
-            {
-                task: "Подайте у вигляді дробу вираз: a² / (a - b) - b² / (a - b)",
-                options: ["a - b", "a + b", "1", "(a + b) / (a - b)"],
+                question: "Виконайте додавання: $$\\frac{2x}{5} + \\frac{x}{5}$$",
+                options: [
+                    "$$\\frac{3x}{10}$$",
+                    "$$\\frac{3x}{5}$$",
+                    "$$\\frac{x}{5}$$",
+                    "$$3x$$"
+                ],
                 correct: 1
             },
             {
-                task: "Виконайте множення дробів: (2x / 3y) · (9y² / 4x²)",
-                options: ["3y / (2x)", "2x / (3y)", "6xy / 12", "3 / 2"],
+                question: "Виконайте множення дробів: $$\\frac{2a}{3b} \\cdot \\frac{9b^2}{4a^2}$$",
+                options: [
+                    "$$\\frac{3b}{2a}$$",
+                    "$$\\frac{2a}{3b}$$",
+                    "$$\\frac{3a}{2b}$$",
+                    "$$\\frac{4}{9}$$"
+                ],
                 correct: 0
             },
             {
-                task: "Виконайте ділення: (5a / b²) : (10a² / b)",
-                options: ["2a / b", "1 / (2ab)", "2b / a", "2ab"],
+                question: "Подайте у вигляді дробу вираз: $$\\frac{4}{x} - \\frac{2}{x}$$",
+                options: [
+                    "$$\\frac{2}{x^2}$$",
+                    "$$\\frac{2}{x}$$",
+                    "$$\\frac{6}{x}$$",
+                    "$$2x$$"
+                ],
                 correct: 1
             },
             {
-                task: "Спростіть вираз: (x² - 9) / (x + 3)",
-                options: ["x + 3", "x - 3", "x - 9", "3"],
-                correct: 1
-            },
-            {
-                task: "Знайдіть значення виразу 2 / (x - 2) + 1 / (x + 2), якщо x = 4",
-                options: ["3 / 4", "5 / 12", "1", "1 / 2"],
-                correct: 1
-            },
-            {
-                task: "Який дріб тотожно рівний дробу -a / (b - c)?",
-                options: ["a / (b - c)", "a / (c - b)", "-a / (-b + c)", "a / (b + c)"],
-                correct: 1
-            },
-            {
-                task: "Виконайте піднесення до степеня: (2x² / y³)³",
-                options: ["6x⁶ / y⁹", "8x⁵ / y⁶", "8x⁶ / y⁹", "2x⁶ / y⁹"],
-                correct: 2
-            },
-            {
-                task: "Спростіть вираз: 4x / (x - 2) - 8 / (x - 2)",
-                options: ["4", "4x", "4 / (x - 2)", "1"],
+                question: "Знайдіть значення виразу $$\\frac{x+2}{x-2}$$ при $$x = 4$$",
+                options: [
+                    "$$3$$",
+                    "$$2$$",
+                    "$$1$$",
+                    "$$0$$"
+                ],
                 correct: 0
             },
             {
-                task: "Розв'яжіть рівняння: (x² - 4) / (x - 2) = 0",
-                options: ["2", "-2", "2 та -2", "коренів немає"],
+                question: "Виконайте піднесення до степеня: $$\\left(-\\frac{2a}{b}\\right)^3$$",
+                options: [
+                    "$$-\\frac{8a^3}{b^3}$$",
+                    "$$\\frac{8a^3}{b^3}$$",
+                    "$$-\\frac{6a^3}{b^3}$$",
+                    "$$-\\frac{2a^3}{b^3}$$"
+                ],
+                correct: 0
+            },
+            {
+                question: "Спростіть вираз: $$\\frac{x^2 - 9}{x - 3}$$",
+                options: [
+                    "$$x - 3$$",
+                    "$$x + 3$$",
+                    "$$3$$",
+                    "$$x + 9$$"
+                ],
+                correct: 1
+            },
+            {
+                question: "Розв'яжіть рівняння: $$\\frac{x^2 - 4}{x - 2} = 0$$",
+                options: [
+                    "$$2$$",
+                    "$$-2$$",
+                    "коренів немає",
+                    "$$2$$ та $$-2$$"
+                ],
+                correct: 1
+            },
+            {
+                question: "Виконайте ділення дробів: $$\\frac{5a}{b} : \\frac{10a^2}{b^2}$$",
+                options: [
+                    "$$\\frac{2a}{b}$$",
+                    "$$\\frac{b}{2a}$$",
+                    "$$\\frac{2b}{a}$$",
+                    "$$\\frac{a}{2b}$$"
+                ],
+                correct: 1
+            },
+            {
+                question: "При яких значеннях змінної значення дробу $$\\frac{x - 1}{x + 4}$$ дорівнює нулю?",
+                options: [
+                    "$$-4$$",
+                    "$$1$$",
+                    "$$1$$ та $$-4$$",
+                    "жодного значення"
+                ],
+                correct: 1
+            },
+            {
+                question: "Спростіть вираз: $$\\frac{5}{a-b} - \\frac{5}{b-a}$$",
+                options: [
+                    "$$0$$",
+                    "$$\\frac{10}{a-b}$$",
+                    "$$\\frac{10}{b-a}$$",
+                    "$$\\frac{5}{a-b}$$"
+                ],
                 correct: 1
             }
         ];
 
-        let currentIndex = 0;
+        let currentQuestion = 0;
         let score = 0;
         let answered = false;
 
         function renderQuestion() {
-            const q = questions[currentIndex];
+            if (currentQuestion >= questions.length) {
+                renderResults();
+                return;
+            }
+
+            const q = questions[currentQuestion];
             const container = document.getElementById('test-container');
 
             container.innerHTML = `
@@ -298,31 +385,38 @@
                     <span class="badge badge-grade">8 клас</span>
                     <span class="badge badge-algebra">Алгебра</span>
                 </div>
-                <div class="progress-info">Запитання ${currentIndex + 1} із ${questions.length}</div>
-                <div class="card-title">${q.task}</div>
-                <div id="options-box">
+                <div class="progress-info">Запитання ${currentQuestion + 1} із ${questions.length}</div>
+                <div class="question-title">${q.question}</div>
+                <div class="options-list" id="options-list">
                     ${q.options.map((opt, idx) => `
-                        <button class="task-option" onclick="checkAnswer(${idx})">${opt}</button>
+                        <button class="option-btn" onclick="selectOption(${idx})">${opt}</button>
                     `).join('')}
                 </div>
-                <div id="action-container"></div>
+                <button class="action-btn" id="next-btn" onclick="nextQuestion()" disabled>
+                    Наступне запитання <i class="fa-solid fa-arrow-right"></i>
+                </button>
             `;
+
+            // Оновлюємо рендеринг формул MathJax після оновлення DOM
+            if (window.MathJax) {
+                MathJax.typeset();
+            }
             answered = false;
         }
 
-        function checkAnswer(selectedIndex) {
+        function selectOption(selectedIndex) {
             if (answered) return;
             answered = true;
 
-            const q = questions[currentIndex];
-            const buttons = document.querySelectorAll('.task-option');
+            const q = questions[currentQuestion];
+            const buttons = document.querySelectorAll('.option-btn');
 
             buttons.forEach((btn, idx) => {
-                btn.style.cursor = 'default';
+                btn.disabled = true;
                 if (idx === q.correct) {
                     btn.classList.add('correct');
                 } else if (idx === selectedIndex) {
-                    btn.classList.add('wrong');
+                    btn.classList.add('incorrect');
                 }
             });
 
@@ -330,49 +424,42 @@
                 score++;
             }
 
-            const actionContainer = document.getElementById('action-container');
-            const isLast = currentIndex === questions.length - 1;
-
-            actionContainer.innerHTML = `
-                <button class="btn-primary" onclick="${isLast ? 'showResults()' : 'nextQuestion()'}">
-                    ${isLast ? 'Переглянути результати' : 'Наступне запитання'}
-                </button>
-            `;
+            document.getElementById('next-btn').disabled = false;
         }
 
         function nextQuestion() {
-            currentIndex++;
+            currentQuestion++;
             renderQuestion();
         }
 
-        function showResults() {
+        function renderResults() {
             const container = document.getElementById('test-container');
-            let grade12 = Math.round((score / questions.length) * 11 + 1);
-            if (grade12 > 12) grade12 = 12;
-
             container.innerHTML = `
-                <div class="card-badges">
-                    <span class="badge badge-grade">8 клас</span>
-                    <span class="badge badge-algebra">Алгебра</span>
-                </div>
-                <div class="card-title">Тест завершено!</div>
-                <div class="card-desc">
-                    Ви правильно відповіли на <b>${score}</b> із <b>${questions.length}</b> завдань.<br>
-                    Оцінка за 12-бальною шкалою: <b style="color: var(--accent-green);">${grade12} балів</b>
-                </div>
-                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                    <a href="index.html" class="btn-primary" style="text-decoration: none; display: inline-block;">Повернутися до Хабу</a>
-                    <button class="btn-primary" onclick="restartTest()" style="background: white; color: var(--text-primary); border: 1px solid var(--border-color);">Пройти знову</button>
+                <div class="results-container">
+                    <div class="card-badges" style="justify-content: center; margin-bottom: 1.5rem;">
+                        <span class="badge badge-grade">8 клас</span>
+                        <span class="badge badge-algebra">Алгебра</span>
+                    </div>
+                    <h2 style="margin-bottom: 1rem;">Тест завершено!</h2>
+                    <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Ваш результат тестування з теми «Раціональні дроби»:</p>
+                    <div class="results-score">${score} / ${questions.length}</div>
+                    <button class="action-btn" onclick="restartTest()" style="margin-top: 1rem;">
+                        <i class="fa-solid fa-rotate-right">}</i> Повторити тест
+                    </button>
                 </div>
             `;
+            if (window.MathJax) {
+                MathJax.typeset();
+            }
         }
 
         function restartTest() {
-            currentIndex = 0;
+            currentQuestion = 0;
             score = 0;
             renderQuestion();
         }
 
+        // Запуск тесту при завантаженні
         renderQuestion();
     </script>
 </body>
