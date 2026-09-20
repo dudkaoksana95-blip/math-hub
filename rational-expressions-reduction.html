@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Скорочення раціональних виразів | Математичний Хаб</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Підключення MathJax для якісних математичних формул -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        :root {
+            --bg-main: #f8fafc;
+            --card-bg: #ffffff;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent-green: #22c55e;
+            --accent-green-light: #f0fdf4;
+            --accent-blue: #3b82f6;
+            --border-color: #e2e8f0;
+            --radius-lg: 20px;
+            --radius-md: 12px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 20px -2px rgba(0,0,0,0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+            background-size: 24px 24px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            background: var(--text-primary);
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            flex: 1;
+            width: 100%;
+        }
+
+        .test-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        .card-badges {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .badge {
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 0.3rem 0.75rem;
+            border-radius: 20px;
+        }
+
+        .badge-grade { background: #e0f2fe; color: #0369a1; }
+        .badge-algebra { background: #fef3c7; color: #b45309; }
+
+        .progress-info {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .question-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1.75rem;
+            line-height: 1.5;
+            color: var(--text-primary);
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .option-btn {
+            background: white;
+            border: 1px solid var(--border-color);
+            padding: 1rem 1.25rem;
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: var(--text-primary);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .option-btn:hover:not(:disabled) {
+            border-color: #cbd5e1;
+            background: #f8fafc;
+            transform: translateY(-1px);
+        }
+
+        .option-btn.correct {
+            background: var(--accent-green-light);
+            border-color: var(--accent-green);
+            color: #166534;
+            font-weight: 600;
+        }
+
+        .option-btn.incorrect {
+            background: #fef2f2;
+            border-color: #ef4444;
+            color: #991b1b;
+        }
+
+        .action-btn {
+            background: var(--text-primary);
+            color: white;
+            border: none;
+            padding: 0.85rem 1.75rem;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .action-btn:hover {
+            background: #334155;
+        }
+
+        .action-btn:disabled {
+            background: #cbd5e1;
+            cursor: not-allowed;
+        }
+
+        .results-container {
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .results-score {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent-green);
+            margin-bottom: 1rem;
+        }
+
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 2rem 1.5rem;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-top: auto;
+            background: white;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon"><i class="fa-solid fa-shapes"></i></div>
+                <span>Математичний Хаб</span>
+            </a>
+            <div style="font-size: 0.875rem; color: var(--text-secondary); font-weight: 500;">
+                Дудка Оксана Анатоліївна
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="test-card" id="test-container">
+            <!-- Контент динамічно генерується скриптом -->
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2026 Математичний Хаб. Авторські матеріали з математики.</p>
+    </footer>
+
+    <script>
+        const questions = [
+            {
+                question: "Скоротіть дріб (винесення за дужки): $$\\frac{3a + 15b}{9ab}$$",
+                options: [
+                    "$$\\frac{a + 5b}{3ab}$$",
+                    "$$\\frac{3a + 5b}{9ab}$$",
+                    "$$\\frac{1 + 5b}{3b}$$",
+                    "$$\\frac{3 + 15b}{9b}$$"
+                ],
+                correct: 0
+            },
+            {
+                question: "Скоротіть дріб: $$\\frac{mn - m}{4(n - 1)}$$",
+                options: [
+                    "$$\\frac{m}{4}$$",
+                    "$$\\frac{n - 1}{4}$$",
+                    "$$\\frac{m}{4(n-1)}$$",
+                    "$$\\frac{1}{4}$$"
+                ],
+                correct: 0
+            },
+            {
+                question: "Скоротіть дріб (різниця квадратів у чисельнику): $$\\frac{a(x - y)}{5(y - x)}$$",
+                options: [
+                    "$$\\frac{a}{5}$$",
+                    "$$-\\frac{a}{5}$$",
+                    "$$\\frac{a(x-y)}{5}$$",
+                    "$$-\\frac{a(x-y)}{5}$$"
+                ],
+                correct: 1
+            },
+            {
+                question: "Скоротіть дріб: $$\\frac{3a - 9b}{15b - 5a}$$",
+                options: [
+                    "$$\\frac{3}{5}$$",
+                    "$$-\\frac{3}{5}$$",
+                    "$$\\frac{a-3b}{5b-a}$$",
+                    "$$3$$"
+                ],
+                correct: 1
+            },
+            {
+                question: "Скоротіть дріб (формула квадрата двочлена): $$\\frac{x^2 + 10x + 25}{mx + 5m}$$",
+                options: [
+                    "$$\\frac{x + 5}{m}$$",
+                    "$$\\frac{x - 5}{m}$$",
+                    "$$\\frac{x + 5}{mx}$$",
+                    "$$\\frac{x + 25}{5m}$$"
+                ],
+                correct: 0
+            },
+            {
+                question: "Скоротіть дріб: $$\\frac{m(p - 2)}{a(2 - p)}$$",
+                options: [
+                    "$$\\frac{m}{a}$$",
+                    "$$-\\frac{m}{a}$$",
+                    "$$\\frac{m(p-2)}{a}$$",
+                    "$$1$$"
+                ],
+                correct: 1
+            },
+            {
+                question: "Скоротіть дріб (формула скороченого множення в знаменнику): $$\\frac{3a + 12}{a^2 - 16}$$",
+                options: [
+                    "$$\\frac{3}{a - 4}$$",
+                    "$$\\frac{3}{a + 4}$$",
+                    "$$\\frac{3a}{a - 4}$$",
+                    "$$\\frac{1}{a - 4}$$"
+                ],
+                correct: 0
+            },
+            {
+                question: "Скоротіть дріб: $$\\frac{x^2 - 4x + 4}{x^2 - 4}$$",
+                options: [
+                    "$$\\frac{x - 2}{x + 2}$$",
+                    "$$\\frac{x + 2}{x - 2}$$",
+                    "$$\\frac{x - 2}{2}$$",
+                    "$$1$$"
+                ],
+                correct: 0
+            },
+            {
+                question: "Спростіть вираз: $$\\frac{a^5 - a^3}{a^4 - a^2}$$",
+                options: [
+                    "$$a$$",
+                    "$$a^2$$",
+                    "$$\\frac{a^3 - a}{a^2 - 1}$$",
+                    "$$a + 1$$"
+                ],
+                correct: 0
+            },
+            {
+                question: "Скоротіть дріб (групування в чисельнику): $$\\frac{3p + pn - 3y - yn}{7p - 7y}$$",
+                options: [
+                    "$$\\frac{p + n}{7}$$",
+                    "$$\\frac{3 + n}{7}$$",
+                    "$$\\frac{p - n}{7}$$",
+                    "$$\\frac{3 - n}{7}$$"
+                ],
+                correct: 1
+            },
+            {
+                question: "Скоротіть дріб (сума кубів): $$\\frac{m^3 + 27}{m^2 - 3m + 9}$$",
+                options: [
+                    "$$m + 3$$",
+                    "$$m - 3$$",
+                    "$$m^2 + 9$$",
+                    "$$\\frac{m + 3}{m - 3}$$"
+                ],
+                correct: 0
+            },
+            {
+                question: "Скоротіть дріб: $$\\frac{a^2 - 2a + 4}{a^3 + 8}$$",
+                options: [
+                    "$$\\frac{1}{a + 2}$$",
+                    "$$\\frac{1}{a - 2}$$",
+                    "$$a + 2$$",
+                    "$$a - 2$$"
+                ],
+                correct: 0
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let answered = false;
+
+        function renderQuestion() {
+            if (currentQuestion >= questions.length) {
+                renderResults();
+                return;
+            }
+
+            const q = questions[currentQuestion];
+            const container = document.getElementById('test-container');
+
+            container.innerHTML = `
+                <div class="card-badges">
+                    <span class="badge badge-grade">8 клас</span>
+                    <span class="badge badge-algebra">Алгебра</span>
+                </div>
+                <div class="progress-info">Запитання ${currentQuestion + 1} із ${questions.length}</div>
+                <div class="question-title">${q.question}</div>
+                <div class="options-list" id="options-list">
+                    ${q.options.map((opt, idx) => `
+                        <button class="option-btn" onclick="selectOption(${idx})">${opt}</button>
+                    `).join('')}
+                </div>
+                <button class="action-btn" id="next-btn" onclick="nextQuestion()" disabled>
+                    Наступне запитання <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            `;
+
+            if (window.MathJax) {
+                MathJax.typeset();
+            }
+            answered = false;
+        }
+
+        function selectOption(selectedIndex) {
+            if (answered) return;
+            answered = true;
+
+            const q = questions[currentQuestion];
+            const buttons = document.querySelectorAll('.option-btn');
+
+            buttons.forEach((btn, idx) => {
+                btn.disabled = true;
+                if (idx === q.correct) {
+                    btn.classList.add('correct');
+                } else if (idx === selectedIndex) {
+                    btn.classList.add('incorrect');
+                }
+            });
+
+            if (selectedIndex === q.correct) {
+                score++;
+            }
+
+            document.getElementById('next-btn').disabled = false;
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            renderQuestion();
+        }
+
+        function renderResults() {
+            const container = document.getElementById('test-container');
+            container.innerHTML = `
+                <div class="results-container">
+                    <div class="card-badges" style="justify-content: center; margin-bottom: 1.5rem;">
+                        <span class="badge badge-grade">8 клас</span>
+                        <span class="badge badge-algebra">Алгебра</span>
+                    </div>
+                    <h2 style="margin-bottom: 1rem;">Тест завершено!</h2>
+                    <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Ваш результат з теми «Скорочення раціональних виразів»:</p>
+                    <div class="results-score">${score} / ${questions.length}</div>
+                    <button class="action-btn" onclick="restartTest()" style="margin-top: 1rem;">
+                        <i class="fa-solid fa-rotate-right"></i> Повторити тест
+                    </button>
+                </div>
+            `;
+            if (window.MathJax) {
+                MathJax.typeset();
+            }
+        }
+
+        function restartTest() {
+            currentQuestion = 0;
+            score = 0;
+            renderQuestion();
+        }
+
+        renderQuestion();
+    </script>
+</body>
+</html>
