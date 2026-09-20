@@ -194,25 +194,6 @@
             margin-right: 10px;
         }
 
-        .explanation {
-            margin-top: 1rem;
-            padding: 1rem;
-            border-radius: var(--radius-md);
-            font-size: 0.9rem;
-            display: none;
-            line-height: 1.5;
-        }
-        .explanation.correct-exp {
-            background: var(--accent-green-light);
-            color: #166534;
-            border: 1px solid #bbf7d0;
-        }
-        .explanation.incorrect-exp {
-            background: #fef2f2;
-            color: #991b1b;
-            border: 1px solid #fecaca;
-        }
-
         .action-btn {
             background: var(--text-primary);
             color: white;
@@ -245,13 +226,13 @@
         }
 
         .recommendations {
-            padding: 1.25rem;
+            padding: 1.5rem;
             background: #eff6ff;
             border-left: 4px solid var(--accent-blue);
             border-radius: var(--radius-md);
             margin-bottom: 1.5rem;
-            font-size: 0.95rem;
-            line-height: 1.5;
+            font-size: 1rem;
+            line-height: 1.6;
         }
 
         footer {
@@ -333,7 +314,6 @@
                     id: 1,
                     text: "Виконайте дію: $$\\frac{1}{a^2} + \\frac{a - 2}{a}$$",
                     correct: "$$\\frac{a^2 - 2a + 1}{a^2}$$",
-                    explanation: "Знайдемо спільний знаменник $a^2$. Додатковий множник для другого дробу дорівнює $a$. Отримуємо: $\\frac{1 + a(a - 2)}{a^2} = \\frac{1 + a^2 - 2a}{a^2} = \\frac{a^2 - 2a + 1}{a^2}$.",
                     options: [
                         "$$\\frac{a^2 - 2a + 1}{a^2}$$",
                         "$$\\frac{a - 1}{a^2}$$",
@@ -345,7 +325,6 @@
                     id: 2,
                     text: "Виконайте дію: $$\\frac{2 + m}{m^2} - \\frac{m^2 - 5}{m^3}$$",
                     correct: "$$\\frac{m + 5}{m^3}$$",
-                    explanation: "Спільний знаменник $m^3$. Додатковий множник для першого дробу дорівнює $m$: $\\frac{m(2 + m) - (m^2 - 5)}{m^3} = \\frac{2m + m^2 - m^2 + 5}{m^3} = \\frac{m + 5}{m^3}$.",
                     options: [
                         "$$\\frac{m + 5}{m^3}$$",
                         "$$\\frac{2m - m^2 + 5}{m^3}$$",
@@ -357,7 +336,6 @@
                     id: 3,
                     text: "Спростіть вираз: $$\\frac{m + 2}{m^2} - \\frac{1}{m}$$",
                     correct: "$$\\frac{2}{m^2}$$",
-                    explanation: "Спільний знаменник $m^2$. Додатковий множник для другого дробу дорівнює $m$: $\\frac{m + 2 - m}{m^2} = \\frac{2}{m^2}$.",
                     options: [
                         "$$\\frac{2}{m^2}$$",
                         "$$\\frac{m + 1}{m^2}$$",
@@ -369,7 +347,6 @@
                     id: 4,
                     text: "Виконайте дію: $$\\frac{4}{b} + \\frac{7}{b + 2}$$",
                     correct: "$$\\frac{11b + 8}{b(b + 2)}$$",
-                    explanation: "Спільний знаменник $b(b + 2)$. Зводимо до спільного знаменника: $\\frac{4(b + 2) + 7b}{b(b + 2)} = \\frac{4b + 8 + 7b}{b(b + 2)} = \\frac{11b + 8}{b(b + 2)}$.",
                     options: [
                         "$$\\frac{11b + 8}{b(b + 2)}$$",
                         "$$\\frac{11}{b(b + 2)}$$",
@@ -381,7 +358,6 @@
                     id: 5,
                     text: "Виконайте дію: $$\\frac{3}{m - n} - \\frac{2}{m + n}$$",
                     correct: "$$\\frac{m + 5n}{m^2 - n^2}$$",
-                    explanation: "Спільний знаменник $(m - n)(m + n) = m^2 - n^2$. Чисельник: $3(m + n) - 2(m - n) = 3m + 3n - 2m + 2n = m + 5n$.",
                     options: [
                         "$$\\frac{m + 5n}{m^2 - n^2}$$",
                         "$$\\frac{m - n}{m^2 - n^2}$$",
@@ -393,7 +369,6 @@
                     id: 6,
                     text: "Виконайте дію: $$\\frac{a - 2}{2(a + 1)} + \\frac{a}{a + 1}$$",
                     correct: "$$\\frac{3a - 2}{2(a + 1)}$$",
-                    explanation: "Спільний знаменник $2(a + 1)$. Додатковий множник для другого дробу дорівнює 2: $\\frac{a - 2 + 2a}{2(a + 1)} = \\frac{3a - 2}{2(a + 1)}$.",
                     options: [
                         "$$\\frac{3a - 2}{2(a + 1)}$$",
                         "$$\\frac{2a - 2}{2(a + 1)}$$",
@@ -405,7 +380,6 @@
                     id: 7,
                     text: "Спростіть вираз: $$\\frac{2}{a} + \\frac{3}{a - 1}$$",
                     correct: "$$\\frac{5a - 2}{a(a - 1)}$$",
-                    explanation: "Спільний знаменник $a(a - 1)$. Чисельник: $2(a - 1) + 3a = 2a - 2 + 3a = 5a - 2$.",
                     options: [
                         "$$\\frac{5a - 2}{a(a - 1)}$$",
                         "$$\\frac{5a + 2}{a(a - 1)}$$",
@@ -417,7 +391,6 @@
                     id: 8,
                     text: "Виконайте дію: $$\\frac{x - y}{x^2} - \\frac{y - x}{xy}$$",
                     correct: "$$\\frac{x^2 - y^2}{x^2y}$$",
-                    explanation: "Перетворимо другий дріб: $\\frac{y - x}{xy} = -\\frac{x - y}{xy}$. Тоді $\\frac{x - y}{x^2} + \\frac{x - y}{xy} = \\frac{(x - y)y + x(x - y)}{x^2y} = \\frac{(x - y)(x + y)}{x^2y} = \\frac{x^2 - y^2}{x^2y}$.",
                     options: [
                         "$$\\frac{x^2 - y^2}{x^2y}$$",
                         "$$\\frac{x - y}{x^2y}$$",
@@ -429,7 +402,6 @@
                     id: 9,
                     text: "Спростіть вираз: $$\\frac{4}{a^2 - 9} - \\frac{2}{a^2 + 3a}$$",
                     correct: "$$\\frac{2}{a(a - 3)}$$",
-                    explanation: "Розкладемо знаменники на множники: $a^2 - 9 = (a - 3)(a + 3)$, а $a^2 + 3a = a(a + 3)$. Спільний знаменник: $a(a - 3)(a + 3)$. Чисельник: $4a - 2(a - 3) = 2a + 6 = 2(a + 3)$. Після скорочення на $(a + 3)$ отримуємо $\\frac{2}{a(a - 3)}$.",
                     options: [
                         "$$\\frac{2}{a(a - 3)}$$",
                         "$$\\frac{2}{a(a + 3)}$$",
@@ -441,7 +413,6 @@
                     id: 10,
                     text: "Виконайте дію: $$m - \\frac{3}{n}$$",
                     correct: "$$\\frac{mn - 3}{n}$$",
-                    explanation: "Подаємо ціле число $m$ як дріб зі знаменником 1: $\\frac{m}{1} - \\frac{3}{n} = \\frac{mn - 3}{n}$.",
                     options: [
                         "$$\\frac{mn - 3}{n}$$",
                         "$$\\frac{m - 3}{n}$$",
@@ -453,7 +424,6 @@
                     id: 11,
                     text: "Спростіть вираз: $$1 - \\frac{m}{2} - \\frac{n}{3}$$",
                     correct: "$$\\frac{6 - 3m - 2n}{6}$$",
-                    explanation: "Спільний знаменник для числа 1, 2 та 3 дорівнює 6. Маємо: $\\frac{6 - 3m - 2n}{6}$.",
                     options: [
                         "$$\\frac{6 - 3m - 2n}{6}$$",
                         "$$\\frac{1 - m - n}{6}$$",
@@ -465,7 +435,6 @@
                     id: 12,
                     text: "Спростіть вираз: $$\\frac{x - 1}{x^2 - x + 1} + \\frac{2 - x}{x^3 + 1}$$",
                     correct: "$$\\frac{1}{x + 1}$$",
-                    explanation: "Знаменник $x^3 + 1$ розкладається на множники за формулою суми кубів: $(x + 1)(x^2 - x + 1)$. Це і є спільний знаменник. Чисельник: $(x - 1)(x + 1) + (2 - x) = x^2 - 1 + 2 - x = x^2 - x + 1$. Після скорочення отримуємо $\\frac{1}{x + 1}$.",
                     options: [
                         "$$\\frac{1}{x + 1}$$",
                         "$$\\frac{1}{x - 1}$$",
@@ -498,7 +467,6 @@
                         <div class="options-list" style="margin-top: 10px;">
                             ${optionsHtml}
                         </div>
-                        <div class="explanation" id="exp_${q.id}"></div>
                     </div>
                 `;
             });
@@ -541,28 +509,21 @@
             let score = 0;
 
             currentQuestions.forEach((q) => {
-                let userAns = userAnswers[q.id] || "Не відповідено";
-                let isCorrect = (userAns === q.correct);
-                if (isCorrect) score++;
-
-                let expBox = document.getElementById(`exp_${q.id}`);
-                expBox.style.display = "block";
-                if (isCorrect) {
-                    expBox.className = "explanation correct-exp";
-                    expBox.innerHTML = `<b>Вірно!</b> ${q.explanation}`;
-                } else {
-                    expBox.className = "explanation incorrect-exp";
-                    expBox.innerHTML = `<b>Неправильно.</b> Ваша відповідь: <em>${userAns}</em>. Правильна відповідь: <b>${q.correct}</b>.<br>Пояснення: ${q.explanation}`;
+                let userAns = userAnswers[q.id] || "";
+                if (userAns === q.correct) {
+                    score++;
                 }
             });
 
             let recommendationsHtml = "<b>Рекомендації щодо повторення теми:</b><br>";
             if (score === 12) {
-                recommendationsHtml += "Фантастичний результат! Ви чудово опанували зведення раціональних дробів до спільного знаменника та виконання дій з ними.";
-            } else if (score >= 8) {
-                recommendationsHtml += "Добрий результат! Зверніть увагу на знаки при розкритті дужок у чисельнику та розкладання знаменників на множники.";
+                recommendationsHtml += "✨ <b>Фантастичний результат!</b> Ви чудово опанували зведення раціональних дробів до спільного знаменника, перетворення цілих виразів у дроби та виконання дій з ними.";
+            } else if (score >= 9) {
+                recommendationsHtml += "👍 <b>Добрий результат!</b> Варто ще трохи зосередитися на уважності при знаходженні спільних знаменників та перевіці знаків під час розкриття дужок у чисельнику.";
+            } else if (score >= 5) {
+                recommendationsHtml += "⚠️ <b>Тема вимагає доопрацювання.</b> Рекомендуємо повторити правила знаходження найменшого спільного знаменника для алгебраїчних дробів, розкладання знаменників на множники та знаходження додаткових множників.";
             } else {
-                recommendationsHtml += "Тема вимагає доопрацювання. Рекомендуємо повторити правила знаходження найменшого спільного знаменника та формули скороченого множення.";
+                recommendationsHtml += "📚 <b>Потрібно суттєво повторити тему.</b> Рекомендуємо детально переглянути параграф підручника щодо додавання і віднімання раціональних дробів з різними знаменниками, повторити формули скороченого множення та основну властивість дробу.";
             }
 
             document.getElementById("protocol-student-info").innerText = `Учень: ${nameInput} | Витрачено часу: ${Math.floor((30*60 - timeLeft)/60)} хв.`;
