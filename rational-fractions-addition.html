@@ -254,19 +254,6 @@
             line-height: 1.5;
         }
 
-        .protocol-box {
-            border: 1px dashed var(--border-color);
-            padding: 1.5rem;
-            border-radius: var(--radius-md);
-            background: #fcfcfc;
-        }
-
-        .protocol-item {
-            padding: 0.75rem 0;
-            border-bottom: 1px solid var(--border-color);
-            font-size: 0.9rem;
-        }
-
         footer {
             border-top: 1px solid var(--border-color);
             padding: 2rem 1.5rem;
@@ -311,19 +298,16 @@
 
             <div id="questions-container"></div>
 
-            <button class="action-btn" id="finish-btn" onclick="finishTest()">Завершити тестування і переглянути протокол</button>
+            <button class="action-btn" id="finish-btn" onclick="finishTest()">Завершити тестування і переглянути результат</button>
 
             <div id="result-section">
                 <hr style="border: none; border-top: 1px solid var(--border-color); margin: 2rem 0;">
-                <h2 style="text-align: center; margin-bottom: 0.5rem;">Протокол результатів роботи</h2>
+                <h2 style="text-align: center; margin-bottom: 0.5rem;">Результати тестування</h2>
                 <p style="text-align: center; color: var(--text-secondary);" id="protocol-student-info"></p>
                 
                 <div class="results-score" id="score-display">0 / 12</div>
 
                 <div class="recommendations" id="recommendations-box"></div>
-
-                <h3 style="margin-bottom: 1rem;">Детальний протокол відповідей:</h3>
-                <div class="protocol-box" id="protocol-list"></div>
 
                 <button class="action-btn" onclick="location.reload()" style="margin-top: 2rem;">
                     <i class="fa-solid fa-rotate-right"></i> Пройти знову
@@ -432,8 +416,8 @@
                 {
                     id: 8,
                     text: "Виконайте дію: $$\\frac{x - y}{x^2} - \\frac{y - x}{xy}$$",
-                    correct: "$$\\frac{2x - y}{x^2}$$",
-                    explanation: "Перетворимо другий дріб: винесемо мінус, або зведемо до спільного знаменника $x^2 y$... Простіше: розпишемо $\\frac{x - y}{x^2} - \\frac{y}{xy} + \\frac{x}{xy} = \\frac{x - y}{x^2} - \\frac{1}{x} + \\frac{1}{y}$ — краще звести до спільного знаменника $x^2y$. Маємо: $\\frac{y(x - y) - x(y - x)}{x^2y} = \\frac{xy - y^2 - xy + x^2}{x^2y} = \\frac{x^2 - y^2}{x^2y}$ — перевіримо вихідне із зображення (4.9 пункт 3): $\\frac{x - y}{x^2} - \\frac{y - x}{xy} = \\frac{(x - y)y - x(y - x)}{x^2y} = \\frac{xy - y^2 - xy + x^2}{x^2y} = \\frac{x^2 - y^2}{x^2y}$. Помилка в баченні, переглянемо звичайне 4.9.3: $\\frac{x-y}{x^2} - \\frac{y-x}{xy} = \\frac{x-y}{x^2} + \\frac{x-y}{xy} = \\frac{(x-y)y + x(x-y)}{x^2y} = \\frac{(x-y)(x+y)}{x^2y} = \\frac{x^2-y^2}{x^2y}$.",
+                    correct: "$$\\frac{x^2 - y^2}{x^2y}$$",
+                    explanation: "Перетворимо другий дріб: $\\frac{y - x}{xy} = -\\frac{x - y}{xy}$. Тоді $\\frac{x - y}{x^2} + \\frac{x - y}{xy} = \\frac{(x - y)y + x(x - y)}{x^2y} = \\frac{(x - y)(x + y)}{x^2y} = \\frac{x^2 - y^2}{x^2y}$.",
                     options: [
                         "$$\\frac{x^2 - y^2}{x^2y}$$",
                         "$$\\frac{x - y}{x^2y}$$",
@@ -444,8 +428,8 @@
                 {
                     id: 9,
                     text: "Спростіть вираз: $$\\frac{4}{a^2 - 9} - \\frac{2}{a^2 + 3a}$$",
-                    correct: "$$\\frac{2}{a(a + 3)}$$",
-                    explanation: "Розкладемо знаменники на множники: $a^2 - 9 = (a - 3)(a + 3)$, а $a^2 + 3a = a(a + 3)$. Спільний знаменник: $a(a - 3)(a + 3)$. Чисельник: $4a - 2(a - 3) = 4a - 2a + 6 = 2a + 6 = 2(a + 3)$. Скорочуємо $(a + 3)$, отримуємо $\\frac{2}{a(a - 3)}$ — перевіримо за завданням 4.28.3: $\\frac{4}{(a-3)(a+3)} - \\frac{2}{a(a+3)} = \\frac{4a - 2(a-3)}{a(a-3)(a+3)} = \\frac{2a+6}{a(a-3)(a+3)} = \\frac{2(a+3)}{a(a-3)(a+3)} = \\frac{2}{a(a-3)}$.",
+                    correct: "$$\\frac{2}{a(a - 3)}$$",
+                    explanation: "Розкладемо знаменники на множники: $a^2 - 9 = (a - 3)(a + 3)$, а $a^2 + 3a = a(a + 3)$. Спільний знаменник: $a(a - 3)(a + 3)$. Чисельник: $4a - 2(a - 3) = 2a + 6 = 2(a + 3)$. Після скорочення на $(a + 3)$ отримуємо $\\frac{2}{a(a - 3)}$.",
                     options: [
                         "$$\\frac{2}{a(a - 3)}$$",
                         "$$\\frac{2}{a(a + 3)}$$",
@@ -457,7 +441,7 @@
                     id: 10,
                     text: "Виконайте дію: $$m - \\frac{3}{n}$$",
                     correct: "$$\\frac{mn - 3}{n}$$",
-                    explanation: "Подаємо ціле число $m$ як дріб зі знаменником 1: $\\frac{m}{1} - \\frac{3}{n} = \\frac{mn - 3}{n}.",
+                    explanation: "Подаємо ціле число $m$ як дріб зі знаменником 1: $\\frac{m}{1} - \\frac{3}{n} = \\frac{mn - 3}{n}$.",
                     options: [
                         "$$\\frac{mn - 3}{n}$$",
                         "$$\\frac{m - 3}{n}$$",
@@ -555,9 +539,8 @@
             clearInterval(timer);
 
             let score = 0;
-            let protocolHtml = "";
 
-            currentQuestions.forEach((q, index) => {
+            currentQuestions.forEach((q) => {
                 let userAns = userAnswers[q.id] || "Не відповідено";
                 let isCorrect = (userAns === q.correct);
                 if (isCorrect) score++;
@@ -571,16 +554,6 @@
                     expBox.className = "explanation incorrect-exp";
                     expBox.innerHTML = `<b>Неправильно.</b> Ваша відповідь: <em>${userAns}</em>. Правильна відповідь: <b>${q.correct}</b>.<br>Пояснення: ${q.explanation}`;
                 }
-
-                protocolHtml += `
-                    <div class="protocol-item">
-                        <b>Завдання ${index + 1}:</b> ${q.text} <br>
-                        Відповідь учня: <b>${userAns}</b> | Правильна відповідь: <b>${q.correct}</b> — 
-                        <span style="color: ${isCorrect ? 'var(--accent-green)' : 'var(--danger-color)'}; font-weight: bold;">
-                            ${isCorrect ? 'ПРАВИЛЬНО' : 'ПОМИЛКА'}
-                        </span>
-                    </div>
-                `;
             });
 
             let recommendationsHtml = "<b>Рекомендації щодо повторення теми:</b><br>";
@@ -595,7 +568,6 @@
             document.getElementById("protocol-student-info").innerText = `Учень: ${nameInput} | Витрачено часу: ${Math.floor((30*60 - timeLeft)/60)} хв.`;
             document.getElementById("score-display").innerText = `${score} / ${currentQuestions.length}`;
             document.getElementById("recommendations-box").innerHTML = recommendationsHtml;
-            document.getElementById("protocol-list").innerHTML = protocolHtml;
 
             document.getElementById("result-section").style.display = "block";
             document.getElementById("finish-btn").style.display = "none";
