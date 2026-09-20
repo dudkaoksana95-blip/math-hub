@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тренажер з математики: Раціональні вирази (8 клас)</title>
+    <!-- Підключення MathJax для красивого відображення формул як у підручнику -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #2980b9;
+            --success-color: #27ae60;
+            --danger-color: #c0392b;
+            --bg-color: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 25px;
+        }
+
+        .screen {
+            display: none;
+        }
+        .screen.active {
+            display: block;
+        }
+
+        #start-screen {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        .input-group {
+            margin: 20px 0;
+        }
+        .input-group label {
+            font-size: 1.1rem;
+            display: block;
+            margin-bottom: 10px;
+        }
+        .input-group input {
+            padding: 12px;
+            font-size: 1rem;
+            width: 60%;
+            max-width: 350px;
+            border: 2px solid #bdc3c7;
+            border-radius: 6px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .input-group input:focus {
+            border-color: var(--accent-color);
+        }
+
+        .test-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #eef2f3;
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .timer {
+            color: var(--danger-color);
+            font-size: 1.2rem;
+        }
+
+        .question-card {
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+        .question-title {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        .options-list label {
+            display: block;
+            padding: 10px 12px;
+            margin: 8px 0;
+            background: #f9f9f9;
+            border: 1px solid #dcdde1;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .options-list label:hover {
+            background: #f1f2f6;
+            border-color: var(--accent-color);
+        }
+        .options-list input {
+            margin-right: 10px;
+        }
+
+        .explanation {
+            margin-top: 12px;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            display: none;
+            line-height: 1.4;
+        }
+        .explanation.correct-exp {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .explanation.incorrect-exp {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s;
+            display: block;
+            margin: 20px auto 0 auto;
+        }
+        .btn:hover {
+            background-color: #1b4f72;
+        }
+
+        .protocol-box {
+            background: #fcfcfc;
+            border: 2px dashed #bdc3c7;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .protocol-item {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 0.95rem;
+        }
+        .recommendations {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e8f4f8;
+            border-left: 5px solid var(--accent-color);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- ЕКРАН 1: Введення імені -->
+    <div id="start-screen" class="screen active">
+        <h1>Тренажер з алгебри для 8 класу</h1>
+        <p class="subtitle">Тема: «Раціональні вирази. Додавання і віднімання дробів»</p>
+        <div class="input-group">
+            <label for="student-name">Введіть ваше Прізвище та Ім'я:</label>
+            <input type="text" id="student-name" placeholder="наприклад, Коваленко Олена" autocomplete="off">
+        </div>
+        <button class="btn" onclick="startTest()">Розпочати тестування</button>
+    </div>
+
+    <!-- ЕКРАН 2: Сам тест -->
+    <div id="test-screen" class="screen">
+        <h1>Тренажер: Раціональні вирази</h1>
+        
+        <div class="test-header">
+            <div id="display-user-name">Учень: </div>
+            <div class="timer" id="timer-display">Час: 30:00</div>
+        </div>
+
+        <div id="questions-container"></div>
+
+        <button class="btn" onclick="finishTest()">Готово</button>
+    </div>
+
+    <!-- ЕКРАН 3: Протокол та результати -->
+    <div id="result-screen" class="screen">
+        <h1>Протокол роботи учня</h1>
+        <p class="subtitle" id="protocol-student-info"></p>
+        
+        <div style="text-align: center; font-size: 1.3rem; margin-bottom: 20px;">
+            <b>Результат: <span id="score-display">0</span> / 10</b>
+        </div>
+
+        <div class="recommendations" id="recommendations-box"></div>
+
+        <h3>Детальний протокол відповідей:</h3>
+        <div class="protocol-box" id="protocol-list"></div>
+
+        <button class="btn" onclick="location.reload()">Пройти знову (нові варіанти)</button>
+    </div>
+</div>
+
+<script>
+    let studentName = "";
+    let timer;
+    let timeLeft = 30 * 60;
+    let currentQuestions = [];
+    let userAnswers = {};
+
+    function startTest() {
+        const nameInput = document.getElementById("student-name").value.trim();
+        if (!nameInput) {
+            alert("Будь ласка, введіть своє Прізвище та Ім'я!");
+            return;
+        }
+        studentName = nameInput;
+        document.getElementById("display-user-name").innerText = `Учень: ${studentName}`;
+
+        document.getElementById("start-screen").classList.remove("active");
+        document.getElementById("test-screen").classList.add("active");
+
+        generateUniqueQuestions();
+        renderQuestions();
+        startTimer();
+    }
+
+    function generateUniqueQuestions() {
+        currentQuestions = [];
+        
+        currentQuestions.push({
+            id: 1,
+            text: `Спростіть вираз: \\(\\frac{a}{x - 1} + \\frac{5}{1 - x}\\)`,
+            correct: "\\(\\frac{a - 5}{x - 1}\\)",
+            explanation: `Змінимо знак у другому знаменнику: 1 - x = -(x - 1). Тоді дріб набуде вигляду: \\(\\frac{a}{x - 1} - \\frac{5}{x - 1} = \\frac{a - 5}{x - 1}\\).`,
+            options: [
+                "\\(\\frac{a - 5}{x - 1}\\)", 
+                "\\(\\frac{a + 5}{x - 1}\\)", 
+                "\\(\\frac{a - 5}{(x - 1)^2}\\)", 
+                "\\(\\frac{5 - a}{x - 1}\\)"
+            ]
+        });
+
+        currentQuestions.push({
+            id: 2,
+            text: `Виконайте дію: \\(\\frac{c}{a - 2} + \\frac{x}{2 - a}\\)`,
+            correct: "\\(\\frac{c - x}{a - 2}\\)",
+            explanation: `Винесемо мінус у знаменнику другого дробу: \\(2 - a = -(a - 2)\\). Отримуємо спільний знаменник \\(a - 2\\): \\(\\frac{c}{a - 2} - \\frac{x}{a - 2} = \\frac{c - x}{a - 2}\\).`,
+            options: [
+                "\\(\\frac{c - x}{a - 2}\\)", 
+                "\\(\\frac{c + x}{a - 2}\\)", 
+                "\\(\\frac{x - c}{a - 2}\\)", 
+                "\\(\\frac{c - x}{(a - 2)^2}\\)"
+            ]
+        });
+
+        currentQuestions.push({
+            id: 3,
+            text: `Виконайте дію: \\(\\frac{m^2 - m}{m^2 + 4m + 4} - \\frac{4 - m}{m^2 + 4m + 4}\\)`,
+            correct: "\\(\\frac{m - 2}{m + 2}\\)",
+            explanation: `Знаменники однакові: \\(m^2 + 4m + 4 = (m + 2)^2\\). Зведемо чисельники: \\((m^2 - m) - (4 - m) = m^2 - m - 4 + m = m^2 - 4 = (m - 2)(m + 2)\\). Скорочуємо на \\((m + 2)\\), отримуємо \\(\\frac{m - 2}{m + 2}\\).`,
+            options: [
+                "\\(\\frac{m - 2}{m + 2}\\)", 
+                "\\(\\frac{m + 2}{m - 2}\\)", 
+                "\\(\\frac{m - 2}{(m + 2)^2}\\)", 
+                "1"
+            ]
+        });
+
+        currentQuestions.push({
+            id: 4,
+            text: `Знайдіть різницю: \\(\\frac{a^2 + 3a}{a^2 + 6a + 9} - \\frac{3a + 9}{a^2 + 6a + 9}\\)`,
+            correct: "\\(\\frac{a - 3}{a + 3}\\)",
+            explanation: `Знаменник \\(a^2 + 6a + 9 = (a + 3)^2\\). У чисельнику першого дробу винесемо \\(a\\): \\(a(a + 3)\\). У другому чисельнику винесемо \\(3\\): \\(3(a + 3)\\). Зведемо: \\(\\frac{a(a + 3) - 3(a + 3)}{(a + 3)^2} = \\frac{(a - 3)(a + 3)}{(a + 3)^2} = \\frac{a - 3}{a + 3}\\).`,
+            options: [
+                "\\(\\frac{a - 3}{a + 3}\\)", 
+                "\\(\\frac{a + 3}{a - 3}\\)", 
+                "\\(\\frac{a}{a + 3}\\)", 
+                "\\(\\frac{a - 3}{a^2 + 6a + 9}\\)"
+            ]
+        });
+
+        currentQuestions.push({
+            id: 5,
+            text: `Яке значення дорівнює лівій частині тотожності: \\(\\frac{(a - b)^2}{2ab} - \\frac{(a + b)^2}{2ab}\\)?`,
+            correct: "-2",
+            explanation: `Зведемо до спільного знаменника \\(2ab\\): \\(\\frac{(a^2 - 2ab + b^2) - (a^2 + 2ab + b^2)}{2ab} = \\frac{a^2 - 2ab + b^2 - a^2 - 2ab - b^2}{2ab} = \\frac{-4ab}{2ab} = -2\\).`,
+            options: ["-2", "2", "0", "\\(-\\frac{2}{ab}\\)"]
+        });
+
+        currentQuestions.push({
+            id: 6,
+            text: `Знайдіть значення виразу \\(\\frac{m^2}{2m - 10} + \\frac{25}{10 - 2m}\\), якщо \\(m = 15\\)`,
+            correct: "10",
+            explanation: `Спрощуємо вираз: \\(\\frac{m^2 - 25}{2m - 10} = \\frac{(m - 5)(m + 5)}{2(m - 5)} = \\frac{m + 5}{2}\\). При \\(m = 15\\) отримуємо: \\(\\frac{15 + 5}{2} = \\frac{20}{2} = 10\\).`,
+            options: ["10", "15", "5", "20"]
+        });
+
+        currentQuestions.push({
+            id: 7,
+            text: `Знайдіть значення виразу \\(\\frac{x^2}{3x - 18} + \\frac{36}{18 - 3x}\\), якщо \\(x = -12\\)`,
+            correct: "-2",
+            explanation: `Спрощуємо: \\(\\frac{x^2 - 36}{3x - 18} = \\frac{(x - 6)(x + 6)}{3(x - 6)} = \\frac{x + 6}{3}\\). Підставляємо \\(x = -12\\): \\(\\frac{-12 + 6}{3} = \\frac{-6}{3} = -2\\).`,
+            options: ["-2", "2", "-6", "6"]
+        });
+
+        currentQuestions.push({
+            id: 8,
+            text: `Подайте дріб \\(\\frac{m + 3}{m}\\) у вигляді суми цілого виразу і дробу`,
+            correct: "\\(1 + \\frac{3}{m}\\)",
+            explanation: `Почленно ділимо чисельник на знаменник: \\(\\frac{m}{m} + \\frac{3}{m} = 1 + \\frac{3}{m}\\).`,
+            options: [
+                "\\(1 + \\frac{3}{m}\\)", 
+                "\\(3 + \\frac{1}{m}\\)", 
+                "\\(1 - \\frac{3}{m}\\)", 
+                "\\(\\frac{1}{m} + 3\\)"
+            ]
+        });
+
+        currentQuestions.push({
+            id: 9,
+            text: `Спростіть вираз: \\(\\frac{2}{x} + \\frac{3}{x - y} - \\frac{2x}{x^2 - xy}\\)`,
+            correct: "\\(\\frac{3}{x - y}\\)",
+            explanation: `Розкладемо знаменник третього дробу: \\(x^2 - xy = x(x - y)\\). Зведемо до спільного знаменника та спростимо чисельник, отримавши \\(\\frac{3}{x - y}\\).`,
+            options: [
+                "\\(\\frac{3}{x - y}\\)", 
+                "\\(\\frac{2}{x - y}\\)", 
+                "\\(\\frac{3}{x}\\)", 
+                "\\(\\frac{1}{x - y}\\)"
+            ]
+        });
+
+        currentQuestions.push({
+            id: 10,
+            text: `Знайдіть область визначення виразу (ОДЗ): \\(\\frac{5}{x^2 - 9} + \\frac{x}{x - 3}\\)`,
+            correct: "\\(x \\neq 3, x \\neq -3\\)",
+            explanation: `Знаменники не повинні дорівнювати нулю: \\(x^2 - 9 \\neq 0 \\Rightarrow (x-3)(x+3) \\neq 0 \\Rightarrow x \\neq 3, x \\neq -3\\).`,
+            options: [
+                "\\(x \\neq 3, x \\neq -3\\)", 
+                "\\(x \\neq 3\\)", 
+                "\\(x \\neq -3\\)", 
+                "Жодних обмежень немає"
+            ]
+        });
+
+        // Перемішуємо варіанти для кожного питання випадковим чином
+        currentQuestions.forEach(q => {
+            q.options = shuffleArray(q.options);
+        });
+    }
+
+    function shuffleArray(array) {
+        let arr = [...array];
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    }
+
+    function renderQuestions() {
+        const container = document.getElementById("questions-container");
+        container.innerHTML = "";
+
+        currentQuestions.forEach((q, index) => {
+            let optionsHtml = "";
+            q.options.forEach((opt, optIndex) => {
+                // Використовуємо індекс варіанту унікально для безпеки збереження
+                optionsHtml += `
+                    <label>
+                        <input type="radio" name="q_${q.id}" value="opt_${optIndex}" data-content="${escapeHtml(opt)}" onchange="saveAnswer(${q.id}, this)">
+                        ${opt}
+                    </label>
+                `;
+            });
+
+            container.innerHTML += `
+                <div class="question-card" id="card_${q.id}">
+                    <div class="question-title">Завдання ${index + 1} (8 клас).</div>
+                    <div>${q.text}</div>
+                    <div class="options-list" style="margin-top: 15px;">
+                        ${optionsHtml}
+                    </div>
+                    <div class="explanation" id="exp_${q.id}"></div>
+                </div>
+            `;
+        });
+
+        if (window.MathJax) {
+            MathJax.typeset();
+        }
+    }
+
+    function escapeHtml(text) {
+        return text.replace(/'/g, "&apos;").replace(/"/g, "&quot;");
+    }
+
+    function saveAnswer(qId, radioElement) {
+        // Зберігаємо справжній текст формули з атрибута data-content замість того, щоб читати зламаний value
+        let realVal = radioElement.getAttribute("data-content");
+        userAnswers[qId] = realVal.replace(/&apos;/g, "'").replace(/&quot;/g, '"');
+    }
+
+    function startTimer() {
+        timer = setInterval(() => {
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                alert("Час вийшов!");
+                finishTest();
+                return;
+            }
+            timeLeft--;
+            let minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            document.getElementById("timer-display").innerText = 
+                `Час: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        }, 1000);
+    }
+
+    function finishTest() {
+        clearInterval(timer);
+        
+        let score = 0;
+        let protocolHtml = "";
+
+        currentQuestions.forEach((q, index) => {
+            let userAns = userAnswers[q.id] || "Не відповідено";
+            
+            // Порівнюємо рядки без урахування пробілів та обгортки MathJax \\(...) для абсолютної точності перевірки
+            let cleanUser = userAns.replace(/\\\(\vert{}\\\)/g, "").replace(/\s+/g, "").trim();
+            let cleanCorrect = q.correct.replace(/\\\(\vert{}\\\)/g, "").replace(/\s+/g, "").trim();
+            let isCorrect = (cleanUser === cleanCorrect);
+            if (isCorrect) score++;
+
+            let expBox = document.getElementById(`exp_${q.id}`);
+            expBox.style.display = "block";
+            if (isCorrect) {
+                expBox.className = "explanation correct-exp";
+                expBox.innerHTML = `<b>Вірно!</b> ${q.explanation}`;
+            } else {
+                expBox.className = "explanation incorrect-exp";
+                expBox.innerHTML = `<b>Неправильно.</b> Ваша відповідь: <em>${userAns}</em>. Правильна відповідь: <b>${q.correct}</b>.<br>Пояснення: ${q.explanation}`;
+            }
+
+            protocolHtml += `
+                <div class="protocol-item">
+                    <b>Завдання ${index + 1}:</b> ${q.text} <br>
+                    Відповідь учня: <b>${userAns}</b> | Правильна відповідь: <b>${q.correct}</b> — 
+                    <span style="color: ${isCorrect ? 'var(--success-color)' : 'var(--danger-color)'}; font-weight: bold;">
+                        ${isCorrect ? 'ПРАВИЛЬНО' : 'ПОМИЛКА'}
+                    </span>
+                </div>
+            `;
+        });
+
+        let recommendationsHtml = "<h3>Рекомендації щодо повторення теми:</h3>";
+        if (score === 10) {
+            recommendationsHtml += "Чудовий результат! Ви чудово засвоїли перетворення раціональних дробів, додавання та віднімання виразів із різними знаменниками.";
+        } else if (score >= 7) {
+            recommendationsHtml += "Добрий результат! Варто ще трохи приділити уваги зміні знаків у знаменниках та розкладанню многочленів на множники.";
+        } else {
+            recommendationsHtml += "Тема вимагає тренування. Повторіть правила зведення дробів до спільного знаменника та знаходження області допустимих значень (ОДЗ).";
+        }
+
+        document.getElementById("protocol-student-info").innerText = `Учень: ${studentName} | Витрачено часу: ${Math.floor((30*60 - timeLeft)/60)} хв.`;
+        document.getElementById("score-display").innerText = score;
+        document.getElementById("recommendations-box").innerHTML = recommendationsHtml;
+        document.getElementById("protocol-list").innerHTML = protocolHtml;
+
+        document.getElementById("test-screen").classList.remove("active");
+        document.getElementById("result-screen").classList.add("active");
+        
+        if (window.MathJax) {
+            MathJax.typeset();
+        }
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>
