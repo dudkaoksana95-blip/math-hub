@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Множення і ділення раціональних дробів (Частина 2) — Тренажер | Математичний Хаб</title>
+    <title>Множення і ділення раціональних дробів (Частина 2) — Математичний Хаб</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -13,12 +13,11 @@
             --text-primary: #0f172a;
             --text-secondary: #475569;
             --accent-blue: #3b82f6;
-            --success-color: #10b981;
-            --error-color: #ef4444;
             --border-color: #e2e8f0;
             --radius-lg: 20px;
             --radius-md: 12px;
             --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 20px -2px rgba(0,0,0,0.05);
         }
 
         * {
@@ -48,7 +47,7 @@
         }
 
         .header-container {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 1rem 1.5rem;
             display: flex;
@@ -79,7 +78,7 @@
         }
 
         main {
-            max-width: 900px;
+            max-width: 800px;
             margin: 0 auto;
             padding: 2rem 1.5rem;
             flex: 1;
@@ -102,228 +101,84 @@
             color: var(--accent-blue);
         }
 
-        .card {
+        .start-card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-lg);
-            padding: 2rem;
-            box-shadow: var(--shadow-sm);
-            margin-bottom: 2rem;
+            padding: 2.5rem;
+            box-shadow: var(--shadow-md);
         }
 
-        #login-screen h1 {
+        .start-card h1 {
             font-size: 1.5rem;
             font-weight: 700;
+            color: var(--text-primary);
             margin-bottom: 0.5rem;
         }
 
-        #login-screen p {
+        .start-card p {
             color: var(--text-secondary);
-            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+            line-height: 1.5;
         }
 
         .form-group {
-            margin-bottom: 1.25rem;
+            margin-bottom: 1.5rem;
         }
 
-        .form-group label {
+        .form-label {
             display: block;
-            font-weight: 600;
             font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
             margin-bottom: 0.5rem;
         }
 
-        .form-group input, .form-group select {
+        .form-input {
             width: 100%;
             padding: 0.75rem 1rem;
             border: 1px solid var(--border-color);
             border-radius: var(--radius-md);
             font-size: 1rem;
+            color: var(--text-primary);
             outline: none;
             transition: border-color 0.2s;
-            background: white;
         }
 
-        .form-group input:focus, .form-group select:focus {
+        .form-input:focus {
             border-color: var(--accent-blue);
         }
 
-        .btn-primary {
+        .btn-start {
+            display: block;
+            width: 100%;
+            padding: 0.85rem;
             background: var(--text-primary);
             color: white;
             border: none;
-            padding: 0.75rem 1.5rem;
             border-radius: var(--radius-md);
-            font-weight: 600;
             font-size: 1rem;
+            font-weight: 600;
             cursor: pointer;
-            transition: background 0.2s;
-            width: 100%;
-        }
-
-        .btn-primary:hover {
-            background: #334155;
-        }
-
-        .test-top-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #f1f5f9;
-            padding: 1rem 1.5rem;
-            border-radius: var(--radius-md);
-            margin-bottom: 2rem;
-            font-weight: 600;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .timer {
-            color: #b45309;
-            background: #fef3c7;
-            padding: 0.4rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.95rem;
-        }
-
-        .instructions {
-            background: #eff6ff;
-            border: 1px solid #bfdbfe;
-            padding: 1rem 1.25rem;
-            border-radius: var(--radius-md);
-            margin-bottom: 2rem;
-            font-size: 0.9rem;
-            color: #1e40af;
-            line-height: 1.5;
-        }
-
-        .instructions ul {
-            margin-left: 1.25rem;
-            margin-top: 0.5rem;
-        }
-
-        .task-item {
-            margin-bottom: 2rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .task-question {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 6px;
-        }
-
-        .options-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 10px;
-        }
-
-        .option-btn {
-            background: #f8fafc;
-            border: 1px solid var(--border-color);
-            padding: 12px 15px;
-            border-radius: var(--radius-md);
-            cursor: pointer;
-            font-size: 1.05rem;
-            transition: all 0.2s;
-            text-align: left;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 56px;
-        }
-
-        .option-btn:hover {
-            background: #e2e8f0;
-        }
-
-        .option-btn.selected {
-            background: #dbeafe;
-            border-color: var(--accent-blue);
-            color: #1d4ed8;
-            font-weight: 600;
-        }
-
-        .frac {
-            display: inline-flex;
-            flex-direction: column;
-            vertical-align: middle;
-            text-align: center;
-            font-size: 0.95em;
-            padding: 0 2px;
-        }
-        .frac > span {
-            display: block;
-            padding: 1px 3px;
-        }
-        .frac-num {
-            border-bottom: 1.5px solid currentColor;
-        }
-        .math-expr {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            flex-wrap: wrap;
-        }
-
-        .submit-container {
+            transition: background 0.2s, transform 0.1s;
             text-align: center;
             margin-top: 2rem;
         }
 
-        .result-box {
-            display: none;
-            text-align: left;
-            padding: 2rem;
-            background: #f0fdf4;
-            border: 1px solid #bbf7d0;
-            border-radius: var(--radius-lg);
-            margin-top: 2rem;
-        }
-
-        .result-box h2 {
-            color: #166534;
-            margin-bottom: 0.5rem;
-            text-align: center;
-        }
-
-        .recommendation-card {
-            background: #ffffff;
-            border-left: 4px solid var(--success-color);
-            padding: 1rem 1.25rem;
-            border-radius: 8px;
-            margin-top: 1.5rem;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-        }
-
-        .recommendation-card h4 {
-            color: #166534;
-            margin-bottom: 0.4rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .recommendation-card p {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            line-height: 1.5;
+        .btn-start:hover {
+            background: #1e293b;
+            transform: translateY(-1px);
         }
 
         footer {
             border-top: 1px solid var(--border-color);
-            padding: 1.5rem;
+            padding: 2rem 1.5rem;
             text-align: center;
             color: var(--text-secondary);
             font-size: 0.875rem;
-            background: white;
             margin-top: auto;
+            background: white;
         }
     </style>
 </head>
@@ -344,333 +199,39 @@
     <main>
         <a href="folder-multiplication-division.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Назад до папки</a>
 
-        <!-- ЕКРАН 1: ВХІД ТА ВИБІР РІВНЯ -->
-        <div id="login-screen" class="card">
+        <div class="start-card">
             <h1>Множення і ділення раціональних дробів (Частина 2)</h1>
-            <p>Оберіть рівень складності та введіть ваші дані для початку роботи.</p>
+            <p>Введіть ваші дані для початку роботи над завданнями за підручником О. С. Істера (номери 5.17–5.21).</p>
+
             <div class="form-group">
-                <label for="student-name">Ваше Прізвище та Ім'я:</label>
-                <input type="text" id="student-name" placeholder="Наприклад: Шевченко Іван" required>
+                <label class="form-label" for="studentName">Ваше Прізвище та Ім'я:</label>
+                <input type="text" id="studentName" class="form-input" placeholder="Наприклад: Шевченко Іван">
             </div>
+
             <div class="form-group">
-                <label for="student-group">Клас:</label>
-                <input type="text" id="student-group" value="8 клас" required>
+                <label class="form-label" for="studentClass">Клас:</label>
+                <input type="text" id="studentClass" class="form-input" value="8 клас">
             </div>
-            <div class="form-group">
-                <label for="test-level">Оберіть рівень складності:</label>
-                <select id="test-level">
-                    <option value="basic">Базовий рівень (номери 5.17 — 5.18: добутки трьох дробів)</option>
-                    <option value="advanced">Складніші завдання (номери 5.19 — 5.21: ФСМ та перетворення)</option>
-                </select>
-            </div>
-            <button class="btn-primary" onclick="startTest()">Розпочати тренажер</button>
-        </div>
 
-        <!-- ЕКРАН 2: ТРЕНАЖЕР -->
-        <div id="test-screen" style="display: none;">
-            <div class="card">
-                <div class="test-top-bar">
-                    <span id="display-student">Учень: </span>
-                    <div class="timer"><i class="fa-regular fa-clock"></i> Час: <span id="time-left">30:00</span></div>
-                </div>
-
-                <div class="instructions">
-                    <strong><i class="fa-solid fa-circle-info"></i> Поради та протокол роботи:</strong>
-                    <ul>
-                        <li id="instruction-text">Виконайте завдання згідно з обраним рівнем складності.</li>
-                        <li>Уважно скорочуйте спільні множники у чисельниках і знаменниках.</li>
-                        <li>На виконання дається 30 хвилин. Результат буде обчислено за 12-бальною шкалою.</li>
-                    </ul>
-                </div>
-
-                <div id="questions-container"></div>
-
-                <div class="submit-container">
-                    <button class="btn-primary" style="max-width: 300px;" onclick="submitTest()">Завершити та перевірити</button>
-                </div>
-
-                <div id="result-box" class="result-box">
-                    <h2>Тест завершено!</h2>
-                    <p id="result-text" style="font-size: 1.1rem; font-weight: 600; color: #166534; text-align: center; margin-bottom: 1rem;"></p>
-                    
-                    <div class="recommendation-card">
-                        <h4><i class="fa-solid fa-chalkboard-user"></i> Педагогічні рекомендації:</h4>
-                        <p id="recommendation-text"></p>
-                    </div>
-                </div>
-            </div>
+            <button class="btn-start" onclick="startTrainer()">Розпочати тренажер</button>
         </div>
     </main>
 
     <footer>
-        <p>© 2026 Математичний Хаб. Усі права захищено.</p>
+        <p>© 2026 Математичний Хаб. Авторські матеріали з математики.</p>
     </footer>
 
     <script>
-        let timerInterval;
-        let timeLeft = 30 * 60;
-        let currentQuestions = [];
-        let totalQuestions = 0;
-
-        function f(num, den) {
-            return `<span class="frac"><span class="frac-num">${num}</span><span class="frac-den">${den}</span></span>`;
-        }
-
-        // БАЗОВИЙ РІВЕНЬ (номери 5.17, 5.18: добутки кількох дробів)
-        const basicQuestions = [
-            { 
-                id: 1, 
-                text: `1. Спростіть вираз: <span class="math-expr">${f('54a<sup>2</sup>c', '81b<sup>3</sup>')} &middot; ${f('32ab', '13c<sup>3</sup>')} &middot; ${f('52bc<sup>2</sup>', '128a<sup>3</sup>')}</span>`, 
-                options: [f('3', 'a'), f('3a', 'b'), f('3b', 'a'), f('1', '3a')], 
-                correct: 1 
-            },
-            { 
-                id: 2, 
-                text: `2. Спростіть вираз: <span class="math-expr">${f('147x<sup>4</sup>y<sup>2</sup>', 'p<sup>3</sup>')} &middot; 10xp<sup>2</sup> &middot; ${f('y<sup>3</sup>', '105x<sup>5</sup>y')}</span>`, 
-                options: [f('14y<sup>4</sup>', 'p'), f('14y<sup>2</sup>', 'p'), f('y<sup>4</sup>', 'p'), f('7y<sup>4</sup>', 'p')], 
-                correct: 0 
-            },
-            { 
-                id: 3, 
-                text: `3. Виконайте дії: <span class="math-expr">${f('14xz<sup>3</sup>', '81y<sup>2</sup>')} &middot; ${f('27y<sup>3</sup>', '5xz')} &middot; ${f('45xy', '7z<sup>2</sup>')}</span>`, 
-                options: [f('6xy', 'z'), f('6x<sup>2</sup>y', 'z'), f('30xy', 'z'), f('6y', 'z')], 
-                correct: 0 
-            },
-            { 
-                id: 4, 
-                text: `4. Виконайте дії: <span class="math-expr">${f('b<sup>3</sup>', '111m<sup>5</sup>')} &middot; 3mc<sup>3</sup> &middot; ${f('74m<sup>3</sup>b', 'c<sup>4</sup>')}</span>`, 
-                options: [f('2b<sup>4</sup>m', 'c'), f('2b<sup>4</sup>', 'mc'), f('2b<sup>3</sup>', 'c'), f('b<sup>4</sup>', 'mc')], 
-                correct: 1 
-            },
-            { 
-                id: 5, 
-                text: `5. Спростіть добуток: <span class="math-expr">${f('3a', '4b')} &middot; ${f('8b<sup>2</sup>', '9a')}</span>`, 
-                options: [f('2b', '3'), f('2b', 'a'), f('b', '3'), f('3', '2b')], 
-                correct: 0 
-            },
-            { 
-                id: 6, 
-                text: `6. Знайдіть добуток: <span class="math-expr">${f('5x', '2y')} &middot; ${f('4y<sup>2</sup>', '15x<sup>2</sup>')}</span>`, 
-                options: [f('2y', '3x'), f('3x', '2y'), f('y', '3x'), f('2x', '3y')], 
-                correct: 0 
-            },
-            { 
-                id: 7, 
-                text: `7. Виконайте множення: <span class="math-expr">${f('12m<sup>2</sup>', '5n')} &middot; ${f('15n<sup>2</sup>', '4m')}</span>`, 
-                options: [f('9mn', '1'), f('3mn', '1'), f('9m', 'n'), f('mn', '9')], 
-                correct: 0 
-            },
-            { 
-                id: 8, 
-                text: `8. Спростіть вираз: <span class="math-expr">${f('7a<sup>2</sup>', '3b')} &middot; ${f('9b<sup>2</sup>', '14a')}</span>`, 
-                options: [f('3ab', '2'), f('ab', '2'), f('3a', '2b'), f('3b', '2')], 
-                correct: 0 
-            },
-            { 
-                id: 9, 
-                text: `9. Виконайте дії: <span class="math-expr">${f('25x', '12y')} &middot; ${f('6y<sup>2</sup>', '5x')}</span>`, 
-                options: [f('5y', '2'), f('2y', '5'), f('5x', '2'), f('y', '2')], 
-                correct: 0 
-            },
-            { 
-                id: 10, 
-                text: `10. Знайдіть значення виразу: <span class="math-expr">${f('a<sup>2</sup>', '3b')} &middot; ${f('6b', 'a')}</span> за а=2, b=5`, 
-                options: ['4', '2', '5', '10'], 
-                correct: 0 
-            }
-        ];
-
-        // СКЛАДНІШИЙ РІВЕНЬ (номери 5.19, 5.20, 5.21: ФСМ, розклад на множники)
-        const advancedQuestions = [
-            { 
-                id: 1, 
-                text: `1. Знайдіть добуток: <span class="math-expr">${f('m<sup>2</sup> &minus; 4m + 4', 'm<sup>2</sup> + 6m + 9')} &middot; ${f('m<sup>2</sup> &minus; 9', '3m &minus; 6')}</span>`, 
-                options: [f('m &minus; 3', '3(m + 3)'), f('m + 3', '3(m &minus; 3)'), f('m &minus; 2', '3m'), f('m &minus; 3', 'm + 3')], 
-                correct: 0 
-            },
-            { 
-                id: 2, 
-                text: `2. Знайдіть добуток: <span class="math-expr">&minus;${f('x<sup>2</sup> &minus; 10x + 25', 'x<sup>2</sup> &minus; 3x + 9')} &middot; ${f('x<sup>3</sup> + 27', '25 &minus; x<sup>2</sup>')}</span>`, 
-                options: [f('x &minus; 5', 'x + 5'), f('x + 5', 'x &minus; 5'), f('x &minus; 3', 'x + 3'), f('5 &minus; x', '5 + x')], 
-                correct: 0 
-            },
-            { 
-                id: 3, 
-                text: `3. Виконайте множення: <span class="math-expr">${f('a<sup>2</sup> + 8a + 16', 'a<sup>2</sup> &minus; 2a + 1')} &middot; ${f('7a &minus; 7', 'a<sup>2</sup> &minus; 16')}</span>`, 
-                options: [f('7(a + 4)', '(a &minus; 1)(a &minus; 4)'), f('7(a &minus; 4)', 'a &minus; 1'), f('a + 4', '7(a &minus; 1)'), f('7(a + 4)', '(a &minus; 1)(a + 4)')], 
-                correct: 0 
-            },
-            { 
-                id: 4, 
-                text: `4. Виконайте множення: <span class="math-expr">${f('y<sup>3</sup> &minus; 8', '9 &minus; y<sup>2</sup>')} &middot; ${f('y<sup>2</sup> &minus; 6y + 9', 'y<sup>2</sup> + 2y + 4')}</span>`, 
-                options: [f('y &minus; 2', 'y + 3'), f('&minus;(y &minus; 2)', 'y + 3'), f('y &minus; 3', 'y + 2'), f('&minus;(y &minus; 2)', 'y &minus; 3')], 
-                correct: 1 
-            },
-            { 
-                id: 5, 
-                text: `5. Перетворіть на дріб: <span class="math-expr">(4a + 20b) &middot; ${f('5', 'a<sup>2</sup> &minus; 25b<sup>2</sup>')}</span>`, 
-                options: [f('20', 'a &minus; 5b'), f('4', 'a &minus; 5b'), f('20a', 'a + 5b'), f('5', 'a &minus; 5b')], 
-                correct: 0 
-            },
-            { 
-                id: 6, 
-                text: `6. Перетворіть на дріб: <span class="math-expr">(m<sup>2</sup> &minus; 4) &middot; ${f('2m', '(m &minus; 2)<sup>2</sup>')}</span>`, 
-                options: [f('2m(m + 2)', 'm &minus; 2'), f('2m(m &minus; 2)', 'm + 2'), f('2', 'm &minus; 2'), f('m + 2', '2m')], 
-                correct: 0 
-            },
-            { 
-                id: 7, 
-                text: `7. Виконайте множення: <span class="math-expr">&minus;${f('a', '2a<sup>2</sup> &minus; 18')} &middot; (a<sup>2</sup> &minus; 6a + 9)</span>`, 
-                options: [f('a(a &minus; 3)', '2(a + 3)'), f('&minus;a(a &minus; 3)', '2(a + 3)'), f('a(a + 3)', '2(a &minus; 3)'), f('&minus;a', '2(a + 3)')], 
-                correct: 1 
-            },
-            { 
-                id: 8, 
-                text: `8. Перетворіть на дріб: <span class="math-expr">(x<sup>3</sup> + 27y<sup>3</sup>) &middot; ${f('5', '3x<sup>2</sup> &minus; 9xy + 27y<sup>2</sup>')}</span>`, 
-                options: [f('5(x + 3y)', '3'), f('5(x &minus; 3y)', '3'), f('x + 3y', '3'), f('15(x + 3y)', 'x &minus; 3y')], 
-                correct: 0 
-            },
-            { 
-                id: 9, 
-                text: `9. Спростіть вираз: <span class="math-expr">${f('4', 'x<sup>2</sup> &minus; 9y<sup>2</sup>')} &middot; (6x + 18y)</span>`, 
-                options: [f('24', 'x &minus; 3y'), f('4(x + 3y)', '3'), f('24', 'x + 3y'), f('6', 'x &minus; 3y')], 
-                correct: 0 
-            },
-            { 
-                id: 10, 
-                text: `10. Виконайте множення: <span class="math-expr">(c<sup>2</sup> + 4c + 4) &middot; (&minus;${f('c', '3c<sup>2</sup> &minus; 12')})</span>`, 
-                options: [f('&minus;c(c + 2)', '3(c &minus; 2)'), f('c(c + 2)', '3(c &minus; 2)'), f('&minus;c(c &minus; 2)', '3(c + 2)'), f('&minus;2c', '3(c &minus; 2)')], 
-                correct: 0 
-            }
-        ];
-
-        function startTest() {
-            const nameInput = document.getElementById('student-name').value.trim();
+        function startTrainer() {
+            const nameInput = document.getElementById('studentName').value.trim();
             if (!nameInput) {
-                alert('Будь ласка, введіть ваше прізвище та ім\'я!');
+                alert('Будь ласка, введіть ваше Прізвище та Ім\'я!');
                 return;
             }
-
-            const level = document.getElementById('test-level').value;
-            if (level === 'basic') {
-                currentQuestions = basicQuestions;
-                document.getElementById('instruction-text').innerText = "Базовий рівень: спрощення добутків кількох раціональних дробів (номери 5.17, 5.18).";
-            } else {
-                currentQuestions = advancedQuestions;
-                document.getElementById('instruction-text').innerText = "Складніший рівень: застосування формул скороченого множення та перетворення цілого виразу на дріб (номери 5.19 — 5.21).";
-            }
-            totalQuestions = currentQuestions.length;
-
-            document.getElementById('display-student').innerText = `Учень: ${nameInput} (${document.getElementById('student-group').value})`;
-            document.getElementById('login-screen').style.display = 'none';
-            document.getElementById('test-screen').style.display = 'block';
-
-            renderQuestions();
-            startTimer();
-        }
-
-        function renderQuestions() {
-            const container = document.getElementById('questions-container');
-            let html = '';
-
-            currentQuestions.forEach((q, index) => {
-                html += `
-                    <div class="task-item" id="task-${index}">
-                        <div class="task-question">${q.text}</div>
-                        <div class="options-grid">
-                `;
-                q.options.forEach((opt, optIndex) => {
-                    html += `<button type="button" class="option-btn" onclick="selectOption(${index}, ${optIndex}, this)">${opt}</button>`;
-                });
-                html += `</div></div>`;
-            });
-
-            container.innerHTML = html;
-        }
-
-        const userAnswers = {};
-        function selectOption(taskIndex, optIndex, btnElement) {
-            const taskDiv = document.getElementById(`task-${taskIndex}`);
-            const buttons = taskDiv.getElementsByClassName('option-btn');
-            
-            for (let b of buttons) {
-                b.classList.remove('selected');
-            }
-            btnElement.classList.add('selected');
-            userAnswers[taskIndex] = optIndex;
-        }
-
-        function startTimer() {
-            timerInterval = setInterval(() => {
-                if (timeLeft <= 0) {
-                    clearInterval(timerInterval);
-                    alert('Час вийшов!');
-                    submitTest();
-                    return;
-                }
-                timeLeft--;
-                let minutes = Math.floor(timeLeft / 60);
-                let seconds = timeLeft % 60;
-                document.getElementById('time-left').innerText = 
-                    `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-            }, 1000);
-        }
-
-        function submitTest() {
-            clearInterval(timerInterval);
-            let score = 0;
-
-            currentQuestions.forEach((q, index) => {
-                const taskDiv = document.getElementById(`task-${index}`);
-                const buttons = taskDiv.getElementsByClassName('option-btn');
-                
-                for (let b of buttons) {
-                    b.style.pointerEvents = 'none';
-                }
-
-                if (userAnswers[index] === q.correct) {
-                    score++;
-                    if(buttons[userAnswers[index]]) {
-                        buttons[userAnswers[index]].style.background = '#dcfce7';
-                        buttons[userAnswers[index]].style.borderColor = '#10b981';
-                        buttons[userAnswers[index]].style.color = '#166534';
-                    }
-                } else {
-                    if (userAnswers[index] !== undefined && buttons[userAnswers[index]]) {
-                        buttons[userAnswers[index]].style.background = '#fee2e2';
-                        buttons[userAnswers[index]].style.borderColor = '#ef4444';
-                        buttons[userAnswers[index]].style.color = '#991b1b';
-                    }
-                    if(buttons[q.correct]) {
-                        buttons[q.correct].style.background = '#f0fdf4';
-                        buttons[q.correct].style.borderColor = '#10b981';
-                        buttons[q.correct].style.fontWeight = 'bold';
-                    }
-                }
-            });
-
-            const grade12 = Math.round((score / totalQuestions) * 12);
-            const resultBox = document.getElementById('result-box');
-            const resultText = document.getElementById('result-text');
-            const recommendationText = document.getElementById('recommendation-text');
-
-            resultText.innerHTML = `Правильних відповідей: ${score} з ${totalQuestions}.<br>Оцінка за 12-бальною шкалою: <b>${grade12} балів</b>`;
-
-            let recommendation = "";
-            if (grade12 >= 10) {
-                recommendation = "Високий рівень засвоєння матеріалу. Учня вдалося безпомилково опрацювати складні перетворення.";
-            } else if (grade12 >= 7) {
-                recommendation = "Добрий результат. Варто звернути увагу на техніку скорочення чисельників та знаменників.";
-            } else if (grade12 >= 4) {
-                recommendation = "Задовільний результат. Рекомендується повторити правила дій з раціональними дробами.";
-            } else {
-                recommendation = "Початковий рівень. Необхідно додатково опрацювати теоретичний матеріал параграфа.";
-            }
-
-            recommendationText.innerText = recommendation;
-            resultBox.style.display = 'block';
-            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            // Тут буде логіка переходу до завдань тренажера
+            alert('Гарної роботи, ' + nameInput + '!');
         }
     </script>
+
 </body>
 </html>
