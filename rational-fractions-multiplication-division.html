@@ -413,74 +413,74 @@
             { 
                 id: 1, 
                 text: `1. Виконайте множення: <span class="math-expr">${f('5a', '7')} &middot; ${f('21', '20a<sup>2</sup>')}</span>`, 
-                options: [f('3', '4a'), f('4', '3a'), f('3a', '4'), f('3', '4a<sup>2</sup>')], 
-                correct: 0 
+                options: [f('4', '3a'), f('3', '4a'), f('3a', '4'), f('3', '4a<sup>2</sup>')], 
+                correct: 1 
             },
             { 
                 id: 2, 
                 text: `2. Спростіть вираз: <span class="math-expr">${f('3,5', '14a<sup>2</sup>')} &middot; ${f('4a<sup>3</sup>', '5b')}</span>`, 
-                options: [f('a', '10b'), f('a<sup>2</sup>', '10b'), f('10', 'ab'), f('a', '5b')], 
-                correct: 3 
+                options: [f('a', '10b'), f('a<sup>2</sup>', '10b'), f('a', '5b'), f('10', 'ab')], 
+                correct: 2 
             },
             { 
                 id: 3, 
                 text: `3. Знайдіть добуток: <span class="math-expr">${f('c<sup>2</sup>', '30')} &middot; ${f('20', 'cm')}</span>`, 
-                options: [f('2c', '3m'), f('3c', '2m'), f('2c', 'm'), f('c', '3m')], 
-                correct: 0 
+                options: [f('3c', '2m'), f('2c', 'm'), f('2c', '3m'), f('c', '3m')], 
+                correct: 2 
             },
             { 
                 id: 4, 
                 text: `4. Виконайте ділення: <span class="math-expr">${f('3m', '5a<sup>2</sup>')} : ${f('9m<sup>2</sup>', 'a')}</span>`, 
-                options: [f('1', '15am'), f('15am', '1'), f('3', '5am'), f('1', '3am')], 
-                correct: 0 
+                options: [f('15am', '1'), f('1', '15am'), f('3', '5am'), f('1', '3am')], 
+                correct: 1 
             },
             { 
                 id: 5, 
                 text: `5. Спростіть вираз: <span class="math-expr">${f('7c<sup>3</sup>', '10m<sup>2</sup>')} &middot; ${f('25m<sup>3</sup>', '14c<sup>8</sup>')}</span>`, 
-                options: [f('5m', '4c<sup>5</sup>'), f('2c<sup>5</sup>', '5m'), f('5m<sup>2</sup>', '2c<sup>3</sup>'), f('m', '10c<sup>5</sup>')], 
-                correct: 0 
+                options: [f('2c<sup>5</sup>', '5m'), f('5m<sup>2</sup>', '2c<sup>3</sup>'), f('m', '10c<sup>5</sup>'), f('5m', '4c<sup>5</sup>')], 
+                correct: 3 
             },
             { 
                 id: 6, 
                 text: `6. Виконайте множення: <span class="math-expr">&minus;${f('8a<sup>3</sup>', '27c<sup>4</sup>')} &middot; ${f('45c<sup>5</sup>', '16a<sup>3</sup>')}</span>`, 
-                options: [`&minus;${f('5c', '6')}`, `&minus;${f('5c', '3')}`, f('5c', '6'), `&minus;${f('3c', '5')}`], 
-                correct: 0 
+                options: [f('5c', '6'), `&minus;${f('5c', '3')}`, `&minus;${f('5c', '6')}`, `&minus;${f('3c', '5')}`], 
+                correct: 2 
             },
             { 
                 id: 7, 
                 text: `7. Піднесіть до степеня: <span class="math-expr">(${f('2a<sup>2</sup>', '3b<sup>3</sup>')})<sup>3</sup></span>`, 
-                options: [f('8a<sup>6</sup>', '27b<sup>9</sup>'), f('6a<sup>5</sup>', '9b<sup>6</sup>'), f('8a<sup>5</sup>', '27b<sup>6</sup>'), f('2a<sup>6</sup>', '3b<sup>9</sup>')], 
-                correct: 0 
+                options: [f('6a<sup>5</sup>', '9b<sup>6</sup>'), f('8a<sup>5</sup>', '27b<sup>6</sup>'), f('8a<sup>6</sup>', '27b<sup>9</sup>'), f('2a<sup>6</sup>', '3b<sup>9</sup>')], 
+                correct: 2 
             },
             { 
                 id: 8, 
                 text: `8. Виконайте множення: <span class="math-expr">${f('a<sup>2</sup> + 2a', '5')} &middot; ${f('a', '4a + 8')}</span>`, 
-                options: [f('a<sup>2</sup>', '20'), f('a', '20'), f('a<sup>2</sup>', '10'), f('4', 'a<sup>2</sup>')], 
-                correct: 0 
+                options: [f('a', '20'), f('a<sup>2</sup>', '10'), f('4', 'a<sup>2</sup>'), f('a<sup>2</sup>', '20')], 
+                correct: 3 
             },
             { 
                 id: 9, 
                 text: `9. Спростіть вираз: <span class="math-expr">${f('7m', 'a')} &middot; ${f('a<sup>2</sup> &minus; ab', '21')}</span>`, 
-                options: [f('m(a &minus; b)', '3'), f('7m(a &minus; b)', '3'), f('m(a &minus; b)', '7'), f('a &minus; b', '3m')], 
-                correct: 0 
+                options: [f('7m(a &minus; b)', '3'), f('m(a &minus; b)', '3'), f('m(a &minus; b)', '7'), f('a &minus; b', '3m')], 
+                correct: 1 
             },
             { 
                 id: 10, 
                 text: `10. Виконайте ділення: <span class="math-expr">${f('2a &minus; b', '10a')} : ${f('b &minus; 2a', '15a<sup>2</sup>')}</span>`, 
-                options: [`&minus;${f('3a', '2')}`, f('3a', '2'), `&minus;${f('2', '3a')}`, `&minus;${f('3', '2a')}`], 
-                correct: 0 
+                options: [f('3a', '2'), `&minus;${f('2', '3a')}`, `&minus;${f('3', '2a')}`, `&minus;${f('3a', '2')}`], 
+                correct: 3 
             },
             { 
                 id: 11, 
                 text: `11. Спростіть вираз: <span class="math-expr">${f('10ab', 'x + y')} &middot; ${f('x<sup>2</sup> &minus; y<sup>2</sup>', '5ab')}</span>`, 
-                options: ["2(x &minus; y)", "2(x + y)", f('2', 'x &minus; y'), "x &minus; y"], 
-                correct: 0 
+                options: ["2(x + y)", f('2', 'x &minus; y'), "2(x &minus; y)", "x &minus; y"], 
+                correct: 2 
             },
             { 
                 id: 12, 
                 text: `12. Виконайте множення: <span class="math-expr">${f('a<sup>2</sup> + ab', 'x<sup>2</sup>')} &middot; ${f('xy', 'a<sup>2</sup> + 2ab + b<sup>2</sup>')}</span>`, 
-                options: [f('ay', 'x(a + b)'), f('a', 'x'), f('ax', 'a + b'), f('1', 'x')], 
-                correct: 0 
+                options: [f('a', 'x'), f('ay', 'x(a + b)'), f('ax', 'a + b'), f('1', 'x')], 
+                correct: 1 
             }
         ];
 
@@ -509,7 +509,6 @@
                         <div class="task-question">${q.text}</div>
                         <div class="options-grid">
                 `;
-                q.options.optionsOpt = q.options; // safety helper
                 q.options.forEach((opt, optIndex) => {
                     html += `<button type="button" class="option-btn" onclick="selectOption(${index}, ${optIndex}, this)">${opt}</button>`;
                 });
@@ -585,9 +584,8 @@
             const resultText = document.getElementById('result-text');
             const recommendationText = document.getElementById('recommendation-text');
 
-            resultText.innerHTML = `Правильних відповідей: ${score} з ${totalQuestions}.<br>Оцінка за 12-бальною шкалою: <b>${grade12} балів</b>`;
+            resultText.innerHTML = `Правильних відповідей: ${score} з ${totalQuestions}.<br>Оцінка за 1-12 бальною шкалою: <b>${grade12} балів</b>`;
 
-            // Формування рекомендацій залежно від результату
             let recommendation = "";
             if (grade12 >= 10) {
                 recommendation = "Чудовий результат! Ви чудово засвоїли правила множення, ділення та піднесення раціональних дробів до степеня. Продовжуйте в тому ж дусі!";
