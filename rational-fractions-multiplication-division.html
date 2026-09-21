@@ -399,10 +399,16 @@
 
             container.innerHTML = html;
             
-            // Коректний перерендер формул MathJax для динамічно створених елементів у кнопках
-            if (window.MathJax && window.MathJax.typesetPromise) {
-                MathJax.typesetPromise([container]).catch((err) => console.log('MathJax error:', err));
-            }
+            // Примусовий якісний перерендер формул MathJax для динамічно створених кнопок
+            setTimeout(() => {
+                if (window.MathJax) {
+                    if (window.MathJax.typesetPromise) {
+                        MathJax.typesetPromise([container]).catch((err) => console.log('MathJax error:', err));
+                    } else if (window.MathJax.typeset) {
+                        MathJax.typeset();
+                    }
+                }
+            }, 50);
         }
 
         // Зберігаємо вибір користувача
@@ -442,7 +448,7 @@
                 const taskDiv = document.getElementById(`task-${index}`);
                 const buttons = taskDiv.getElementsByClassName('option-btn');
                 
-                // Вимикаємо кнопки після здачі
+                // Вимикаємо кнопки
                 for (let b of buttons) {
                     b.style.pointerEvents = 'none';
                 }
@@ -461,7 +467,7 @@
                         buttons[userAnswers[index]].style.borderColor = '#ef4444';
                         buttons[userAnswers[index]].style.color = '#991b1b';
                     }
-                    // Показуємо правильну відповідь
+                    // Показуємо правильну
                     if(buttons[q.correct]) {
                         buttons[q.correct].style.background = '#f0fdf4';
                         buttons[q.correct].style.borderColor = '#10b981';
@@ -470,7 +476,7 @@
                 }
             });
 
-            // Розрахунок за 12-бальною шкалою
+            // Розрахунок 12-бальної шкали або відсотків
             const grade12 = Math.round((score / totalQuestions) * 12);
             const resultBox = document.getElementById('result-box');
             const resultText = document.getElementById('result-text');
