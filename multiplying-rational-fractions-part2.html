@@ -72,8 +72,13 @@
         .option-item:hover { border-color: var(--accent-blue); background: #f8fafc; }
         .option-item input { accent-color: var(--accent-blue); width: 18px; height: 18px; }
 
-        .result-box { text-align: center; padding: 2rem 0; }
-        .score-circle { width: 100px; height: 100px; border-radius: 50%; background: #e0f2fe; color: #0369a1; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 700; margin: 0 auto 1.5rem auto; }
+        .result-box { text-align: center; padding: 1rem 0; }
+        .score-circle { width: 90px; height: 90px; border-radius: 50%; background: #e0f2fe; color: #0369a1; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; font-weight: 700; margin: 0 auto 1rem auto; }
+        
+        .recommendations-box { text-align: left; background: #f8fafc; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 1.25rem; margin-top: 1.5rem; margin-bottom: 1.5rem; }
+        .recommendations-box h3 { font-size: 1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 8px; }
+        .recommendations-box ul { padding-left: 1.25rem; color: var(--text-secondary); font-size: 0.9rem; line-height: 1.5; }
+        .recommendations-box li { margin-bottom: 0.35rem; }
 
         footer { border-top: 1px solid var(--border-color); padding: 2rem 1.5rem; text-align: center; color: var(--text-secondary); font-size: 0.875rem; margin-top: auto; background: white; }
     </style>
@@ -123,9 +128,17 @@
         <div class="card" id="resultScreen" style="display: none;">
             <div class="result-box">
                 <h1>Тестування завершено!</h1>
-                <p id="resultStudentInfo" style="margin-bottom: 1.5rem;"></p>
+                <p id="resultStudentInfo" style="margin-bottom: 1rem;"></p>
                 <div class="score-circle" id="scoreCircle">12</div>
-                <p id="resultMessage" style="font-size: 1.1rem; font-weight: 600; margin-bottom: 2rem;"></p>
+                <p id="resultMessage" style="font-size: 1.05rem; font-weight: 600; margin-bottom: 1rem;"></p>
+                
+                <div class="recommendations-box" id="recommendationsBox">
+                    <h3><i class="fa-solid fa-lightbulb" style="color: #f59e0b;"></i> Рекомендації для учня:</h3>
+                    <ul id="recommendationsList">
+                        <!-- Динамічно заповнюється залежно від результату -->
+                    </ul>
+                </div>
+
                 <button class="btn-main" onclick="location.reload()">Пройти знову</button>
             </div>
         </div>
@@ -298,6 +311,37 @@
             document.getElementById('scoreCircle').innerText = grade12;
             
             document.getElementById('resultMessage').innerText = `Ви правильно відповіли на ${score} з ${questions.length} питань. Оцінка: ${grade12} балів!`;
+
+            // Генерація рекомендацій залежно від результату
+            const recList = document.getElementById('recommendationsList');
+            recList.innerHTML = '';
+
+            let recommendations = [];
+
+            if (score === 6) {
+                recommendations = [
+                    "Чудовий результат! Ви чудово засвоїли тему та впевнено виконуєте перетворення раціональних дробів.",
+                    "Продовжуйте практикуватися із завданнями підвищеної складності для закріплення навичок."
+                ];
+            } else if (score >= 4) {
+                recommendations = [
+                    "Добрий результат, але є над чим попрацювати.",
+                    "Зверніть увагу на допущені помилки при розкладанні многочленів на множники та використанні формул скороченого множення.",
+                    "Рекомендуємо повторити властивості степенів та знаки при перетвореннях."
+                ];
+            } else {
+                recommendations = [
+                    "Потрібно глибше повторити теоретичний матеріал з теми «Множення і ділення раціональних дробів».",
+                    "Особливу увагу приділіть формулам скороченого множення (різниця квадратів, кубів) та методу групування.",
+                    "Рекомендуємо розв'язати кілька базових вправ із підручника і пройти тренажер повторно."
+                ];
+            }
+
+            recommendations.forEach(rec => {
+                const li = document.createElement('li');
+                li.innerText = rec;
+                recList.appendChild(li);
+            });
         }
     </script>
 </body>
