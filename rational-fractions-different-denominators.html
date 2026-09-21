@@ -6,23 +6,16 @@
     <title>Додавання і віднімання дробів з різними знаменниками | Математичний Хаб</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Підключення MathJax для якісних математичних формул -->
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
         :root {
             --bg-main: #f8fafc;
             --card-bg: #ffffff;
             --text-primary: #0f172a;
             --text-secondary: #475569;
-            --accent-green: #22c55e;
-            --accent-green-light: #f0fdf4;
             --accent-blue: #3b82f6;
-            --accent-blue-light: #eff6ff;
-            --danger-color: #ef4444;
+            --accent-green: #10b981;
             --border-color: #e2e8f0;
             --radius-lg: 20px;
-            --radius-md: 12px;
             --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
             --shadow-md: 0 4px 20px -2px rgba(0,0,0,0.05);
         }
@@ -31,7 +24,7 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Inter', sans-serif;
         }
 
         body {
@@ -67,7 +60,7 @@
             align-items: center;
             gap: 12px;
             font-weight: 700;
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             color: var(--text-primary);
             text-decoration: none;
         }
@@ -75,9 +68,9 @@
         .logo-icon {
             background: var(--text-primary);
             color: white;
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -85,163 +78,169 @@
         }
 
         main {
-            max-width: 850px;
-            margin: 2rem auto;
-            padding: 0 1.5rem;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
             flex: 1;
             width: 100%;
         }
 
-        .trainer-card {
+        /* Екран ідентифікації учня */
+        #auth-screen {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-lg);
             padding: 2.5rem;
             box-shadow: var(--shadow-md);
+            max-width: 500px;
+            margin: 3rem auto;
+            text-align: center;
         }
 
-        .trainer-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        #auth-screen h2 {
+            font-size: 1.35rem;
+            margin-bottom: 0.5rem;
+        }
+
+        #auth-screen p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
             margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-            gap: 1rem;
         }
 
-        .badge {
-            font-size: 0.8rem;
-            font-weight: 600;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            background: #e0f2fe;
-            color: #0369a1;
-        }
-
-        .timer-box {
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-            background: #f1f5f9;
-            padding: 0.4rem 1rem;
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .progress-bar-container {
-            width: 100%;
-            height: 8px;
-            background: #f1f5f9;
-            border-radius: 4px;
-            margin-bottom: 2rem;
-            overflow: hidden;
-        }
-
-        .progress-bar-fill {
-            height: 100%;
-            background: var(--accent-blue);
-            width: 0%;
-            transition: width 0.3s ease;
-        }
-
-        .task-counter {
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-            margin-bottom: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .task-condition {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 1.75rem;
-            line-height: 1.6;
-            color: var(--text-primary);
-            background: var(--accent-blue-light);
-            padding: 1.25rem;
-            border-radius: var(--radius-md);
-            border-left: 4px solid var(--accent-blue);
-        }
-
-        .options-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-            margin-bottom: 1.75rem;
-        }
-
-        .option-btn {
-            background: white;
-            border: 2px solid var(--border-color);
-            padding: 1rem 1.25rem;
-            border-radius: var(--radius-md);
-            font-size: 1.05rem;
+        .form-group {
+            margin-bottom: 1.25rem;
             text-align: left;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-weight: 500;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
             color: var(--text-primary);
         }
 
-        .option-btn:hover:not(:disabled) {
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-control:focus {
             border-color: var(--accent-blue);
-            background: var(--accent-blue-light);
         }
 
-        .option-btn.correct {
-            background: var(--accent-green-light) !important;
-            border-color: var(--accent-green) !important;
-            color: #166534;
-        }
-
-        .option-btn.incorrect {
-            background: #fef2f2 !important;
-            border-color: var(--danger-color) !important;
-            color: #991b1b;
-        }
-
-        .action-row {
-            display: flex;
-            justify-content: flex-end;
-        }
-
-        .btn-primary {
-            background: var(--text-primary);
+        .btn {
+            background: var(--accent-blue);
             color: white;
             border: none;
-            padding: 0.75rem 1.75rem;
-            border-radius: 30px;
+            padding: 0.85rem 1.5rem;
+            border-radius: 10px;
+            font-size: 1rem;
             font-weight: 600;
-            font-size: 0.95rem;
             cursor: pointer;
+            width: 100%;
             transition: background 0.2s;
         }
 
-        .btn-primary:hover {
-            background: #334155;
+        .btn:hover {
+            background: #2563eb;
         }
 
-        .results-container {
+        /* Екран тесту */
+        #test-screen {
+            display: none;
+        }
+
+        .test-header {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .student-info-badge {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .task-card {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            margin-bottom: 1.25rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .task-number {
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--accent-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .task-condition {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.95rem;
+        }
+
+        .option-label:hover {
+            background: #f8fafc;
+            border-color: #cbd5e1;
+        }
+
+        .option-label input {
+            accent-color: var(--accent-blue);
+        }
+
+        /* Екран результатів */
+        #results-screen {
+            display: none;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
             text-align: center;
-            padding: 1rem 0;
+            box-shadow: var(--shadow-md);
         }
 
         .results-score {
             font-size: 2.5rem;
             font-weight: 700;
             color: var(--accent-green);
-            margin-bottom: 1rem;
-        }
-
-        .results-details {
-            font-size: 1.05rem;
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-            line-height: 1.6;
+            margin: 1rem 0;
         }
 
         footer {
@@ -259,277 +258,215 @@
 
     <header>
         <div class="header-container">
-            <a href="index.html" class="logo">
+            <a href="rational-fractions-folder.html" class="logo">
                 <div class="logo-icon"><i class="fa-solid fa-arrow-left"></i></div>
-                <span>Назад до Математичного Хабу</span>
+                <span>Назад до папки матеріалів</span>
             </a>
-            <div style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 500;">
-                Дудка Оксана Анатоліївна
-            </div>
+            <div style="font-size: 0.85rem; color: var(--text-secondary);">8 клас • Алгебра</div>
         </div>
     </header>
 
     <main>
-        <div class="trainer-card">
-            <div class="trainer-header">
-                <div>
-                    <span class="badge">8 клас · Алгебра</span>
-                    <h1 style="font-size: 1.4rem; margin-top: 0.4rem;">Додавання і віднімання раціональних дробів з різними знаменниками</h1>
-                </div>
-                <div class="timer-box" id="timer">
-                    <i class="fa-regular fa-clock"></i> <span id="time-display">00:00</span>
-                </div>
+        <!-- ЕКРАН АВТОРИЗАЦІЇ -->
+        <div id="auth-screen">
+            <h2>Ідентифікація учня</h2>
+            <p>Будь ласка, введіть свої дані перед початком виконання тренажера</p>
+            <div class="form-group">
+                <label for="surname">Прізвище:</label>
+                <input type="text" id="surname" class="form-control" placeholder="Наприклад, Шевченко" required>
+            </div>
+            <div class="form-group">
+                <label for="name">Ім'я:</label>
+                <input type="text" id="name" class="form-control" placeholder="Наприклад, Олена" required>
+            </div>
+            <div class="form-group">
+                <label for="student-class">Клас:</label>
+                <input type="text" id="student-class" class="form-control" placeholder="Наприклад, 8-А" required>
+            </div>
+            <button class="btn" onclick="startTest()">Розпочати виконання</button>
+        </div>
+
+        <!-- ЕКРАН ТЕСТУ -->
+        <div id="test-screen">
+            <div class="test-header">
+                <div class="student-info-badge" id="display-student">Учень: </div>
+                <div style="font-size: 0.85rem; color: var(--text-secondary);">Тема: Додавання і віднімання дробів з різними знаменниками</div>
             </div>
 
-            <div id="quiz-section">
-                <div class="progress-bar-container">
-                    <div class="progress-bar-fill" id="progress-bar"></div>
-                </div>
-                <div class="task-counter" id="task-counter">Завдання 1 із 10</div>
-                <div class="task-condition" id="task-condition">Завантаження завдання...</div>
-                
-                <div class="options-grid" id="options-container"></div>
-
-                <div class="action-row">
-                    <button class="btn-primary" id="next-btn" onclick="nextTask()" style="display: none;">Наступне завдання</button>
-                </div>
+            <div id="tasks-container">
+                <!-- Завдання генеруються динамічно або виводяться фіксовано -->
             </div>
 
-            <div id="results-section" style="display: none;" class="results-container">
-                <div class="results-score" id="final-score"></div>
-                <div class="results-details" id="final-details"></div>
-                <button class="btn-primary" onclick="restartTrainer()">Пройти знову</button>
-            </div>
+            <button class="btn" onclick="submitTest()" style="margin-top: 1.5rem;">Завершити і перевірити</button>
+        </div>
+
+        <!-- ЕКРАН РЕЗУЛЬТАТІВ -->
+        <div id="results-screen">
+            <h2>Результати тестування</h2>
+            <div id="result-details" style="color: var(--text-secondary); margin-top: 0.5rem; font-size: 1rem;"></div>
+            <div class="results-score" id="score-display">0 / 5</div>
+            <p id="feedback-text" style="margin-bottom: 1.5rem; font-weight: 500;"></p>
+            <button class="btn" onclick="location.reload()">Пройти знову</button>
         </div>
     </main>
 
     <footer>
-        <p>© 2026 Математичний Хаб. Авторські матеріали з математики.</p>
+        <p>© 2026 Математичний Хаб. Усі права захищено.</p>
     </footer>
 
     <script>
         const tasks = [
             {
-                condition: "Виконайте додавання: \\[\\frac{2}{x} + \\frac{3}{y} \\]",
+                id: 1,
+                condition: "Виконайте додавання: \\(\\frac{1}{x} + \\frac{1}{2x}\\)",
+                text: "Виконайте додавання: 1/x + 1/(2x)",
                 options: [
-                    "\\(\\frac{2y + 3x}{xy} \\)",
-                    "\\(\\frac{5}{x + y} \\)",
-                    "\\(\\frac{6}{xy} \\)",
-                    "\\(\\frac{2+3}{xy} \\)"
+                    "\\(\\frac{2}{3x}\\)",
+                    "\\(\\frac{3}{2x}\\)",
+                    "\\(\\frac{2}{x}\\)",
+                    "\\(\\frac{3}{3x}\\)"
                 ],
+                rawOptions: ["2/(3x)", "3/(2x)", "2/x", "3/(3x)"],
+                correct: 1 // друга опція (індекс 1) -> 3/(2x)
+            },
+            {
+                id: 2,
+                condition: "Знайдіть різницю: \\(\\frac{3}{a} - \\frac{2}{b}\\)",
+                text: "Знайдіть різницю: 3/a - 2/b",
+                options: [
+                    "\\(\\frac{1}{a-b}\\)",
+                    "\\(\\frac{3b - 2a}{ab}\\)",
+                    "\\(\\frac{3a - 2b}{ab}\\)",
+                    "\\(\\frac{1}{ab}\\)"
+                ],
+                rawOptions: ["1/(a-b)", "(3b - 2a)/(ab)", "(3a - 2b)/(ab)", "1/(ab)"],
+                correct: 1
+            },
+            {
+                id: 3,
+                condition: "Спростіть вираз: \\(\\frac{x}{x-2} - \\frac{2}{x}\\)",
+                text: "Спростіть вираз: x / (x - 2) - 2 / x",
+                options: [
+                    "\\(\\frac{x-4}{x(x-2)}\\)",
+                    "\\(\\frac{x^2 - 2x + 4}{x(x-2)}\\)",
+                    "\\(\\frac{4}{x(x-2)}\\)",
+                    "\\(\\frac{x-2}{x}\\)"
+                ],
+                rawOptions: ["(x-4)/(x(x-2))", "(x^2 - 2x + 4)/(x(x-2))", "4/(x(x-2))", "(x-2)/x"],
                 correct: 0
             },
             {
-                condition: "Спростіть вираз: \\[\\frac{3}{a} - \\frac{2}{b} \\]",
+                id: 4,
+                condition: "Виконайте дії: \\(\\frac{5}{x-3} + \\frac{3}{3-x}\\)",
+                text: "Виконайте дії: 5 / (x - 3) + 3 / (3 - x)",
                 options: [
-                    "\\(\\frac{3b - 2a}{ab} \\)",
-                    "\\(\\frac{1}{ab} \\)",
-                    "\\(\\frac{3b - 2a}{a - b} \\)",
-                    "\\(\\frac{1}{a - b} \\)"
+                    "\\(\\frac{2}{x-3}\\)",
+                    "\\(\\frac{8}{x-3}\\)",
+                    "\\(\\frac{2}{3-x}\\)",
+                    "\\(\\frac{8}{3-x}\\)"
                 ],
+                rawOptions: ["2/(x-3)", "8/(x-3)", "2/(3-x)", "8/(3-x)"],
                 correct: 0
             },
             {
-                condition: "Знайдіть суму: \\[\\frac{1}{x} + \\frac{1}{2x} \\]",
+                id: 5,
+                condition: "Зведіть до спільного знаменника та спростіть: \\(\\frac{1}{x+1} + \\frac{1}{x-1}\\)",
+                text: "Зведіть до спільного знаменника та спростіть: 1/(x+1) + 1/(x-1)",
                 options: [
-                    "\\(\\frac{3}{2x} \\)",
-                    "\\(\\frac{2}{3x} \\)",
-                    "\\(\\frac{2}{2x^2} \\)",
-                    "\\(\\frac{1}{3x} \\)"
+                    "\\(\\frac{2}{x^2-1}\\)",
+                    "\\(\\frac{2x}{x^2-1}\\)",
+                    "\\(\\frac{1}{x^2-1}\\)",
+                    "\\(\\frac{2x}{x-1}\\)"
                 ],
-                correct: 0
-            },
-            {
-                condition: "Виконайте віднімання: \\[\\frac{5}{a} - \\frac{3}{2a} \\]",
-                options: [
-                    "\\(\\frac{7}{2a} \\)",
-                    "\\(\\frac{2}{a} \\)",
-                    "\\(\\frac{1}{a} \\)",
-                    "\\(\\frac{3}{2a^2} \\)"
-                ],
-                correct: 0
-            },
-            {
-                condition: "Зведіть до спільного знаменника та спростіть: \\[\\frac{1}{x-1} + \\frac{1}{x} \\]",
-                options: [
-                    "\\(\\frac{2x - 1}{x(x-1)} \\)",
-                    "\\(\\frac{2}{x(x-1)} \\)",
-                    "\\(\\frac{1}{2x - 1} \\)",
-                    "\\(\\frac{x^2 - 1}{2x} \\)"
-                ],
-                correct: 0
-            },
-            {
-                condition: "Обчисліть: \\[\\frac{2}{x+2} - \\frac{1}{x} \\]",
-                options: [
-                    "\\(\\frac{x - 2}{x(x+2)} \\)",
-                    "\\(\\frac{1}{x(x+2)} \\)",
-                    "\\(\\frac{3x + 2}{x(x+2)} \\)",
-                    "\\(\\frac{-2}{x+2} \\)"
-                ],
-                correct: 0
-            },
-            {
-                condition: "Виконайте дії: \\[\\frac{a}{a-b} - \\frac{b}{a+b} \\]",
-                options: [
-                    "\\(\\frac{a^2 + b^2}{a^2 - b^2} \\)",
-                    "\\(\\frac{a^2 - b^2}{a^2 + b^2} \\)",
-                    "\\(\\frac{a - b}{a + b} \\)",
-                    "\\(\\frac{1}{a^2 - b^2} \\)"
-                ],
-                correct: 0
-            },
-            {
-                condition: "Спростіть вираз: \\[\\frac{2}{x^2 - 4} + \\frac{1}{x-2} \\]",
-                options: [
-                    "\\(\\frac{x + 4}{(x-2)(x+2)} \\)",
-                    "\\(\\frac{3}{x^2 - 4} \\)",
-                    "\\(\\frac{1}{x+2} \\)",
-                    "\\(\\frac{x-1}{x+2} \\)"
-                ],
-                correct: 0
-            },
-            {
-                condition: "Знайдіть різницю: \\[\\frac{3}{x-3} - \\frac{9}{x^2 - 3x} \\]",
-                options: [
-                    "\\( 0 \\)",
-                    "\\(\\frac{6}{x(x-3)} \\)",
-                    "\\(\\frac{3}{x} \\)",
-                    "\\(\\frac{12}{x(x-3)} \\)"
-                ],
-                correct: 2
-            },
-            {
-                condition: "Виконайте додавання: \\[\\frac{x}{x-y} + \\frac{y}{x+y} \\]",
-                options: [
-                    "\\(\\frac{x^2 + y^2}{x^2 - y^2} \\)",
-                    "\\(\\frac{x + y}{x - y} \\)",
-                    "\\(\\frac{2xy}{x^2 - y^2} \\)",
-                    "\\( 1 \\)"
-                ],
-                correct: 0
+                rawOptions: ["2/(x^2-1)", "2x/(x^2-1)", "1/(x^2-1)", "2x/(x-1)"],
+                correct: 1
             }
         ];
 
-        let currentTaskIndex = 0;
-        let score = 0;
-        let timerInterval;
-        let secondsElapsed = 0;
-        let answered = false;
+        let studentData = { surname: '', name: '', class: '' };
 
-        function startTimer() {
-            secondsElapsed = 0;
-            clearInterval(timerInterval);
-            timerInterval = setInterval(() => {
-                secondsElapsed++;
-                let mins = Math.floor(secondsElapsed / 60).toString().padStart(2, '0');
-                let secs = (secondsElapsed % 60).toString().padStart(2, '0');
-                document.getElementById('time-display').innerText = `${mins}:${secs}`;
-            }, 1000);
+        function startTest() {
+            const surname = document.getElementById('surname').value.trim();
+            const name = document.getElementById('name').value.trim();
+            const studentClass = document.getElementById('student-class').value.trim();
+
+            if (!surname || !name || !studentClass) {
+                alert('Будь ласка, заповніть усі поля ідентифікації (Прізвище, Ім\'я, Клас)!');
+                return;
+            }
+
+            studentData = { surname, name, class: studentClass };
+            document.getElementById('display-student').innerText = `Учень: ${surname} ${name} (${studentClass} клас)`;
+
+            document.getElementById('auth-screen').style.display = 'none';
+            document.getElementById('test-screen').style.display = 'block';
+
+            renderTasks();
         }
 
-        function shuffle(array) {
-            return array.map(value => ({ value, sort: Math.random() }))
-                        .sort((a, b) => a.sort - b.sort)
-                        .map(({ value }) => value);
-        }
+        function renderTasks() {
+            const container = document.getElementById('tasks-container');
+            let html = '';
 
-        let shuffledTasks = [];
+            tasks.forEach((task, index) => {
+                html += `
+                    <div class="task-card">
+                        <div class="task-number">Завдання ${index + 1}</div>
+                        <div class="task-condition">${task.text}</div>
+                        <div class="options-list">
+                `;
 
-        function initTrainer() {
-            currentTaskIndex = 0;
-            score = 0;
-            shuffledTasks = tasks.map(t => {
-                let optionsWithIndices = t.options.map((opt, idx) => ({ opt, isCorrect: idx === t.correct }));
-                let shuffledOpts = shuffle(optionsWithIndices);
-                return {
-                    condition: t.condition,
-                    options: shuffledOpts.map(o => o.opt),
-                    correct: shuffledOpts.findIndex(o => o.isCorrect)
-                };
-            });
-            document.getElementById('quiz-section').style.display = 'block';
-            document.getElementById('results-section').style.display = 'none';
-            startTimer();
-            loadTask();
-        }
+                task.rawOptions.forEach((opt, optIndex) => {
+                    html += `
+                        <label class="option-label">
+                            <input type="radio" name="task_${index}" value="${optIndex}">
+                            <span>${opt}</span>
+                        </label>
+                    `;
+                });
 
-        function loadTask() {
-            answered = false;
-            document.getElementById('next-btn').style.display = 'none';
-            
-            let task = shuffledTasks[currentTaskIndex];
-            let progress = ((currentTaskIndex) / tasks.length) * 100;
-            document.getElementById('progress-bar').style.width = `${progress}%`;
-            document.getElementById('task-counter').innerText = `Завдання ${currentTaskIndex + 1} із ${tasks.length}`;
-            document.getElementById('task-condition').innerHTML = task.condition;
-
-            let optsContainer = document.getElementById('options-container');
-            optsContainer.innerHTML = '';
-
-            task.options.forEach((opt, idx) => {
-                let btn = document.createElement('button');
-                btn.className = 'option-btn';
-                btn.innerHTML = opt;
-                btn.onclick = () => selectAnswer(idx, task.correct, btn);
-                optsContainer.appendChild(btn);
+                html += `</div></div>`;
             });
 
-            if (window.MathJax) {
-                MathJax.typeset();
-            }
+            container.innerHTML = html;
         }
 
-        function selectAnswer(selected, correct, btn) {
-            if (answered) return;
-            answered = true;
+        function submitTest() {
+            let score = 0;
+            let answeredCount = 0;
 
-            let buttons = document.querySelectorAll('.option-btn');
-            if (selected === correct) {
-                btn.classList.add('correct');
-                score++;
+            tasks.forEach((task, index) => {
+                const selected = document.querySelector(`input[name="task_${index}"]:checked`);
+                if (selected) {
+                    answeredCount++;
+                    if (parseInt(selected.value) === task.correct) {
+                        score++;
+                    }
+                }
+            });
+
+            if (answeredCount < tasks.length) {
+                if (!confirm(`Ви відповіли не на всі запитання (${answeredCount} з ${tasks.length}). Бажаєте завершити тест?`)) {
+                    return;
+                }
+            }
+
+            document.getElementById('test-screen').style.display = 'none';
+            document.getElementById('results-screen').style.display = 'block';
+
+            document.getElementById('result-details').innerText = `${studentData.surname} ${studentData.name}, ${studentData.class} клас`;
+            document.getElementById('score-display').innerText = `${score} / ${tasks.length}`;
+
+            let feedback = '';
+            if (score === tasks.length) {
+                feedback = 'Чудово! Ви чудово засвоїли тему!';
+            } else if (score >= 3) {
+                feedback = 'Добре, але є над чим попрацювати.';
             } else {
-                btn.classList.add('incorrect');
-                buttons[correct].classList.add('correct');
+                feedback = 'Слід повторити правила зведення до спільного знаменника.';
             }
-
-            buttons.forEach(b => b.disabled = true);
-            document.getElementById('next-btn').style.display = 'block';
+            document.getElementById('feedback-text').innerText = feedback;
         }
-
-        function nextTask() {
-            currentTaskIndex++;
-            if (currentTaskIndex < tasks.length) {
-                loadTask();
-            } else {
-                showResults();
-            }
-        }
-
-        function showResults() {
-            clearInterval(timerInterval);
-            document.getElementById('quiz-section').style.display = 'none';
-            document.getElementById('results-section').style.display = 'block';
-
-            let mins = Math.floor(secondsElapsed / 60);
-            let secs = secondsElapsed % 60;
-            let timeStr = mins > 0 ? `${mins} хв ${secs} сек` : `${secs} сек`;
-
-            let grade12 = Math.round((score / tasks.length) * 11 + 1);
-            if (score === 0) grade12 = 1;
-
-            document.getElementById('final-score').innerText = `${score} / ${tasks.length} правильних відповідей`;
-            document.getElementById('final-details').innerHTML = `
-                Час виконання: <b>${timeStr}</b><br>
-                Орієнтовна оцінка: <b>${grade12} балів</b> (за 12-бальною шкалою)
-            `;
-        }
-
-        function restartTrainer() {
-            initTrainer();
-        }
-
-        window.onload = initTrainer;
     </script>
 </body>
 </html>
