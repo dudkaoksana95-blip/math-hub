@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Підключаємо MathJax для красивих математичних формул -->
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.5net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
         :root {
             --bg-main: #f8fafc;
@@ -398,9 +398,10 @@
             });
 
             container.innerHTML = html;
-            // Оновлюємо формули MathJax після рендерингу
-            if (window.MathJax) {
-                MathJax.typeset();
+            
+            // Коректний перерендер формул MathJax для динамічно створених елементів у кнопках
+            if (window.MathJax && window.MathJax.typesetPromise) {
+                MathJax.typesetPromise([container]).catch((err) => console.log('MathJax error:', err));
             }
         }
 
@@ -441,7 +442,7 @@
                 const taskDiv = document.getElementById(`task-${index}`);
                 const buttons = taskDiv.getElementsByClassName('option-btn');
                 
-                // Вимикаємо кнопки
+                // Вимикаємо кнопки після здачі
                 for (let b of buttons) {
                     b.style.pointerEvents = 'none';
                 }
@@ -460,7 +461,7 @@
                         buttons[userAnswers[index]].style.borderColor = '#ef4444';
                         buttons[userAnswers[index]].style.color = '#991b1b';
                     }
-                    // Показуємо правильну
+                    // Показуємо правильну відповідь
                     if(buttons[q.correct]) {
                         buttons[q.correct].style.background = '#f0fdf4';
                         buttons[q.correct].style.borderColor = '#10b981';
@@ -469,7 +470,7 @@
                 }
             });
 
-            // Розрахунок 12-бальної шкали або відсотків
+            // Розрахунок за 12-бальною шкалою
             const grade12 = Math.round((score / totalQuestions) * 12);
             const resultBox = document.getElementById('result-box');
             const resultText = document.getElementById('result-text');
