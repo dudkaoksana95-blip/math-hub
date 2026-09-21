@@ -200,6 +200,11 @@
             border-color: #cbd5e1;
         }
 
+        .card.folder-card {
+            background: #fdfefe;
+            border-left: 5px solid #f39c12;
+        }
+
         .card-badges {
             display: flex;
             gap: 6px;
@@ -218,6 +223,7 @@
         .badge-grade { background: #e0f2fe; color: #0369a1; }
         .badge-algebra { background: #fef3c7; color: #b45309; }
         .badge-geometry { background: #fce7f3; color: #be185d; }
+        .badge-folder { background: #fef9e7; color: #b7950b; }
 
         .card-title {
             font-size: 1.1rem;
@@ -349,54 +355,14 @@
     <script>
         const itemsData = [
             {
-                id: 19,
-                title: "Підсумковий тест: Раціональні дроби та їх властивості",
-                desc: "Інтерактивний підсумковий тест (12 завдань) з таймером на 30 хв, ідентифікацією учня та протоколом результатів.",
+                id: 20,
+                title: "Раціональні дроби та їх властивості. Додавання раціональних дробів",
+                desc: "Тематична папка містить 5 інтерактивних тренажерів та підсумковий тест для опрацювання теми.",
                 grade: "grade8",
                 subject: "algebra",
                 gradeLabel: "8 клас",
-                type: "trainer",
-                link: "rational-fractions-test-8.html"
-            },
-            {
-                id: 17,
-                title: "Додавання дробів з різними знаменниками. Частина 1",
-                desc: "Інтерактивний тренажер: зведення до спільного знаменника та перетворення виразів.",
-                grade: "grade8",
-                subject: "algebra",
-                gradeLabel: "8 клас",
-                type: "trainer",
-                link: "rational-fractions-different-denominators.html"
-            },
-            {
-                id: 15,
-                title: "Скорочення раціональних виразів",
-                desc: "Інтерактивний тест на скорочення раціональних дробів з винесенням за дужки, формулами та групуванням.",
-                grade: "grade8",
-                subject: "algebra",
-                gradeLabel: "8 клас",
-                type: "trainer",
-                link: "rational-expressions-reduction.html"
-            },
-            {
-                id: 1,
-                title: "Додавання раціональних дробів з однаковими знаменниками",
-                desc: "Тренажер додавання, віднімання та скорочення раціональних дробів.",
-                grade: "grade8",
-                subject: "algebra",
-                gradeLabel: "8 клас",
-                type: "trainer",
-                link: "ratsionalni-vyrazy.html"
-            },
-            {
-                id: 16,
-                title: "Додавання дробів з різними знаменниками. Частина 2",
-                desc: "Практикум із перетворення та спрощення раціональних виразів.",
-                grade: "grade8",
-                subject: "algebra",
-                gradeLabel: "8 клас",
-                type: "trainer",
-                link: "rational-fractions-addition.html"
+                type: "folder",
+                link: "rational-fractions-folder.html"
             },
             {
                 id: 12,
@@ -483,7 +449,7 @@
 
             filtered.forEach(item => {
                 const card = document.createElement('div');
-                card.className = 'card';
+                card.className = item.type === 'folder' ? 'card folder-card' : 'card';
                 card.onclick = () => {
                     if (item.link) {
                         window.open(item.link, '_blank');
@@ -494,18 +460,21 @@
 
                 const subjClass = item.subject === 'algebra' ? 'badge-algebra' : 'badge-geometry';
                 const subjText = item.subject === 'algebra' ? 'Алгебра' : 'Геометрія';
+                const actionText = item.type === 'folder' ? 'Відкрити папку (5 матеріалів)' : 'Відкрити завдання';
+                const extraBadge = item.type === 'folder' ? `<span class="badge badge-folder">Тематична папка</span>` : '';
 
                 card.innerHTML = `
                     <div>
                         <div class="card-badges">
                             <span class="badge badge-grade">${item.gradeLabel}</span>
                             <span class="badge ${subjClass}">${subjText}</span>
+                            ${extraBadge}
                         </div>
                         <div class="card-title">${item.title}</div>
                         <div class="card-desc">${item.desc}</div>
                     </div>
                     <div style="font-size: 0.85rem; font-weight: 600; color: var(--accent-blue); display: flex; align-items: center; gap: 5px;">
-                        <span>Відкрити завдання</span> <i class="fa-solid fa-arrow-right"></i>
+                        <span>${actionText}</span> <i class="fa-solid fa-arrow-right"></i>
                     </div>
                 `;
                 container.appendChild(card);
