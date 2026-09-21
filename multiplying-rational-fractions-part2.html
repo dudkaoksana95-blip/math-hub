@@ -150,7 +150,7 @@
             {
                 q: "2) Виконайте множення:<br>\\(-\\frac{y^3 - 8}{9 - y^2} \\cdot \\frac{y^2 - 6y + 9}{y^2 + 2y + 4}\\)",
                 options: [
-                    "\\(\\frac{y - 3}{y + 3}\\)",
+                    "\\(\\frac{(y - 2)(y - 3)}{y + 3}\\)",
                     "\\(-\\frac{y - 3}{y + 3}\\)",
                     "\\(\\frac{y + 3}{y - 3}\\)",
                     "\\(1\\)"
@@ -182,7 +182,7 @@
                 options: [
                     "\\(6\\)",
                     "\\(12\\)",
-                    "\\(8\\)",
+                    "\\(9,6\\)",
                     "\\(4\\)"
                 ],
                 correct: 2
@@ -190,12 +190,12 @@
             {
                 q: "6) Виконайте множення методом групування:<br>\\(\\frac{x^2 + ax - cx - ca}{x^2 - ax + cx - ac} \\cdot \\frac{x^2 + ac + xc + xa}{x^2 + ac - xc - xa}\\)",
                 options: [
-                    "\\(1\\)",
+                    "\\(\\frac{x + a}{x - a}\\)",
                     "\\(-1\\)",
-                    "\\(\\frac{x+a}{x-c}\\)",
-                    "\\(\\frac{x-a}{x+c}\\)"
+                    "\\(\\left(\\frac{x + a}{x - a}\\right)^2\\)",
+                    "\\(1\\)"
                 ],
-                correct: 0
+                correct: 2
             }
         ];
 
@@ -204,6 +204,8 @@
         let studentName = "";
         let studentClass = "";
         let userAnswers = [];
+        let timerInterval;
+        let timeLeft = 25 * 60; // 25 хвилин
 
         function startTrainer() {
             const nameInput = document.getElementById('studentName').value.trim();
@@ -220,7 +222,23 @@
             document.getElementById('startScreen').style.display = 'none';
             document.getElementById('quizScreen').style.display = 'block';
             
+            startTimer();
             loadQuestion();
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    showResults();
+                    return;
+                }
+                timeLeft--;
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                document.getElementById('timerText').innerText = 
+                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }, 1000);
         }
 
         function loadQuestion() {
@@ -265,6 +283,7 @@
             if (currentQuestion < questions.length) {
                 loadQuestion();
             } else {
+                clearInterval(timerInterval);
                 showResults();
             }
         }
