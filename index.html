@@ -209,6 +209,7 @@
             display: flex;
             gap: 6px;
             margin-bottom: 0.75rem;
+            flex-wrap: wrap;
         }
 
         .badge {
@@ -365,6 +366,16 @@
                 link: "rational-fractions-folder.html"
             },
             {
+                id: 21,
+                title: "Множення та ділення дробів. Раціональні рівняння",
+                desc: "Тематична папка містить тренажери на множення, ділення дробів, степенування та раціональні рівняння.",
+                grade: "grade8",
+                subject: "algebra",
+                gradeLabel: "8 клас",
+                type: "folder",
+                link: "folder-multiplication-division.html"
+            },
+            {
                 id: 12,
                 title: "Квадратні рівняння",
                 desc: "Інтерактивний марафон із неповними, повними рівняннями, теоремою Вієта .",
@@ -460,7 +471,7 @@
 
                 const subjClass = item.subject === 'algebra' ? 'badge-algebra' : 'badge-geometry';
                 const subjText = item.subject === 'algebra' ? 'Алгебра' : 'Геометрія';
-                const actionText = item.type === 'folder' ? 'Відкрити папку (5 матеріалів)' : 'Відкрити завдання';
+                const actionText = item.type === 'folder' ? 'Відкрити папку' : 'Відкрити завдання';
                 const extraBadge = item.type === 'folder' ? `<span class="badge badge-folder">Тематична папка</span>` : '';
 
                 card.innerHTML = `
