@@ -6,6 +6,9 @@
     <title>Множення і ділення раціональних дробів (Частина 2) — Математичний Хаб</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Підключаємо MathJax для красивих формул -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
         :root {
             --bg-main: #f8fafc;
@@ -13,8 +16,6 @@
             --text-primary: #0f172a;
             --text-secondary: #475569;
             --accent-blue: #3b82f6;
-            --success: #10b981;
-            --error: #ef4444;
             --border-color: #e2e8f0;
             --radius-lg: 20px;
             --radius-md: 12px;
@@ -140,7 +141,6 @@
         const questions = [
             {
                 q: "Виконайте множення дробів: \\(\\frac{3x}{y^2} \\cdot \\frac{y}{6x^2}\\)",
-                text: "Виконайте множення дробів: (3x / y²) · (y / 6x²)",
                 options: [
                     "\\(\\frac{1}{2xy}\\)",
                     "\\(\\frac{2}{xy}\\)",
@@ -151,7 +151,6 @@
             },
             {
                 q: "Спростіть вираз: \\(\\frac{a^2 - 4}{a} \\cdot \\frac{a^2}{a + 2}\\)",
-                text: "Спростіть вираз: ((a² - 4) / a) · (a² / (a + 2))",
                 options: [
                     "\\(a(a - 2)\\)",
                     "\\(a + 2\\)",
@@ -162,7 +161,6 @@
             },
             {
                 q: "Виконайте ділення дробів: \\(\\frac{5a}{b} : \\frac{10a^2}{b^2}\\)",
-                text: "Виконайте ділення дробів: (5a / b) : (10a² / b²)",
                 options: [
                     "\\(\\frac{b}{2a}\\)",
                     "\\(\\frac{2a}{b}\\)",
@@ -173,7 +171,6 @@
             },
             {
                 q: "Спростіть вираз: \\(\\frac{x^2 - 9}{x + 1} : \\frac{x - 3}{x + 1}\\)",
-                text: "Спростіть вираз: ((x² - 9) / (x + 1)) : ((x - 3) / (x + 1))",
                 options: [
                     "\\(x + 3\\)",
                     "\\(x - 3\\)",
@@ -184,7 +181,6 @@
             },
             {
                 q: "Знайдіть значення виразу \\(\\frac{x^2 - 25}{x^2 - 4} \\cdot \\frac{x + 2}{x - 5}\\) при \\(x = 10\\)",
-                text: "Знайдіть значення виразу ((x² - 25) / (x² - 4)) · ((x + 2) / (x - 5)) при x = 10",
                 options: [
                     "\\(3\\)",
                     "\\(1,5\\)",
@@ -222,23 +218,25 @@
         function loadQuestion() {
             const q = questions[currentQuestion];
             document.getElementById('progressBadge').innerText = `Питання ${currentQuestion + 1} з ${questions.length}`;
-            document.getElementById('questionText').innerText = q.text;
+            document.getElementById('questionText').innerHTML = q.q;
 
             const optionsList = document.getElementById('optionsList');
             optionsList.innerHTML = '';
 
             q.options.forEach((optText, index) => {
-                // Очищаємо теги для простих текстових варіантів
-                let cleanOpt = optText.replace(/\\\(\vert{}\\\)/g, '').replace(/\\frac\{(.*?)\}\\{(.*?)\}/g, '($1)/($2)').replace(/\\cdot/g, '·').replace(/\\/, '');
-                
                 const div = document.createElement('label');
                 div.className = 'option-item';
                 div.innerHTML = `
                     <input type="radio" name="option" value="${index}" id="opt${index}">
-                    <span>${cleanOpt}</span>
+                    <span>${optText}</span>
                 `;
                 optionsList.appendChild(div);
             });
+
+            // Оновлюємо рендеринг формул через MathJax
+            if (window.MathJax) {
+                MathJax.typeset();
+            }
         }
 
         function nextQuestion() {
@@ -270,7 +268,6 @@
 
             document.getElementById('resultStudentInfo').innerText = `${studentName}, ${studentClass}`;
             
-            // Переводимо у 12-бальну шкалу
             const grade12 = Math.round((score / questions.length) * 12);
             document.getElementById('scoreCircle').innerText = grade12;
             
