@@ -15,6 +15,7 @@
             --accent-blue: #3b82f6;
             --border-color: #e2e8f0;
             --radius-lg: 20px;
+            --radius-md: 12px;
             --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
             --shadow-md: 0 4px 20px -2px rgba(0,0,0,0.05);
         }
@@ -84,28 +85,20 @@
             width: 100%;
         }
 
-        .breadcrumbs {
-            display: flex;
+        .back-link {
+            display: inline-flex;
             align-items: center;
-            gap: 10px;
-            font-size: 0.9rem;
+            gap: 8px;
             color: var(--text-secondary);
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-        }
-
-        .breadcrumbs a {
-            color: var(--accent-blue);
             text-decoration: none;
             font-weight: 500;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            transition: color 0.2s;
         }
 
-        .breadcrumbs a:hover {
-            text-decoration: underline;
-        }
-
-        .breadcrumbs span {
-            color: #94a3b8;
+        .back-link:hover {
+            color: var(--accent-blue);
         }
 
         .folder-header {
@@ -121,12 +114,11 @@
             font-size: 1.5rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
-            color: var(--text-primary);
         }
 
         .folder-desc {
             color: var(--text-secondary);
-            font-size: 1rem;
+            font-size: 0.95rem;
             line-height: 1.5;
         }
 
@@ -134,10 +126,10 @@
             font-size: 1.15rem;
             font-weight: 600;
             margin-bottom: 1.25rem;
-            color: var(--text-primary);
             display: flex;
             align-items: center;
             gap: 8px;
+            color: var(--text-primary);
         }
 
         .cards-grid {
@@ -156,6 +148,7 @@
             justify-content: space-between;
             transition: all 0.25s ease;
             box-shadow: var(--shadow-sm);
+            cursor: pointer;
             text-decoration: none;
             color: inherit;
         }
@@ -170,6 +163,7 @@
             display: flex;
             gap: 6px;
             margin-bottom: 0.75rem;
+            flex-wrap: wrap;
         }
 
         .badge {
@@ -183,7 +177,8 @@
 
         .badge-grade { background: #e0f2fe; color: #0369a1; }
         .badge-algebra { background: #fef3c7; color: #b45309; }
-        .badge-test { background: #f3e8ff; color: #6b21a8; }
+        .badge-trainer { background: #f3e8ff; color: #6b21a8; }
+        .badge-test { background: #dcfce7; color: #166534; }
 
         .card-title {
             font-size: 1.1rem;
@@ -234,85 +229,62 @@
     </header>
 
     <main>
-        <div class="breadcrumbs">
-            <a href="index.html">Головна</a>
-            <span>/</span>
-            <span>8 клас</span>
-            <span>/</span>
-            <span>Алгебра</span>
-            <span>/</span>
-            <span style="color: var(--text-primary); font-weight: 500;">Раціональні дроби та їх властивості. Додавання раціональних дробів</span>
-        </div>
+        <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> На головну</a>
 
         <div class="folder-header">
-            <div class="folder-title">Раціональні дроби та їх властивості. Додавання раціональних дробів</div>
-            <div class="folder-desc">Тематична добірка інтерактивних матеріалів: тренажери, правила скорочення, виконання дій з раціональними дробами та підсумкові тести.</div>
+            <h1 class="folder-title">Раціональні дроби та їх властивості. Додавання раціональних дробів</h1>
+            <p class="folder-desc">Тематична добірка інтерактивних матеріалів: тренажери, правила скорочення, виконання дій з раціональними дробами та підсумкові тести.</p>
         </div>
 
         <div class="section-heading">
-            <i class="fa-solid fa-folder-open" style="color: #f59e0b;"></i> Матеріали теми (5 тестів та тренажерів)
+            <i class="fa-solid fa-folder-open" style="color: #f39c12;"></i> Матеріали теми (4 тести та тренажери)
         </div>
 
         <div class="cards-grid">
-            
-            <!-- Матеріал 1 -->
-            <a href="rational-expressions-reduction.html" target="_blank" class="card">
+            <!-- Картка 1 -->
+            <a href="trainer-rational-1.html" class="card">
                 <div>
                     <div class="card-badges">
                         <span class="badge badge-grade">8 клас</span>
                         <span class="badge badge-algebra">Алгебра</span>
-                        <span class="badge badge-test">Тренажер 1</span>
+                        <span class="badge badge-trainer">Тренажер 1</span>
                     </div>
                     <div class="card-title">Скорочення раціональних дробів</div>
                     <div class="card-desc">Практичні завдання на розкладання на множники та скорочення дробів.</div>
                 </div>
-                <div class="card-action"><span>Розпочати тест</span> <i class="fa-solid fa-arrow-right"></i></div>
+                <div class="card-action">Розпочати тест <i class="fa-solid fa-arrow-right"></i></div>
             </a>
 
-            <!-- Матеріал 2 -->
-            <a href="rational-fractions-addition.html" target="_blank" class="card">
+            <!-- Картка 2 -->
+            <a href="trainer-rational-2.html" class="card">
                 <div>
                     <div class="card-badges">
                         <span class="badge badge-grade">8 клас</span>
                         <span class="badge badge-algebra">Алгебра</span>
-                        <span class="badge badge-test">Тренажер 2</span>
+                        <span class="badge badge-trainer">Тренажер 2</span>
                     </div>
                     <div class="card-title">Додавання і віднімання дробів з однаковими знаменниками</div>
                     <div class="card-desc">Базові вправи на виконання арифметичних дій з раціональними виразами.</div>
                 </div>
-                <div class="card-action"><span>Розпочати тест</span> <i class="fa-solid fa-arrow-right"></i></div>
+                <div class="card-action">Розпочати тест <i class="fa-solid fa-arrow-right"></i></div>
             </a>
 
-            <!-- Матеріал 3 -->
-            <a href="rational-fractions-different-denominators.html" target="_blank" class="card">
+            <!-- Картка 3 -->
+            <a href="trainer-rational-3.html" class="card">
                 <div>
                     <div class="card-badges">
                         <span class="badge badge-grade">8 клас</span>
                         <span class="badge badge-algebra">Алгебра</span>
-                        <span class="badge badge-test">Тренажер 3</span>
+                        <span class="badge badge-trainer">Тренажер 3</span>
                     </div>
                     <div class="card-title">Додавання і віднімання дробів з різними знаменниками</div>
                     <div class="card-desc">Зведення до спільного знаменника та перетворення складніших виразів.</div>
                 </div>
-                <div class="card-action"><span>Розпочати тест</span> <i class="fa-solid fa-arrow-right"></i></div>
+                <div class="card-action">Розпочати тест <i class="fa-solid fa-arrow-right"></i></div>
             </a>
 
-            <!-- Матеріал 4 -->
-            <a href="rational-equations-trainer.html" target="_blank" class="card">
-                <div>
-                    <div class="card-badges">
-                        <span class="badge badge-grade">8 клас</span>
-                        <span class="badge badge-algebra">Алгебра</span>
-                        <span class="badge badge-test">Тренажер 4</span>
-                    </div>
-                    <div class="card-title">Рівняння з раціональними дробами</div>
-                    <div class="card-desc">Розв'язування раціональних рівнянь із врахуванням області допустимих значень (ОДЗ).</div>
-                </div>
-                <div class="card-action"><span>Розпочати тест</span> <i class="fa-solid fa-arrow-right"></i></div>
-            </a>
-
-            <!-- Матеріал 5 -->
-            <a href="rational-fractions-test-8.html" target="_blank" class="card">
+            <!-- Картка 4 -->
+            <a href="test-rational-final.html" class="card">
                 <div>
                     <div class="card-badges">
                         <span class="badge badge-grade">8 клас</span>
@@ -322,9 +294,8 @@
                     <div class="card-title">Підсумковий тест з теми</div>
                     <div class="card-desc">Контрольний тест для перевірки засвоєння всіх властивостей та дій з раціональними дробами.</div>
                 </div>
-                <div class="card-action"><span>Розпочати тест</span> <i class="fa-solid fa-arrow-right"></i></div>
+                <div class="card-action">Розпочати тест <i class="fa-solid fa-arrow-right"></i></div>
             </a>
-
         </div>
     </main>
 
