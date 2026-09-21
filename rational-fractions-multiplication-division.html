@@ -173,6 +173,8 @@
             border-radius: var(--radius-md);
             margin-bottom: 2rem;
             font-weight: 600;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .timer {
@@ -277,7 +279,7 @@
 
         .result-box {
             display: none;
-            text-align: center;
+            text-align: left;
             padding: 2rem;
             background: #f0fdf4;
             border: 1px solid #bbf7d0;
@@ -288,6 +290,30 @@
         .result-box h2 {
             color: #166534;
             margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .recommendation-card {
+            background: #ffffff;
+            border-left: 4px solid var(--success-color);
+            padding: 1rem 1.25rem;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .recommendation-card h4 {
+            color: #166534;
+            margin-bottom: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .recommendation-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.5;
         }
 
         footer {
@@ -358,7 +384,12 @@
 
                 <div id="result-box" class="result-box">
                     <h2>Тест завершено!</h2>
-                    <p id="result-text" style="font-size: 1.1rem; font-weight: 600; color: #166534;"></p>
+                    <p id="result-text" style="font-size: 1.1rem; font-weight: 600; color: #166534; text-align: center; margin-bottom: 1rem;"></p>
+                    
+                    <div class="recommendation-card">
+                        <h4><i class="fa-solid fa-chalkboard-user"></i> Педагогічні рекомендації:</h4>
+                        <p id="recommendation-text"></p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -406,7 +437,7 @@
             { 
                 id: 5, 
                 text: `5. Спростіть вираз: <span class="math-expr">${f('7c<sup>3</sup>', '10m<sup>2</sup>')} &middot; ${f('25m<sup>3</sup>', '14c<sup>8</sup>')}</span>`, 
-                options: [f('5m', '2c<sup>5</sup>'), f('2c<sup>5</sup>', '5m'), f('5m<sup>2</sup>', '2c<sup>3</sup>'), f('m', '10c<sup>5</sup>')], 
+                options: [f('5m', '4c<sup>5</sup>'), f('2c<sup>5</sup>', '5m'), f('5m<sup>2</sup>', '2c<sup>3</sup>'), f('m', '10c<sup>5</sup>')], 
                 correct: 0 
             },
             { 
@@ -478,6 +509,7 @@
                         <div class="task-question">${q.text}</div>
                         <div class="options-grid">
                 `;
+                q.options.optionsOpt = q.options; // safety helper
                 q.options.forEach((opt, optIndex) => {
                     html += `<button type="button" class="option-btn" onclick="selectOption(${index}, ${optIndex}, this)">${opt}</button>`;
                 });
@@ -551,8 +583,23 @@
             const grade12 = Math.round((score / totalQuestions) * 12);
             const resultBox = document.getElementById('result-box');
             const resultText = document.getElementById('result-text');
+            const recommendationText = document.getElementById('recommendation-text');
 
             resultText.innerHTML = `Правильних відповідей: ${score} з ${totalQuestions}.<br>Оцінка за 12-бальною шкалою: <b>${grade12} балів</b>`;
+
+            // Формування рекомендацій залежно від результату
+            let recommendation = "";
+            if (grade12 >= 10) {
+                recommendation = "Чудовий результат! Ви чудово засвоїли правила множення, ділення та піднесення раціональних дробів до степеня. Продовжуйте в тому ж дусі!";
+            } else if (grade12 >= 7) {
+                recommendation = "Добрий результат! Ви непогано орієнтуєтеся в темі, проте варто звернути увагу на техніку скорочення дробів та уважніше виконувати дії зі степенями у складніших виразах.";
+            } else if (grade12 >= 4) {
+                recommendation = "Задовільний результат. Вам варто повторити алгоритми розкладання многочленів на множники (формули скороченого множення, винесення за дужки) та правила перетворення раціональних виразів.";
+            } else {
+                recommendation = "Початковий рівень. Рекомендуємо уважно переглянути теоретичний матеріал у підручнику, повторити правила множення і ділення звичайних і раціональних дробів та спробувати розв'язати тренажер ще раз.";
+            }
+
+            recommendationText.innerText = recommendation;
             resultBox.style.display = 'block';
             window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
         }
