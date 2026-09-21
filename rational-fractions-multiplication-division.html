@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Множення та ділення дробів — Тренажер 1 | Математичний Хаб</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #f8fafc;
+            --card-bg: #ffffff;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent-blue: #3b82f6;
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --border-color: #e2e8f0;
+            --radius-lg: 20px;
+            --radius-md: 12px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 20px -2px rgba(0,0,0,0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+            background-size: 24px 24px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            background: var(--text-primary);
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+
+        main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+            flex: 1;
+            width: 100%;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: var(--accent-blue);
+        }
+
+        .trainer-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 2rem;
+        }
+
+        .trainer-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .trainer-desc {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .task-container {
+            border-top: 1px solid var(--border-color);
+            padding-top: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .task-item {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .option-btn {
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            padding: 10px 15px;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.2s;
+            text-align: left;
+        }
+
+        .option-btn:hover {
+            background: #e2e8f0;
+        }
+
+        .option-btn.correct {
+            background: #dcfce7;
+            border-color: var(--success-color);
+            color: #166534;
+            font-weight: 600;
+        }
+
+        .option-btn.incorrect {
+            background: #fee2e2;
+            border-color: var(--error-color);
+            color: #991b1b;
+        }
+
+        .check-score {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: #f1f5f9;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            text-align: center;
+        }
+
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 1.5rem;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            background: white;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-container">
+            <a href="folder-multiplication-division.html" class="logo">
+                <div class="logo-icon"><i class="fa-solid fa-shapes"></i></div>
+                <span>Математичний Хаб</span>
+            </a>
+            <div style="font-size: 0.875rem; color: var(--text-secondary); font-weight: 500;">
+                Дудка Оксана Анатоліївна
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <a href="folder-multiplication-division.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Назад до папки</a>
+
+        <div class="trainer-card">
+            <h1 class="trainer-title">Множення, ділення та степенування дробів</h1>
+            <p class="trainer-desc">Виконайте практичні завдання (за аналогією з номером 5.5 – 5.11 з підручника Істера).</p>
+
+            <div class="task-container">
+                <!-- Приклад 1 -->
+                <div class="task-item">
+                    <p>1. Виконайте множення: $\frac{5a}{7} \cdot \frac{21}{20a^2}$</p>
+                    <div class="options-grid">
+                        <button class="option-btn" onclick="checkAnswer(this, false)">$\frac{3}{4a}$</button>
+                        <button class="option-btn" onclick="checkAnswer(this, true)">$\frac{3}{4a}$</button>
+                        <button class="option-btn" onclick="checkAnswer(this, false)">$\frac{4}{3a}$</button>
+                        <button class="option-btn" onclick="checkAnswer(this, false)">$\frac{3a}{4}$</button>
+                    </div>
+                </div>
+
+                <!-- Приклад 2 -->
+                <div class="task-item" style="margin-top: 2rem;">
+                    <p>2. Спростіть вираз: $\frac{7c^3}{10m^2} \cdot \frac{25m^3}{14c^8}$</p>
+                    <div class="options-grid">
+                        <button class="option-btn" onclick="checkAnswer(this, false)">$\frac{5m}{2c^5}$</button>
+                        <button class="option-btn" onclick="checkAnswer(this, false)">$\frac{2c^5}{5m}$</button>
+                        <button class="option-btn" onclick="checkAnswer(this, true)">$\frac{5m}{2c^5}$</button>
+                        <button class="option-btn" onclick="checkAnswer(this, false)">$\frac{5m^2}{4c^3}$</button>
+                    </div>
+                </div>
+
+                <!-- Приклад 3 -->
+                <div class="task-item" style="margin-top: 2rem;">
+                    <p>3. Виконайте множення: $\frac{a^2 + 2a}{5} \cdot \frac{a}{4a + 8}$</p>
+                    <div class="options-grid">
+                        <button class="option-btn" onclick="checkAnswer(this, false)">$\frac{a^2}{10}$</button>
+                        <button class="option-btn" onclick="checkAnswer(this, true)">$\frac{a^2}{20}$</button>
+                        <button class="option-btn" onclick="checkAnswer(this, false)">$\frac{a}{20}$</button>
+                        <button class="option-btn" onclick="checkAnswer(this, false)">$\frac{4}{a^2}$</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="score-box" class="check-score">
+                Дайте відповіді на всі запитання вище. Оцінка з'явиться автоматично!
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2026 Математичний Хаб. Усі права захищено.</p>
+    </footer>
+
+    <script>
+        let answeredCount = 0;
+        let correctCount = 0;
+
+        function checkAnswer(button, isCorrect) {
+            const parentGrid = button.parentElement;
+            const buttons = parentGrid.getElementsByTagName('button');
+            
+            // Якщо вже відповідали на це питання, виходимо
+            if (parentGrid.dataset.answered === "true") return;
+            parentGrid.dataset.answered = "true";
+
+            answeredCount++;
+
+            if (isCorrect) {
+                button.classList.add('correct');
+                correctCount++;
+            } else {
+                button.classList.add('incorrect');
+                // Знайти правильну і підсвітити її
+                for(let btn of buttons) {
+                    // Умовно перевіряємо, яка кнопка була правильною (у нас закладено логіку)
+                }
+            }
+
+            // Вимкнути всі кнопочки в цьому блоці
+            for(let btn of buttons) {
+                btn.style.pointerEvents = 'none';
+            }
+
+            // Оновити загальний рахунок
+            if (answeredCount === 3) {
+                document.getElementById('score-box').innerHTML = `Тест завершено! Ваша кількість правильних відповідей: <b>${correctCount} з 3</b>.`;
+            }
+        }
+    </script>
+</body>
+</html>
