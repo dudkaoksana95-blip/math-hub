@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Перевірка знань до §§ 1–4: Раціональні дроби (8 клас)</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f7f6; color: #333; max-width: 850px; margin: 20px auto; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h2, h3 { color: #2c3e50; text-align: center; }
+        .card { background: #fff; padding: 15px 20px; margin-bottom: 15px; border-radius: 6px; border-left: 4px solid #3498db; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        .student-info { background: #e8f4f8; border-left-color: #2980b9; display: flex; gap: 15px; flex-wrap: wrap; justify-content: space-between; align-items: center; }
+        .student-info input { padding: 8px; font-size: 14px; border: 1px solid #ccc; border-radius: 4px; flex: 1; min-width: 200px; }
+        #timer-box { font-size: 18px; font-weight: bold; color: #e74c3c; background: #fde8e8; padding: 8px 15px; border-radius: 4px; text-align: center; }
+        input[type="text"] { padding: 6px 10px; font-size: 14px; border: 1px solid #ccc; border-radius: 4px; width: 250px; margin-top: 5px; }
+        select { padding: 6px 10px; font-size: 14px; border: 1px solid #ccc; border-radius: 4px; width: 260px; margin-top: 5px; }
+        button { background: #27ae60; color: white; border: none; padding: 12px 20px; font-size: 16px; border-radius: 4px; cursor: pointer; display: block; width: 100%; margin-top: 20px; font-weight: bold; }
+        button:hover { background: #219653; }
+        #protocol { display: none; background: #fff; padding: 20px; margin-top: 20px; border-radius: 6px; border: 2px solid #27ae60; }
+        .correct { color: #27ae60; font-weight: bold; }
+        .incorrect { color: #e74c3c; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <h2>Завдання для перевірки знань до §§ 1–4 (Алгебра, 8 клас)</h2>
+    <h3>За підручником О. С. Істера</h3>
+
+    <div class="card student-info">
+        <div>
+            <label><b>Прізвище, Ім'я учня/учениці:</b></label><br>
+            <input type="text" id="studentName" placeholder="Введіть ПІБ">
+        </div>
+        <div>
+            <label><b>Клас:</b></label><br>
+            <input type="text" id="studentClass" placeholder="Наприклад: 8-А">
+        </div>
+        <div>
+            <label><b>Час до кінця:</b></label>
+            <div id="timer-box">30:00</div>
+        </div>
+    </div>
+
+    <div id="test-form">
+        <!-- 1 -->
+        <div class="card">
+            <p><b>1. Який із виразів є дробовим?</b><br>
+            1) \(\frac{1}{3}a^2b\); 2) \(\frac{x-y}{x}\); 3) \(\frac{c+2}{9}\); 4) \(p^2-p-19\).</p>
+            <select id="q1">
+                <option value="">-- Оберіть відповідь --</option>
+                <option value="1">1) 1</option>
+                <option value="2">2) 2</option>
+                <option value="3">3) 3</option>
+                <option value="4">4) 4</option>
+            </select>
+        </div>
+
+        <!-- 2 -->
+        <div class="card">
+            <p><b>2. Скоротіть дріб:</b> \(\frac{m^2}{mn}\) (при \(m \neq 0, n \neq 0\))</p>
+            <input type="text" id="q2" placeholder="Наприклад: m/n">
+        </div>
+
+        <!-- 3 -->
+        <div class="card">
+            <p><b>3. Виконайте дію:</b> \(\frac{a-b}{n} + \frac{b}{n}\)</p>
+            <input type="text" id="q3" placeholder="Наприклад: a/n">
+        </div>
+
+        <!-- 4 -->
+        <div class="card">
+            <p><b>4. Знайдіть допустимі значення змінної у виразі:</b> \(\frac{5}{x(x-1)}\)</p>
+            <p><i>(Введіть через кому заборонені значення, напр.: 0, 1)</i></p>
+            <input type="text" id="q4" placeholder="Ваша відповідь">
+        </div>
+
+        <!-- 5 -->
+        <div class="card">
+            <p><b>5. Скоротіть дріб:</b> \(\frac{16am}{20bm}\)</p>
+            <input type="text" id="q5" placeholder="Наприклад: 4a/5b">
+        </div>
+
+        <!-- 6 -->
+        <div class="card">
+            <p><b>6. Виконайте дію:</b> \(\frac{5x+y}{x^2y} + \frac{x-5y}{xy^2}\)</p>
+            <p><i>(Введіть чисельник при загальному знаменнику \(x^2y^2\), напр.: x^2+y^2)</i></p>
+            <input type="text" id="q6" placeholder="Ваша відповідь">
+        </div>
+
+        <!-- 7 -->
+        <div class="card">
+            <p><b>7. Спростіть вираз:</b> \(\frac{2b}{b-4} + \frac{b}{b+4} + \frac{2b^2}{16-b^2}\)</p>
+            <input type="text" id="q7" placeholder="Наприклад: 3b/(b-4) або числа">
+        </div>
+
+        <!-- 8 -->
+        <div class="card">
+            <p><b>8. Знайдіть цілу частину при діленні многочлена на одночлен:</b> вираз \(\frac{c^2 - c^3 + 5}{c^2}\). Введіть цілу частину:</p>
+            <input type="text" id="q8" placeholder="Наприклад: 1-c або подібне">
+        </div>
+
+        <!-- 9 -->
+        <div class="card">
+            <p><b>9. Скільки точок перетину з віссю абсцис має графік функції</b> \(y = \frac{x^2 - 4x}{16 - 4x}\)?</p>
+            <select id="q9">
+                <option value="">-- Оберіть кількість --</option>
+                <option value="0">0 точок</option>
+                <option value="1">1 точка</option>
+                <option value="2">2 точки</option>
+            </select>
+        </div>
+
+        <!-- 10 -->
+        <div class="card">
+            <p><b>10. Знайдіть область визначення виразу:</b> \(\frac{x^2 - 16}{\vert{}x + 1\vert{} - 5}\)</p>
+            <p><i>(Введіть винятки через кому, наприклад: -6, 4)</i></p>
+            <input type="text" id="q10" placeholder="Ваша відповідь">
+        </div>
+
+        <!-- 11 -->
+        <div class="card">
+            <p><b>11. Значення \(x\), за яких дріб з п. 10 дорівнює нулю:</b></p>
+            <input type="text" id="q11" placeholder="Ваша відповідь">
+        </div>
+
+        <!-- 12 -->
+        <div class="card">
+            <p><b>12. Спростіть вираз:</b> \(\frac{3(a-2b)}{(a-3)(b-4)} - \frac{a^2-6b}{(3-a)(4-b)}\)</p>
+            <input type="text" id="q12" placeholder="Ваша відповідь">
+        </div>
+
+        <button onclick="finishTest()">Завершити тест і сформувати протокол</button>
+    </div>
+
+    <div id="protocol">
+        <h3>Протокол результатів тестування</h3>
+        <p id="p-student"></p>
+        <p id="p-time"></p>
+        <p id="p-score"></p>
+        <div id="p-details"></div>
+        <div id="p-recommendations" style="margin-top: 15px; padding: 10px; background: #eef9f0; border-left: 4px solid #27ae60;"></div>
+    </div>
+
+    <script>
+        // Таймер на 30 хвилин
+        let totalSeconds = 30 * 60;
+        const timerInterval = setInterval(() => {
+            let minutes = Math.floor(totalSeconds / 60);
+            let seconds = totalSeconds % 60;
+            document.getElementById('timer-box').innerText = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            if (totalSeconds <= 0) {
+                clearInterval(timerInterval);
+                alert("Час вийшов!");
+                finishTest();
+            }
+            totalSeconds--;
+        }, 1000);
+
+        function cleanStr(str) {
+            return str.replace(/\s+/g, '').toLowerCase();
+        }
+
+        function finishTest() {
+            clearInterval(timerInterval);
+            let name = document.getElementById('studentName').value.trim() || "Анонім";
+            let sClass = document.getElementById('studentClass').value.trim() || "Не вказано";
+            
+            let score = 0;
+            let detailsHtml = "<h4>Деталі перевірки:</h4><ul>";
+
+            // Еталони відповідей
+            // 1
+            let a1 = document.getElementById('q1').value;
+            if (a1 === '2') { score++; detailsHtml += "<li class='correct'>Завдання 1: Правильно</li>"; }
+            else { detailsHtml += "<li class='incorrect'>Завдання 1: Помилка (Правильно: 2)</li>"; }
+
+            // 2
+            let a2 = cleanStr(document.getElementById('q2').value);
+            if (a2 === 'm/n') { score++; detailsHtml += "<li class='correct'>Завдання 2: Правильно</li>"; }
+            else { detailsHtml += "<li class='incorrect'>Завдання 2: Помилка (Правильно: m/n)</li>"; }
+
+            // 3
+            let a3 = cleanStr(document.getElementById('q3').value);
+            if (a3 === 'a/n') { score++; detailsHtml += "<li class='correct'>Завдання 3: Правильно</li>"; }
+            else { detailsHtml += "<li class='incorrect'>Завдання 3: Помилка (Правильно: a/n)</li>"; }
+
+            // 4
+            let a4 = cleanStr(document.getElementById('q4').value);
+            if (a4 === '0,1' || a4 === '1,0') { score++; detailsHtml += "<li class='correct'>Завдання 4: Правильно</li>"; }
+            else { detailsHtml += "<li class='incorrect'>Завдання 4: Помилка (Правильно: 0, 1)</li>"; }
+
+            // 5
+            let a5 = cleanStr(document.getElementById('q5').value);
+            if (a5 === '4a/5b') { score++; detailsHtml += "<li class='correct'>Завдання 5: Правильно</li>"; }
+            else { detailsHtml += "<li class='incorrect'>Завдання 5: Помилка (Правильно: 4a/5b)</li>"; }
+
+            // 6
+            let a6 = cleanStr(document.getElementById('q6').value);
+            if (a6 === 'x^2+y^2' || a6 === 'y^2+x^2') { score++; detailsHtml += "<li class='correct'>Завдання 6: Правильно</li>"; }
+            else { detailsHtml += "<li class='incorrect'>Завдання 6: Помилка (Правильно: x^2+y^2)</li>"; }
+
+            // 7
+            let a7 = cleanStr(document.getElementById('q7').value);
+            if (a7 === '1' || a7 === 'b/(b-4)' || a7.includes('b')) { score++; detailsHtml += "<li class='correct'>Завдання 7: Правильно (зараховано)</li>"; }
+            else { detailsHtml += "<li class='incorrect'>Завдання 7: Помилка</li>"; }
+
+            // 8
+            let a8 = cleanStr(document.getElementById('q8').value);
+            if (a8.includes('1-c') || a8.includes('-c+1')) { score++; detailsHtml += "<li class='correct'>Завдання 8: Правильно</li>"; }
+            else { detailsHtml += "<li class='incorrect'>Завдання 8: Помилка</li>"; }
+
+            // 9
+            let a9 = document.getElementById('q9').value;
+            if (a9 === '0') { score++; detailsHtml += "<li class='correct'>Завдання 9: Правильно (при x=4 чисельник і знаменник одночасно дорівнюють 0, точка «виколота»)</li>"; }
+            else { detailsHtml += "<li class='incorrect'>Завдання 9: Помилка (Правильно: 0 точок, бо x=4 не входить в ОДЗ)</li>"; }
+
+            // 10
+            let a10 = cleanStr(document.getElementById('q10').value);
+            if (a10 === '-6,4' || a10 === '4,-6') { score++; detailsHtml += "<li class='correct'>Завдання 10: Правильно</li>"; }
+            else { detailsHtml += "<li class='incorrect'>Завдання 10: Помилка (Правильно: -6, 4)</li>"; }
+
+            // 11
+            let a11 = cleanStr(document.getElementById('q11').value);
+            if (a11 === '-4') { score++; detailsHtml += "<li class='correct'>Завдання 11: Правильно</li>"; }
+            else { detailsHtml += "<li class='incorrect'>Завдання 11: Помилка (Правильно: -4)</li>"; }
+
+            // 12
+            let a12 = cleanStr(document.getElementById('q12').value);
+            if (a12 === '0') { score++; detailsHtml += "<li class='correct'>Завдання 12: Правильно</li>"; }
+            else { detailsHtml += "<li class='incorrect'>Завдання 12: Помилка (Правильно: 0)</li>"; }
+
+            detailsHtml += "</ul>";
+
+            // Рекомендації залежно від балів (з розрахунку на 12-бальну шкалу або у відсотках)
+            let recommendationText = "";
+            let grade12 = Math.round((score / 12) * 11 + 1); // приблизна оцінка за 12-бальною
+            if (grade12 > 12) grade12 = 12;
+
+            if (score >= 10) {
+                recommendationText = `<b>Рівень високий (${grade12} балів).</b> Чудовий результат! Ви чудово засвоїли перетворення раціональних дробів та знаходження ОДЗ. Продовжуйте в тому ж дусі!`;
+            } else if (score >= 7) {
+                recommendationText = `<b>Рівень достатній (${grade12} балів).</b> Добре володієте базовими алгоритмами, але варто звернути увагу на завдання підвищеної складності (модулі в знаменниках та область визначення виразів).`;
+            } else if (score >= 4) {
+                recommendationText = `<b>Рівень середній (${grade12} балів).</b> Варто повторити правила скорочення дробів, зведення до спільного знаменника та перевірку ОДЗ (області допустимих значень).`;
+            } else {
+                recommendationText = `<b>Початковий рівень (${grade12} балів).</b> Рекомендуємо уважно переглянути теоретичний конспект до §§ 1–4, розібрати приклади в підручнику О. С. Істера та спробувати пройти тренажер повторно.`;
+            }
+
+            // Виведення протоколу
+            document.getElementById('test-form').style.display = 'none';
+            document.querySelector('.student-info').style.display = 'none';
+            document.getElementById('protocol').style.display = 'block';
+
+            document.getElementById('p-student').innerHTML = `<b>Учень/Учениця:</b> ${name} (${sClass} клас)`;
+            document.getElementById('p-time').innerHTML = `<b>Затрачений час:</b> Виконано достроково або за відведений час`;
+            document.getElementById('p-score').innerHTML = `<b>Загальний результат:</b> ${score} із 12 завдань (Орієнтовна оцінка: <b>${grade12} балів</b>)`;
+            document.getElementById('p-details').innerHTML = detailsHtml;
+            document.getElementById('p-recommendations').innerHTML = `<b>Рекомендації для учня:</b><br>${recommendationText}`;
+        }
+    </script>
+</body>
+</html>
