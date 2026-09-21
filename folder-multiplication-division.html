@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Множення, ділення та степенування дробів. Раціональні рівняння | Математичний Хаб</title>
+    <title>Множення та ділення дробів. Раціональні рівняння — Математичний Хаб</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -15,18 +15,10 @@
             --accent-blue: #3b82f6;
             --border-color: #e2e8f0;
             --radius-lg: 20px;
-            --radius-md: 12px;
             --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
             --shadow-md: 0 4px 20px -2px rgba(0,0,0,0.05);
         }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Inter', sans-serif;
-        }
-
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
         body {
             background-color: var(--bg-main);
             color: var(--text-primary);
@@ -36,7 +28,6 @@
             display: flex;
             flex-direction: column;
         }
-
         header {
             background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(10px);
@@ -45,203 +36,52 @@
             top: 0;
             z-index: 100;
         }
-
-        .header-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1rem 1.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-weight: 700;
-            font-size: 1.25rem;
-            color: var(--text-primary);
-            text-decoration: none;
-        }
-
-        .logo-icon {
-            background: var(--text-primary);
-            color: white;
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1rem;
-        }
-
-        main {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem 1.5rem;
-            flex: 1;
-            width: 100%;
-        }
-
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.9rem;
-            margin-bottom: 1.5rem;
-            transition: color 0.2s;
-        }
-
-        .back-link:hover {
-            color: var(--accent-blue);
-        }
-
-        .folder-header {
-            background: #ffffff;
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-lg);
-            padding: 2rem;
-            margin-bottom: 2rem;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .folder-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .folder-desc {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            line-height: 1.5;
-        }
-
-        .section-heading {
-            font-size: 1.15rem;
-            font-weight: 600;
-            margin-bottom: 1.25rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--text-primary);
-        }
-
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-lg);
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: all 0.25s ease;
-            box-shadow: var(--shadow-sm);
-            cursor: pointer;
-            text-decoration: none;
-            color: inherit;
-        }
-
-        .card:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-md);
-            border-color: #cbd5e1;
-        }
-
-        .card-badges {
-            display: flex;
-            gap: 6px;
-            margin-bottom: 0.75rem;
-            flex-wrap: wrap;
-        }
-
-        .badge {
-            font-size: 0.75rem;
-            font-weight: 600;
-            padding: 0.25rem 0.6rem;
-            border-radius: 20px;
-            background: #f1f5f9;
-            color: var(--text-secondary);
-        }
-
+        .header-container { max-width: 1200px; margin: 0 auto; padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center; }
+        .logo { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 1.25rem; color: var(--text-primary); text-decoration: none; }
+        .logo-icon { background: var(--text-primary); color: white; width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+        main { max-width: 1200px; margin: 0 auto; padding: 2rem 1.5rem; flex: 1; width: 100%; }
+        .back-link { display: inline-flex; align-items: center; gap: 8px; color: var(--text-secondary); text-decoration: none; font-weight: 500; font-size: 0.9rem; margin-bottom: 1.5rem; transition: color 0.2s; }
+        .back-link:hover { color: var(--accent-blue); }
+        .folder-banner { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: var(--radius-lg); padding: 2rem; margin-bottom: 2.5rem; }
+        .folder-banner h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; color: #1e3a8a; }
+        .folder-banner p { color: #1e40af; font-size: 1rem; line-height: 1.5; }
+        .section-title { font-size: 1.2rem; font-weight: 700; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px; color: var(--text-primary); }
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+        .card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between; transition: all 0.25s ease; box-shadow: var(--shadow-sm); text-decoration: none; color: inherit; }
+        .card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: #cbd5e1; }
+        .card-badges { display: flex; gap: 6px; margin-bottom: 0.75rem; flex-wrap: wrap; }
+        .badge { font-size: 0.75rem; font-weight: 600; padding: 0.25rem 0.6rem; border-radius: 20px; background: #f1f5f9; color: var(--text-secondary); }
         .badge-grade { background: #e0f2fe; color: #0369a1; }
         .badge-algebra { background: #fef3c7; color: #b45309; }
-        .badge-trainer { background: #f3e8ff; color: #6b21a8; }
+        .badge-trainer { background: #f3e8ff; color: #7e22ce; }
         .badge-test { background: #dcfce7; color: #166534; }
-
-        .card-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            line-height: 1.4;
-        }
-
-        .card-desc {
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-            line-height: 1.5;
-            margin-bottom: 1.5rem;
-        }
-
-        .card-action {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--accent-blue);
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        footer {
-            border-top: 1px solid var(--border-color);
-            padding: 2rem 1.5rem;
-            text-align: center;
-            color: var(--text-secondary);
-            font-size: 0.875rem;
-            margin-top: auto;
-            background: white;
-        }
+        .card-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; line-height: 1.4; }
+        .card-desc { font-size: 0.875rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 1.5rem; }
+        .card-action { font-size: 0.85rem; font-weight: 600; color: var(--accent-blue); display: flex; align-items: center; gap: 5px; }
+        footer { border-top: 1px solid var(--border-color); padding: 2rem 1.5rem; text-align: center; color: var(--text-secondary); font-size: 0.875rem; margin-top: auto; background: white; }
     </style>
 </head>
 <body>
-
     <header>
         <div class="header-container">
             <a href="index.html" class="logo">
                 <div class="logo-icon"><i class="fa-solid fa-shapes"></i></div>
                 <span>Математичний Хаб</span>
             </a>
-            <div style="font-size: 0.875rem; color: var(--text-secondary); font-weight: 500;">
-                Дудка Оксана Анатоліївна
-            </div>
+            <div style="font-size: 0.875rem; color: var(--text-secondary); font-weight: 500;">Дудка Оксана Анатоліївна</div>
         </div>
     </header>
-
     <main>
         <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> На головну</a>
-
-        <div class="folder-header">
-            <h1 class="folder-title">Множення, ділення та степенування дробів. Раціональні рівняння</h1>
-            <p class="folder-desc">Тематична папка містить тренажери на множення, ділення, степенування раціональних дробів та розв'язування раціональних рівнянь.</p>
+        <div class="folder-banner">
+            <h1>Множення, ділення та піднесення дробу до степеня. Раціональні рівняння</h1>
+            <p>Тематична папка містить тренажери на множення, ділення, піднесення раціонального дробу до степеня та розв'язування раціональних рівнянь.</p>
         </div>
-
-        <div class="section-heading">
+        <div class="section-title">
             <i class="fa-solid fa-folder-open" style="color: #f39c12;"></i> Матеріали теми (Тренажери та рівняння)
         </div>
-
         <div class="cards-grid">
-            <!-- Картка 1: Множення, ділення та степенування -->
+            <!-- Тренажер 1 -->
             <a href="rational-fractions-multiplication-division.html" class="card">
                 <div>
                     <div class="card-badges">
@@ -252,25 +92,36 @@
                     <div class="card-title">Множення, ділення та степенування дробів</div>
                     <div class="card-desc">Практичні завдання на правила множення, ділення та піднесення раціонального дробу до степеня.</div>
                 </div>
-                <div class="card-action">Розпочати тест <i class="fa-solid fa-arrow-right"></i></div>
+                <div class="card-action"><span>Розпочати тест</span> <i class="fa-solid fa-arrow-right"></i></div>
             </a>
-
-            <!-- Картка 2: Рівняння -->
-            <a href="rational-equations-trainer.html" class="card">
+            <!-- Тренажер 2 (Частина 2) -->
+            <a href="multiplying-rational-fractions-part2.html" class="card">
                 <div>
                     <div class="card-badges">
                         <span class="badge badge-grade">8 клас</span>
                         <span class="badge badge-algebra">Алгебра</span>
                         <span class="badge badge-trainer">Тренажер 2</span>
                     </div>
+                    <div class="card-title">Множення і ділення раціональних дробів (Частина 2)</div>
+                    <div class="card-desc">Добутки дробів, використання формул скороченого множення (ФСМ) та перетворення за номерами 5.17–5.21 (Істер).</div>
+                </div>
+                <div class="card-action"><span>Розпочати тест</span> <i class="fa-solid fa-arrow-right"></i></div>
+            </a>
+            <!-- Тренажер з рівнянь -->
+            <a href="rational-equations-trainer.html" class="card">
+                <div>
+                    <div class="card-badges">
+                        <span class="badge badge-grade">8 клас</span>
+                        <span class="badge badge-algebra">Алгебра</span>
+                        <span class="badge badge-trainer">Рівняння</span>
+                    </div>
                     <div class="card-title">Рівняння з раціональними дробами</div>
                     <div class="card-desc">Розв'язування раціональних рівнянь із врахуванням області допустимих значень (ОДЗ).</div>
                 </div>
-                <div class="card-action">Розпочати тест <i class="fa-solid fa-arrow-right"></i></div>
+                <div class="card-action"><span>Розпочати тест</span> <i class="fa-solid fa-arrow-right"></i></div>
             </a>
-
-            <!-- Картка 3: Підсумковий тест -->
-            <a href="test-rational-theme2-final.html" class="card">
+            <!-- Підсумковий тест -->
+            <a href="rational-fractions-test-8.html" class="card">
                 <div>
                     <div class="card-badges">
                         <span class="badge badge-grade">8 клас</span>
@@ -280,14 +131,12 @@
                     <div class="card-title">Підсумковий тест з теми</div>
                     <div class="card-desc">Контрольний тест для перевірки засвоєння множення, ділення, степенування та раціональних рівнянь.</div>
                 </div>
-                <div class="card-action">Розпочати тест <i class="fa-solid fa-arrow-right"></i></div>
+                <div class="card-action"><span>Розпочати тест</span> <i class="fa-solid fa-arrow-right"></i></div>
             </a>
         </div>
     </main>
-
     <footer>
         <p>© 2026 Математичний Хаб. Авторські матеріали з математики.</p>
     </footer>
-
 </body>
 </html>
