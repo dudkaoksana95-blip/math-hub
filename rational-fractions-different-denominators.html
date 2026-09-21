@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Додавання і віднімання дробів з різними знаменниками | Математичний Хаб</title>
+    <title>Додавання і віднімання раціональних дробів | Математичний Хаб</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Підключення MathJax для красивих математичних формул -->
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
@@ -21,8 +20,8 @@
             --shadow: 0 4px 20px -2px rgba(0,0,0,0.05);
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
-        body { background-color: var(--bg-main); color: var(--text-primary); padding: 2rem 1rem; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-        .container { max-width: 650px; width: 100%; }
+        body { background-color: var(--bg-main); color: var(--text-primary); padding: 2rem 1rem; min-height: 100vh; display: flex; flex-direction: column; align-items: center; }
+        .container { max-width: 750px; width: 100%; }
         .card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 2.5rem; box-shadow: var(--shadow); margin-bottom: 1.5rem; }
         h2 { font-size: 1.35rem; margin-bottom: 0.5rem; color: var(--text-primary); text-align: center; }
         .subtitle { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1.5rem; text-align: center; }
@@ -50,7 +49,7 @@
     <!-- ЕКРАН ІДЕНТИФІКАЦІЇ -->
     <div id="auth-screen" class="card">
         <h2>Ідентифікація учня</h2>
-        <div class="subtitle">Введіть свої дані для проходження тренажера</div>
+        <div class="subtitle">Введіть свої дані для проходження тесту</div>
         <div class="form-group">
             <label>Прізвище:</label>
             <input type="text" id="surname" class="form-control" placeholder="Наприклад, Шевченко">
@@ -66,30 +65,132 @@
         <button class="btn" onclick="startTest()">Розпочати тест</button>
     </div>
 
-    <!-- ЕКРАН ТЕСТУ -->
+    <!-- ЕКРАН ТЕСТУ (12 ПИТАНЬ) -->
     <div id="test-screen" class="card">
         <div class="student-badge">
             <span id="display-student">Учень: </span>
             <span>8 клас • Алгебра</span>
         </div>
-        <h2>Додавання і віднімання дробів з різними знаменниками</h2>
-        <div class="subtitle" style="margin-bottom: 2rem;">Виконайте завдання та натисніть кнопку перевірки</div>
+        <h2>Додавання і віднімання раціональних дробів</h2>
+        <div class="subtitle" style="margin-bottom: 2rem;">Виконайте всі 12 завдань та натисніть кнопку перевірки</div>
         
+        <!-- Питання 1 (№4.26. 1) -->
         <div class="task-block">
-            <div class="task-title">1. Виконайте додавання: \(\dfrac{1}{x} + \dfrac{1}{2x}\)</div>
+            <div class="task-title">1. Перетворіть у дріб: \(\dfrac{4a-b}{a^2-b^2} + \dfrac{1}{a-b}\)</div>
             <div class="options">
-                <label><input type="radio" name="q1" value="0"> \(\dfrac{2}{3x}\)</label>
-                <label><input type="radio" name="q1" value="1"> \(\dfrac{3}{2x}\)</label>
-                <label><input type="radio" name="q1" value="2"> \(\dfrac{2}{x}\)</label>
+                <label><input type="radio" name="q1" value="0"> \(\dfrac{5a-2b}{a^2-b^2}\)</label>
+                <label><input type="radio" name="q1" value="1"> \(\dfrac{5a}{a^2-b^2}\)</label>
+                <label><input type="radio" name="q1" value="2"> \(\dfrac{3a-2b}{a^2-b^2}\)</label>
             </div>
         </div>
 
+        <!-- Питання 2 (№4.26. 2) -->
         <div class="task-block">
-            <div class="task-title">2. Знайдіть різницю: \(\dfrac{3}{a} - \dfrac{2}{b}\)</div>
+            <div class="task-title">2. Перетворіть у дріб: \(\dfrac{2}{b+3} + \dfrac{b+6}{b^2-9}\)</div>
             <div class="options">
-                <label><input type="radio" name="q2" value="0"> \(\dfrac{1}{a-b}\)</label>
-                <label><input type="radio" name="q2" value="1"> \(\dfrac{3b - 2a}{ab}\)</label>
-                <label><input type="radio" name="q2" value="2"> \(\dfrac{1}{ab}\)</label>
+                <label><input type="radio" name="q2" value="0"> \(\dfrac{3}{b-3}\)</label>
+                <label><input type="radio" name="q2" value="1"> \(\dfrac{3b+12}{b^2-9}\)</label>
+                <label><input type="radio" name="q2" value="2"> \(\dfrac{b+8}{b^2-9}\)</label>
+            </div>
+        </div>
+
+        <!-- Питання 3 (№4.26. 3) -->
+        <div class="task-block">
+            <div class="task-title">3. Перетворіть у дріб: \(\dfrac{m}{m+4} - \dfrac{m^2}{m^2+8m+16}\)</div>
+            <div class="options">
+                <label><input type="radio" name="q3" value="0"> \(\dfrac{4m}{(m+4)^2}\)</label>
+                <label><input type="radio" name="q3" value="1"> \(\dfrac{m^2}{(m+4)^2}\)</label>
+                <label><input type="radio" name="q3" value="2"> \(\dfrac{4}{(m+4)}\)</label>
+            </div>
+        </div>
+
+        <!-- Питання 4 (№4.27. 1) -->
+        <div class="task-block">
+            <div class="task-title">4. Спростіть вираз: \(\dfrac{a+4}{ab-a^2} + \dfrac{b+4}{ab-b^2}\)</div>
+            <div class="options">
+                <label><input type="radio" name="q4" value="0"> \(\dfrac{4}{ab}\)</label>
+                <label><input type="radio" name="q4" value="1"> \(\dfrac{a+b}{ab}\)</label>
+                <label><input type="radio" name="q4" value="2"> \(\dfrac{a-b}{ab}\)</label>
+            </div>
+        </div>
+
+        <!-- Питання 5 (№4.27. 3) -->
+        <div class="task-block">
+            <div class="task-title">5. Спростіть вираз: \(\dfrac{2}{x^2-4} - \dfrac{1}{x^2+2x}\)</div>
+            <div class="options">
+                <label><input type="radio" name="q5" value="0"> \(\dfrac{1}{x^2+2x}\)</label>
+                <label><input type="radio" name="q5" value="1"> \(\dfrac{1}{x(x+2)}\)</label>
+                <label><input type="radio" name="q5" value="2"> \(\dfrac{3}{x(x^2-4)}\)</label>
+            </div>
+        </div>
+
+        <!-- Питання 6 (№4.28. 1) -->
+        <div class="task-block">
+            <div class="task-title">6. Спростіть вираз: \(\dfrac{a-2}{ab-a^2} - \dfrac{2-b}{ab-b^2}\)</div>
+            <div class="options">
+                <label><input type="radio" name="q6" value="0"> \(\dfrac{2}{ab}\)</label>
+                <label><input type="radio" name="q6" value="1"> \(\dfrac{-(a+b)}{ab}\)</label>
+                <label><input type="radio" name="q6" value="2"> \(-\dfrac{2}{ab}\)</label>
+            </div>
+        </div>
+
+        <!-- Питання 7 (№4.28. 3) -->
+        <div class="task-block">
+            <div class="task-title">7. Спростіть вираз: \(\dfrac{4}{a^2-9} - \dfrac{2}{a^2+3a}\)</div>
+            <div class="options">
+                <label><input type="radio" name="q7" value="0"> \(\dfrac{2}{a(a+3)}\)</label>
+                <label><input type="radio" name="q7" value="1"> \(\dfrac{2}{a^2-9}\)</label>
+                <label><input type="radio" name="q7" value="2"> \(\dfrac{2}{a(a-3)}\)</label>
+            </div>
+        </div>
+
+        <!-- Питання 8 (№4.30. 1) -->
+        <div class="task-block">
+            <div class="task-title">8. Подайте вираз у вигляді дробу: \(m - n - \dfrac{m^2+n^2}{m+n}\)</div>
+            <div class="options">
+                <label><input type="radio" name="q8" value="0"> \(-\dfrac{2n^2}{m+n}\)</label>
+                <label><input type="radio" name="q8" value="1"> \(\dfrac{2mn}{m+n}\)</label>
+                <label><input type="radio" name="q8" value="2"> \(-\dfrac{2mn}{m+n}\)</label>
+            </div>
+        </div>
+
+        <!-- Питання 9 (№4.30. 2) -->
+        <div class="task-block">
+            <div class="task-title">9. Подайте вираз у вигляді дробу: \(p - \dfrac{4}{p-2} - 2\)</div>
+            <div class="options">
+                <label><input type="radio" name="q9" value="0"> \(\dfrac{(p-2)^2}{p-2}\)</label>
+                <label><input type="radio" name="q9" value="1"> \(\dfrac{p^2-4p+8}{p-2}\)</label>
+                <label><input type="radio" name="q9" value="2"> \(\dfrac{p^2-4}{p-2}\)</label>
+            </div>
+        </div>
+
+        <!-- Питання 10 (№4.31. 1) -->
+        <div class="task-block">
+            <div class="task-title">10. Подайте вираз у вигляді дробу: \(m - \dfrac{9}{m+3} + 3\)</div>
+            <div class="options">
+                <label><input type="radio" name="q10" value="0"> \(\dfrac{m^2}{m+3}\)</label>
+                <label><input type="radio" name="q10" value="1"> \(\dfrac{m^2+6m}{m+3}\)</label>
+                <label><input type="radio" name="q10" value="2"> \(\dfrac{m}{m+3}\)</label>
+            </div>
+        </div>
+
+        <!-- Питання 11 (№4.33. 1) -->
+        <div class="task-block">
+            <div class="task-title">11. Спростіть вираз: \(\dfrac{x-1}{x^2-x+1} + \dfrac{2-x}{x^3+1}\)</div>
+            <div class="options">
+                <label><input type="radio" name="q11" value="0"> \(\dfrac{1}{x+1}\)</label>
+                <label><input type="radio" name="q11" value="1"> \(\dfrac{x}{x^3+1}\)</label>
+                <label><input type="radio" name="q11" value="2"> \(\dfrac{1}{x^2+1}\)</label>
+            </div>
+        </div>
+
+        <!-- Питання 12 (№4.33. 3) -->
+        <div class="task-block">
+            <div class="task-title">12. Спростіть вираз: \(\dfrac{6}{m^2-6m} + \dfrac{m-12}{6m-36}\)</div>
+            <div class="options">
+                <label><input type="radio" name="q12" value="0"> \(\dfrac{m}{6(m-6)}\)</label>
+                <label><input type="radio" name="q12" value="1"> \(\dfrac{1}{m-6}\)</label>
+                <label><input type="radio" name="q12" value="2"> \(\dfrac{6}{m(m-6)}\)</label>
             </div>
         </div>
 
@@ -100,7 +201,7 @@
     <div id="results-screen" class="card">
         <h2>Результати тестування</h2>
         <div id="result-details" style="color: var(--text-secondary); text-align: center; margin-top: 0.5rem;"></div>
-        <div class="results-score" id="score-display">0 / 2</div>
+        <div class="results-score" id="score-display">0 / 12</div>
         <p id="feedback-text" style="text-align: center; margin-bottom: 1.5rem; font-weight: 500;"></p>
         <button class="btn" onclick="location.reload()">Пройти знову</button>
     </div>
@@ -128,19 +229,38 @@
 
     function submitTest() {
         let score = 0;
-        const q1 = document.querySelector('input[name="q1"]:checked');
-        const q2 = document.querySelector('input[name="q2"]:checked');
+        
+        // Правильні відповіді для 12 питань:
+        // 1: 0, 2: 0, 3: 0, 4: 0, 5: 1, 6: 2, 7: 0, 8: 0, 9: 1, 10: 1, 11: 0, 12: 0
+        const correctAnswers = { 
+            q1: "0", q2: "0", q3: "0", q4: "0", 
+            q5: "1", q6: "2", q7: "0", q8: "0", 
+            q9: "1", q10: "1", q11: "0", q12: "0" 
+        };
 
-        if (q1 && q1.value === "1") score++;
-        if (q2 && q2.value === "1") score++;
+        for (let i = 1; i <= 12; i++) {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            if (selected && selected.value === correctAnswers[`q${i}`]) {
+                score++;
+            }
+        }
 
         document.getElementById('test-screen').style.display = 'none';
-        document.getElementById('results-screen').style.display, document.getElementById('results-screen').style.display = 'block';
+        document.getElementById('results-screen').style.display = 'block';
         
         document.getElementById('result-details').innerText = `${userData.surname} ${userData.name} (${userData.sClass})`;
-        document.getElementById('score-display').innerText = `${score} / 2`;
+        document.getElementById('score-display').innerText = `${score} / 12`;
 
-        let feedback = score === 2 ? 'Чудово! Ви чудово впоралися із завданнями!' : 'Потрібно ще трохи потренуватися з цією темою.';
+        let feedback = '';
+        if (score === 12) {
+            feedback = 'Неймовірно! Ви чудово опанували тему!';
+        } else if (score >= 9) {
+            feedback = 'Чудовий результат! Ви дуже добре знаєте тему.';
+        } else if (score >= 6) {
+            feedback = 'Добре, але є над чим попрацювати.';
+        } else {
+            feedback = 'Потрібно ще повторити правила зведення дробів до спільного знаменника.';
+        }
         document.getElementById('feedback-text').innerText = feedback;
     }
 </script>
