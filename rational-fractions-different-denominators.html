@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Додавання і віднімання дробів з різними знаменниками</title>
+    <title>Додавання і віднімання дробів з різними знаменниками | Математичний Хаб</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Підключення MathJax для красивих математичних формул -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
         :root {
             --bg-main: #f8fafc;
@@ -15,77 +18,90 @@
             --accent-green: #10b981;
             --border-color: #e2e8f0;
             --radius-lg: 16px;
+            --shadow: 0 4px 20px -2px rgba(0,0,0,0.05);
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
-        body { background-color: var(--bg-main); color: var(--text-primary); padding: 2rem 1rem; }
-        .container { max-width: 600px; margin: 0 auto; }
-        .card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 2rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); margin-bottom: 1.5rem; }
-        h2 { font-size: 1.25rem; margin-bottom: 1rem; color: var(--text-primary); }
-        .form-group { margin-bottom: 1rem; text-align: left; }
-        .form-group label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.4rem; }
-        .form-control { width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 8px; font-size: 1rem; outline: none; }
+        body { background-color: var(--bg-main); color: var(--text-primary); padding: 2rem 1rem; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        .container { max-width: 650px; width: 100%; }
+        .card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 2.5rem; box-shadow: var(--shadow); margin-bottom: 1.5rem; }
+        h2 { font-size: 1.35rem; margin-bottom: 0.5rem; color: var(--text-primary); text-align: center; }
+        .subtitle { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1.5rem; text-align: center; }
+        .form-group { margin-bottom: 1.25rem; text-align: left; }
+        .form-group label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .form-control { width: 100%; padding: 0.75rem 1rem; border: 1px solid var(--border-color); border-radius: 10px; font-size: 1rem; outline: none; transition: border-color 0.2s; }
         .form-control:focus { border-color: var(--accent-blue); }
-        .btn { background: var(--accent-blue); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; width: 100%; margin-top: 1rem; }
+        .btn { background: var(--accent-blue); color: white; border: none; padding: 0.85rem 1.5rem; border-radius: 10px; font-size: 1rem; font-weight: 600; cursor: pointer; width: 100%; margin-top: 1rem; transition: background 0.2s; }
         .btn:hover { background: #2563eb; }
+        
         #test-screen, #results-screen { display: none; }
-        .task-block { margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-color); }
-        .task-title { font-weight: 600; margin-bottom: 0.75rem; }
-        .options label { display: block; padding: 0.5rem 0.75rem; border: 1px solid var(--border-color); border-radius: 6px; margin-bottom: 0.5rem; cursor: pointer; }
-        .options label:hover { background: #f1f5f9; }
+        
+        .student-badge { background: #f1f5f9; padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center; }
+        .task-block { margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); }
+        .task-title { font-weight: 600; font-size: 1.05rem; margin-bottom: 1rem; }
+        .options label { display: flex; align-items: center; gap: 10px; padding: 0.75rem 1rem; border: 1px solid var(--border-color); border-radius: 10px; margin-bottom: 0.5rem; cursor: pointer; transition: all 0.2s; }
+        .options label:hover { background: #f8fafc; border-color: #cbd5e1; }
+        .options input { accent-color: var(--accent-blue); }
+        .results-score { font-size: 2.5rem; font-weight: 700; color: var(--accent-green); margin: 1rem 0; text-align: center; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <!-- ЕКРАН ІДЕНТИФІКАЦІЇ -->
-    <div id="auth-screen" class="card" style="text-align: center;">
+    <div id="auth-screen" class="card">
         <h2>Ідентифікація учня</h2>
-        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1.5rem;">Введіть свої дані для проходження тренажера</p>
+        <div class="subtitle">Введіть свої дані для проходження тренажера</div>
         <div class="form-group">
             <label>Прізвище:</label>
-            <input type="text" id="surname" class="form-control" placeholder="Шевченко">
+            <input type="text" id="surname" class="form-control" placeholder="Наприклад, Шевченко">
         </div>
         <div class="form-group">
             <label>Ім'я:</label>
-            <input type="text" id="name" class="form-control" placeholder="Олена">
+            <input type="text" id="name" class="form-control" placeholder="Наприклад, Олена">
         </div>
         <div class="form-group">
             <label>Клас:</label>
-            <input type="text" id="student-class" class="form-control" placeholder="8-А">
+            <input type="text" id="student-class" class="form-control" placeholder="Наприклад, 8-А">
         </div>
         <button class="btn" onclick="startTest()">Розпочати тест</button>
     </div>
 
     <!-- ЕКРАН ТЕСТУ -->
     <div id="test-screen" class="card">
-        <div id="student-badge" style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem; font-weight: 600;"></div>
+        <div class="student-badge">
+            <span id="display-student">Учень: </span>
+            <span>8 клас • Алгебра</span>
+        </div>
         <h2>Додавання і віднімання дробів з різними знаменниками</h2>
+        <div class="subtitle" style="margin-bottom: 2rem;">Виконайте завдання та натисніть кнопку перевірки</div>
         
         <div class="task-block">
-            <div class="task-title">1. Виконайте додавання: \(\frac{1}{x} + \frac{1}{2x}\)</div>
+            <div class="task-title">1. Виконайте додавання: \(\dfrac{1}{x} + \dfrac{1}{2x}\)</div>
             <div class="options">
-                <label><input type="radio" name="q1" value="0"> \(\frac{2}{3x}\)</label>
-                <label><input type="radio" name="q1" value="1"> \(\frac{3}{2x}\)</label>
-                <label><input type="radio" name="q1" value="2"> \(\frac{2}{x}\)</label>
+                <label><input type="radio" name="q1" value="0"> \(\dfrac{2}{3x}\)</label>
+                <label><input type="radio" name="q1" value="1"> \(\dfrac{3}{2x}\)</label>
+                <label><input type="radio" name="q1" value="2"> \(\dfrac{2}{x}\)</label>
             </div>
         </div>
 
         <div class="task-block">
-            <div class="task-title">2. Знайдіть різницю: \(\frac{3}{a} - \frac{2}{b}\)</div>
+            <div class="task-title">2. Знайдіть різницю: \(\dfrac{3}{a} - \dfrac{2}{b}\)</div>
             <div class="options">
-                <label><input type="radio" name="q2" value="0"> \(\frac{1}{a-b}\)</label>
-                <label><input type="radio" name="q2" value="1"> \(\frac{3b - 2a}{ab}\)</label>
-                <label><input type="radio" name="q2" value="2"> \(\frac{1}{ab}\)</label>
+                <label><input type="radio" name="q2" value="0"> \(\dfrac{1}{a-b}\)</label>
+                <label><input type="radio" name="q2" value="1"> \(\dfrac{3b - 2a}{ab}\)</label>
+                <label><input type="radio" name="q2" value="2"> \(\dfrac{1}{ab}\)</label>
             </div>
         </div>
 
-        <button class="btn" onclick="submitTest()">Завершити тест</button>
+        <button class="btn" onclick="submitTest()">Завершити і перевірити</button>
     </div>
 
     <!-- ЕКРАН РЕЗУЛЬТАТУ -->
-    <div id="results-screen" class="card" style="text-align: center;">
+    <div id="results-screen" class="card">
         <h2>Результати тестування</h2>
-        <p id="result-text" style="font-size: 1.1rem; margin: 1rem 0;"></p>
+        <div id="result-details" style="color: var(--text-secondary); text-align: center; margin-top: 0.5rem;"></div>
+        <div class="results-score" id="score-display">0 / 2</div>
+        <p id="feedback-text" style="text-align: center; margin-bottom: 1.5rem; font-weight: 500;"></p>
         <button class="btn" onclick="location.reload()">Пройти знову</button>
     </div>
 </div>
@@ -104,7 +120,7 @@
         }
 
         userData = { surname, name, sClass };
-        document.getElementById('student-badge').innerText = `Учень: ${surname} ${name} (${sClass} клас)`;
+        document.getElementById('display-student').innerText = `Учень: ${surname} ${name} (${sClass})`;
         
         document.getElementById('auth-screen').style.display = 'none';
         document.getElementById('test-screen').style.display = 'block';
@@ -119,12 +135,13 @@
         if (q2 && q2.value === "1") score++;
 
         document.getElementById('test-screen').style.display = 'none';
-        document.getElementById('results-screen').style.display = 'block';
+        document.getElementById('results-screen').style.display, document.getElementById('results-screen').style.display = 'block';
         
-        document.getElementById('result-text').innerHTML = `
-            <b>${userData.surname} ${userData.name} (${userData.sClass})</b><br>
-            Ваш результат: <b>${score} / 2</b>
-        `;
+        document.getElementById('result-details').innerText = `${userData.surname} ${userData.name} (${userData.sClass})`;
+        document.getElementById('score-display').innerText = `${score} / 2`;
+
+        let feedback = score === 2 ? 'Чудово! Ви чудово впоралися із завданнями!' : 'Потрібно ще трохи потренуватися з цією темою.';
+        document.getElementById('feedback-text').innerText = feedback;
     }
 </script>
 
