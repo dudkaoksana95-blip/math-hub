@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Множення та ділення дробів — Тренажер 1 | Математичний Хаб</title>
+    <title>Множення, ділення та степенування дробів — Тренажер 1 | Математичний Хаб</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Підключаємо MathJax для красивих математичних формул -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.5net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
         :root {
             --bg-main: #f8fafc;
@@ -103,7 +106,7 @@
             color: var(--accent-blue);
         }
 
-        .trainer-card {
+        .card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-lg);
@@ -112,35 +115,112 @@
             margin-bottom: 2rem;
         }
 
-        .trainer-title {
+        /* Екран входу */
+        #login-screen h1 {
             font-size: 1.5rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
         }
 
-        .trainer-desc {
+        #login-screen p {
             color: var(--text-secondary);
-            font-size: 0.95rem;
             margin-bottom: 1.5rem;
         }
 
-        .task-container {
-            border-top: 1px solid var(--border-color);
-            padding-top: 1.5rem;
-            margin-top: 1.5rem;
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus {
+            border-color: var(--accent-blue);
+        }
+
+        .btn-primary {
+            background: var(--text-primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            background: #334155;
+        }
+
+        /* Панель інформації під час тесту */
+        .test-top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f1f5f9;
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius-md);
+            margin-bottom: 2rem;
+            font-weight: 600;
+        }
+
+        .timer {
+            color: #b45309;
+            background: #fef3c7;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.95rem;
+        }
+
+        .instructions {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            padding: 1rem 1.25rem;
+            border-radius: var(--radius-md);
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+            color: #1e40af;
+            line-height: 1.5;
+        }
+
+        .instructions ul {
+            margin-left: 1.25rem;
+            margin-top: 0.5rem;
         }
 
         .task-item {
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .task-question {
             font-size: 1.1rem;
-            font-weight: 500;
+            font-weight: 600;
+            margin-bottom: 1rem;
         }
 
         .options-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 10px;
-            margin-top: 10px;
         }
 
         .option-btn {
@@ -158,26 +238,31 @@
             background: #e2e8f0;
         }
 
-        .option-btn.correct {
-            background: #dcfce7;
-            border-color: var(--success-color);
-            color: #166534;
+        .option-btn.selected {
+            background: #dbeafe;
+            border-color: var(--accent-blue);
+            color: #1d4ed8;
             font-weight: 600;
         }
 
-        .option-btn.incorrect {
-            background: #fee2e2;
-            border-color: var(--error-color);
-            color: #991b1b;
-        }
-
-        .check-score {
-            margin-top: 2rem;
-            padding: 1rem;
-            background: #f1f5f9;
-            border-radius: var(--radius-md);
-            font-weight: 600;
+        .submit-container {
             text-align: center;
+            margin-top: 2rem;
+        }
+
+        .result-box {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: var(--radius-lg);
+            margin-top: 2rem;
+        }
+
+        .result-box h2 {
+            color: #166534;
+            margin-bottom: 0.5rem;
         }
 
         footer {
@@ -208,47 +293,50 @@
     <main>
         <a href="folder-multiplication-division.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Назад до папки</a>
 
-        <div class="trainer-card">
-            <h1 class="trainer-title">Множення, ділення та степенування дробів</h1>
-            <p class="trainer-desc">Виконайте практичні завдання (за аналогією з номером 5.5 – 5.11 з підручника Істера).</p>
-
-            <div class="task-container">
-                <!-- Приклад 1 -->
-                <div class="task-item">
-                    <p>1. Виконайте множення: $\frac{5a}{7} \cdot \frac{21}{20a^2}$</p>
-                    <div class="options-grid">
-                        <button class="option-btn" onclick="checkAnswer(this, false)">$\frac{3}{4a}$</button>
-                        <button class="option-btn" onclick="checkAnswer(this, true)">$\frac{3}{4a}$</button>
-                        <button class="option-btn" onclick="checkAnswer(this, false)">$\frac{4}{3a}$</button>
-                        <button class="option-btn" onclick="checkAnswer(this, false)">$\frac{3a}{4}$</button>
-                    </div>
-                </div>
-
-                <!-- Приклад 2 -->
-                <div class="task-item" style="margin-top: 2rem;">
-                    <p>2. Спростіть вираз: $\frac{7c^3}{10m^2} \cdot \frac{25m^3}{14c^8}$</p>
-                    <div class="options-grid">
-                        <button class="option-btn" onclick="checkAnswer(this, false)">$\frac{5m}{2c^5}$</button>
-                        <button class="option-btn" onclick="checkAnswer(this, false)">$\frac{2c^5}{5m}$</button>
-                        <button class="option-btn" onclick="checkAnswer(this, true)">$\frac{5m}{2c^5}$</button>
-                        <button class="option-btn" onclick="checkAnswer(this, false)">$\frac{5m^2}{4c^3}$</button>
-                    </div>
-                </div>
-
-                <!-- Приклад 3 -->
-                <div class="task-item" style="margin-top: 2rem;">
-                    <p>3. Виконайте множення: $\frac{a^2 + 2a}{5} \cdot \frac{a}{4a + 8}$</p>
-                    <div class="options-grid">
-                        <button class="option-btn" onclick="checkAnswer(this, false)">$\frac{a^2}{10}$</button>
-                        <button class="option-btn" onclick="checkAnswer(this, true)">$\frac{a^2}{20}$</button>
-                        <button class="option-btn" onclick="checkAnswer(this, false)">$\frac{a}{20}$</button>
-                        <button class="option-btn" onclick="checkAnswer(this, false)">$\frac{4}{a^2}$</button>
-                    </div>
-                </div>
+        <!-- ЕКРАН 1: ВХІД / ІДЕНТИФІКАЦІЯ -->
+        <div id="login-screen" class="card">
+            <h1>Множення, ділення та степенування дробів</h1>
+            <p>Будь ласка, введіть свої дані перед початком виконання тренажера.</p>
+            <div class="form-group">
+                <label for="student-name">Ваше Прізвище та Ім'я:</label>
+                <input type="text" id="student-name" placeholder="Наприклад: Шевченко Іван" required>
             </div>
+            <div class="form-group">
+                <label for="student-group">Клас:</label>
+                <input type="text" id="student-group" value="8 клас" required>
+            </div>
+            <button class="btn-primary" onclick="startTest()">Розпочати тренажер</button>
+        </div>
 
-            <div id="score-box" class="check-score">
-                Дайте відповіді на всі запитання вище. Оцінка з'явиться автоматично!
+        <!-- ЕКРАН 2: САМ ТРЕНАЖЕР (ПРИХОВАНИЙ ДО ВХОДУ) -->
+        <div id="test-screen" style="display: none;">
+            <div class="card">
+                <div class="test-top-bar">
+                    <span id="display-student">Учень: </span>
+                    <div class="timer"><i class="fa-regular fa-clock"></i> Час: <span id="time-left">30:00</span></div>
+                </div>
+
+                <div class="instructions">
+                    <strong><i class="fa-solid fa-circle-info"></i> Поради та протокол роботи:</strong>
+                    <ul>
+                        <li>Тест містить 12 завдань на множення, ділення, степенування та скорочення раціональних дробів.</li>
+                        <li>Уважно спрощуйте вирази, розкладайте чисельники та знаменники на множники.</li>
+                        <li>На виконання завдання дається 30 хвилин. По завершенню результати будуть обчислені автоматично.</li>
+                    </ul>
+                </div>
+
+                <div id="questions-container">
+                    <!-- Завдання генеруватимуться або виводяться тут -->
+                </div>
+
+                <div class="submit-container">
+                    <button class="btn-primary" style="max-width: 300px;" onclick="submitTest()">Завершити та перевірити</button>
+                </div>
+
+                <div id="result-box" class="result-box">
+                    <h2>Тест завершено!</h2>
+                    <p id="result-text" style="font-size: 1.1rem; font-weight: 600; color: #166534;"></p>
+                </div>
             </div>
         </div>
     </main>
@@ -258,39 +346,137 @@
     </footer>
 
     <script>
-        let answeredCount = 0;
-        let correctCount = 0;
+        let timerInterval;
+        let timeLeft = 30 * 60; // 30 хвилин
+        const totalQuestions = 12;
 
-        function checkAnswer(button, isCorrect) {
-            const parentGrid = button.parentElement;
-            const buttons = parentGrid.getElementsByTagName('button');
+        // База з 12 запитань
+        const questionsData = [
+            { id: 1, text: "1. Виконайте множення: $\\frac{5a}{7} \\cdot \\frac{21}{20a^2}$", options: ["$\\frac{3}{4a}$", "$\\frac{4}{3a}$", "$\\frac{3a}{4}$", "$\\frac{3}{4a^2}$"], correct: 0 },
+            { id: 2, text: "2. Спростіть вираз: $\\frac{3,5}{14a^2} \\cdot \\frac{4a^3}{5b}$", options: ["$\\frac{a}{10b}$", "$\\frac{a^2}{10b}$", "$\\frac{10}{ab}$", "$\\frac{a}{5b}$"], correct: 0 },
+            { id: 3, text: "3. Знайдіть добуток: $\\frac{c^2}{30} \\cdot \\frac{20}{cm}$", options: ["$\\frac{2c}{3m}$", "$\\frac{3c}{2m}$", "$\\frac{2c}{m}$", "$\\frac{c}{3m}$"], correct: 0 },
+            { id: 4, text: "4. Виконайте ділення: $\\frac{3m}{5a^2} : \\frac{9m^2}{a}$", options: ["$\\frac{1}{15am}$", "$\\frac{15am}{1}$", "$\\frac{3}{5am}$", "$\\frac{1}{3am}$"], correct: 0 },
+            { id: 5, text: "5. Спростіть вираз: $\\frac{7c^3}{10m^2} \\cdot \\frac{25m^3}{14c^8}$", options: ["$\\frac{5m}{2c^5}$", "$\\frac{2c^5}{5m}$", "$\\frac{5m^2}{2c^3}$", "$\\frac{m}{10c^5}$"], correct: 0 },
+            { id: 6, text: "6. Виконайте множення: $-\\frac{8a^3}{27c^4} \\cdot \\frac{45c^5}{16a^3}$", options: ["$-\\frac{15c}{6}$", "$-\\frac{5c}{2}$", "$\\frac{5c}{2}$", "$-\\frac{3c}{2}$"], correct: 1 },
+            { id: 7, text: "7. Піднесіть до степеня: $\\left(\\frac{2a^2}{3b^3}\\right)^3$", options: ["$\\frac{8a^6}{27b^9}$", "$\\frac{6a^5}{9b^6}$", "$\\frac{8a^5}{27b^6}$", "$\\frac{2a^6}{3b^9}$"], correct: 0 },
+            { id: 8, text: "8. Виконайте множення: $\\frac{a^2 + 2a}{5} \\cdot \\frac{a}{4a + 8}$", options: ["$\\frac{a^2}{20}$", "$\\frac{a}{20}$", "$\\frac{a^2}{10}$", "$\\frac{4}{a^2}$"], correct: 0 },
+            { id: 9, text: "9. Спростіть вираз: $\\frac{7m}{a} \\cdot \\frac{a^2 - ab}{21}$", options: ["$\\frac{m(a-b)}{3}$", "$\\frac{7m(a-b)}{3}$", "$\\frac{m(a-b)}{7}$", "$\\frac{a-b}{3m}$"], correct: 0 },
+            { id: 10, text: "10. Виконайте ділення: $\\frac{2a - b}{10a} : \\frac{b - 2a}{15a^2}$", options: ["$-\\frac{3a}{2}$", "$\\frac{3a}{2}$", "$-\\frac{2}{3a}$", "$-\\frac{3}{2a}$"], correct: 0 },
+            { id: 11, text: "11. Спростіть вираз: $\\frac{10ab}{x + y} \\cdot \\frac{x^2 - y^2}{5ab}$", options: ["$2(x - y)$", "$2(x + y)$", "$\\frac{2}{x-y}$", "$x - y$"], correct: 0 },
+            { id: 12, text: "12. Виконайте множення: $\\frac{a^2 + ab}{x^2} \\cdot \\frac{xy}{a^2 + 2ab + b^2}$", options: ["$\\frac{a}{x(a+b)}$", "$\\frac{a}{x}$", "$\\frac{ax}{a+b}$", "$\\frac{1}{x}$"], correct: 1 }
+        ];
+
+        function startTest() {
+            const nameInput = document.getElementById('student-name').value.trim();
+            if (!nameInput) {
+                alert('Будь ласка, введіть ваше прізвище та ім\'я!');
+                return;
+            }
+
+            document.getElementById('display-student').innerText = `Учень: ${nameInput} (${document.getElementById('student-group').value})`;
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('test-screen').style.display = 'block';
+
+            renderQuestions();
+            startTimer();
+        }
+
+        function renderQuestions() {
+            const container = document.getElementById('questions-container');
+            let html = '';
+
+            questionsData.forEach((q, index) => {
+                html += `
+                    <div class="task-item" id="task-${index}">
+                        <div class="task-question">${q.text}</div>
+                        <div class="options-grid">
+                `;
+                q.options.forEach((opt, optIndex) => {
+                    html += `<button type="button" class="option-btn" onclick="selectOption(${index}, ${optIndex}, this)">${opt}</button>`;
+                });
+                html += `</div></div>`;
+            });
+
+            container.innerHTML = html;
+            // Оновлюємо формули MathJax після рендерингу
+            if (window.MathJax) {
+                MathJax.typeset();
+            }
+        }
+
+        // Зберігаємо вибір користувача
+        const userAnswers = {};
+        function selectOption(taskIndex, optIndex, btnElement) {
+            const taskDiv = document.getElementById(`task-${taskIndex}`);
+            const buttons = taskDiv.getElementsByClassName('option-btn');
             
-            // Якщо вже відповідали на це питання, виходимо
-            if (parentGrid.dataset.answered === "true") return;
-            parentGrid.dataset.answered = "true";
+            for (let b of buttons) {
+                b.classList.remove('selected');
+            }
+            btnElement.classList.add('selected');
+            userAnswers[taskIndex] = optIndex;
+        }
 
-            answeredCount++;
-
-            if (isCorrect) {
-                button.classList.add('correct');
-                correctCount++;
-            } else {
-                button.classList.add('incorrect');
-                // Знайти правильну і підсвітити її
-                for(let btn of buttons) {
-                    // Умовно перевіряємо, яка кнопка була правильною (у нас закладено логіку)
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    alert('Час вийшов!');
+                    submitTest();
+                    return;
                 }
-            }
+                timeLeft--;
+                let minutes = Math.floor(timeLeft / 60);
+                let seconds = timeLeft % 60;
+                document.getElementById('time-left').innerText = 
+                    `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            }, 1000);
+        }
 
-            // Вимкнути всі кнопочки в цьому блоці
-            for(let btn of buttons) {
-                btn.style.pointerEvents = 'none';
-            }
+        function submitTest() {
+            clearInterval(timerInterval);
+            let score = 0;
 
-            // Оновити загальний рахунок
-            if (answeredCount === 3) {
-                document.getElementById('score-box').innerHTML = `Тест завершено! Ваша кількість правильних відповідей: <b>${correctCount} з 3</b>.`;
-            }
+            questionsData.forEach((q, index) => {
+                const taskDiv = document.getElementById(`task-${index}`);
+                const buttons = taskDiv.getElementsByClassName('option-btn');
+                
+                // Вимикаємо кнопки
+                for (let b of buttons) {
+                    b.style.pointerEvents = 'none';
+                }
+
+                // Перевірка
+                if (userAnswers[index] === q.correct) {
+                    score++;
+                    if(buttons[userAnswers[index]]) {
+                        buttons[userAnswers[index]].style.background = '#dcfce7';
+                        buttons[userAnswers[index]].style.borderColor = '#10b981';
+                        buttons[userAnswers[index]].style.color = '#166534';
+                    }
+                } else {
+                    if (userAnswers[index] !== undefined && buttons[userAnswers[index]]) {
+                        buttons[userAnswers[index]].style.background = '#fee2e2';
+                        buttons[userAnswers[index]].style.borderColor = '#ef4444';
+                        buttons[userAnswers[index]].style.color = '#991b1b';
+                    }
+                    // Показуємо правильну
+                    if(buttons[q.correct]) {
+                        buttons[q.correct].style.background = '#f0fdf4';
+                        buttons[q.correct].style.borderColor = '#10b981';
+                        buttons[q.correct].style.fontWeight = 'bold';
+                    }
+                }
+            });
+
+            // Розрахунок 12-бальної шкали або відсотків
+            const grade12 = Math.round((score / totalQuestions) * 12);
+            const resultBox = document.getElementById('result-box');
+            const resultText = document.getElementById('result-text');
+
+            resultText.innerHTML = `Правильних відповідей: ${score} з ${totalQuestions}.<br>Оцінка за 12-бальною шкалою: <b>${grade12} балів</b>`;
+            resultBox.style.display = 'block';
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
         }
     </script>
 </body>
