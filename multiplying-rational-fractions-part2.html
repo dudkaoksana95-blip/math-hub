@@ -6,7 +6,6 @@
     <title>Множення і ділення раціональних дробів (Частина 2) — Математичний Хаб</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Підключаємо MathJax для красивих формул -->
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
@@ -19,7 +18,6 @@
             --border-color: #e2e8f0;
             --radius-lg: 20px;
             --radius-md: 12px;
-            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
             --shadow-md: 0 4px 20px -2px rgba(0,0,0,0.05);
         }
 
@@ -68,7 +66,7 @@
         .progress-badge { font-size: 0.85rem; font-weight: 600; padding: 0.3rem 0.8rem; border-radius: 20px; background: #e0f2fe; color: #0369a1; }
         .timer { font-size: 0.9rem; font-weight: 600; color: var(--text-secondary); display: flex; align-items: center; gap: 6px; }
 
-        .question-text { font-size: 1.15rem; font-weight: 600; margin-bottom: 1.5rem; line-height: 1.6; }
+        .question-text { font-size: 1.1rem; font-weight: 600; margin-bottom: 1.5rem; line-height: 1.6; }
         .options-list { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 2rem; }
         .option-item { display: flex; align-items: center; gap: 12px; padding: 1rem; border: 1px solid var(--border-color); border-radius: var(--radius-md); cursor: pointer; transition: all 0.2s; font-size: 1rem; }
         .option-item:hover { border-color: var(--accent-blue); background: #f8fafc; }
@@ -97,7 +95,7 @@
 
         <div class="card" id="startScreen">
             <h1>Множення і ділення раціональних дробів (Частина 2)</h1>
-            <p>Практичний тренажер за підручником О. С. Істера (номери 5.17–5.21). Перевірте свої навички перетворення та спрощення раціональних виразів.</p>
+            <p>Поглиблений тренажер за підручником О. С. Істера (номери 5.19, 5.20, 5.23, 5.24, 5.26). Завдання на розкладання на множники, формули скороченого множення та степені.</p>
 
             <div class="form-group">
                 <label class="form-label" for="studentName">Ваше Прізвище та Ім'я:</label>
@@ -114,7 +112,7 @@
 
         <div class="card" id="quizScreen" style="display: none;">
             <div class="quiz-header">
-                <span class="progress-badge" id="progressBadge">Питання 1 з 5</span>
+                <span class="progress-badge" id="progressBadge">Питання 1 з 6</span>
                 <div class="timer"><i class="fa-regular fa-clock"></i> <span id="timerText">25:00</span></div>
             </div>
             <div class="question-text" id="questionText">Текст питання з'явиться тут...</div>
@@ -140,52 +138,62 @@
     <script>
         const questions = [
             {
-                q: "Виконайте множення дробів: \\(\\frac{3x}{y^2} \\cdot \\frac{y}{6x^2}\\)",
+                q: "1) Знайдіть добуток (номер 5.19, п. 1):<br>\\(\\frac{m^2 - 4m + 4}{m^2 + 6m + 9} \\cdot \\frac{m^2 - 9}{3m - 6}\\)",
                 options: [
-                    "\\(\\frac{1}{2xy}\\)",
-                    "\\(\\frac{2}{xy}\\)",
-                    "\\(\\frac{1}{2x^2y}\\)",
-                    "\\(\\frac{3}{6xy}\\)"
+                    "\\(\\frac{m - 2}{3(m + 3)}\\)",
+                    "\\(\\frac{m - 3}{3(m + 2)}\\)",
+                    "\\(\\frac{m + 2}{3(m - 3)}\\)",
+                    "\\(\\frac{3(m - 2)}{m + 3}\\)"
                 ],
                 correct: 0
             },
             {
-                q: "Спростіть вираз: \\(\\frac{a^2 - 4}{a} \\cdot \\frac{a^2}{a + 2}\\)",
+                q: "2) Виконайте множення (номер 5.20, п. 2):<br>\\(-\\frac{y^3 - 8}{9 - y^2} \\cdot \\frac{y^2 - 6y + 9}{y^2 + 2y + 4}\\)",
                 options: [
-                    "\\(a(a - 2)\\)",
-                    "\\(a + 2\\)",
-                    "\\(a - 2\\)",
-                    "\\(a^2 - 2\\)"
+                    "\\(\\frac{y - 3}{y + 3}\\)",
+                    "\\(-\\frac{y - 3}{y + 3}\\)",
+                    "\\(\\frac{y + 3}{y - 3}\\)",
+                    "\\(1\\)"
                 ],
                 correct: 0
             },
             {
-                q: "Виконайте ділення дробів: \\(\\frac{5a}{b} : \\frac{10a^2}{b^2}\\)",
+                q: "3) Виконайте піднесення до степеня та множення (номер 5.23, п. 1):<br>\\(\\left(\\frac{25x^2}{8y^3}\\right)^3 \\cdot \\left(-\\frac{16y^5}{125x^3}\\right)^2\\)",
                 options: [
-                    "\\(\\frac{b}{2a}\\)",
-                    "\\(\\frac{2a}{b}\\)",
-                    "\\(\\frac{b^2}{2a}\\)",
-                    "\\(\\frac{5}{2ab}\\)"
+                    "\\(\\frac{2x}{y}\\)",
+                    "\\(\\frac{5x}{2y}\\)",
+                    "\\(-\\frac{2x}{y}\\)",
+                    "\\(\\frac{4x^2}{y^2}\\)"
                 ],
                 correct: 0
             },
             {
-                q: "Спростіть вираз: \\(\\frac{x^2 - 9}{x + 1} : \\frac{x - 3}{x + 1}\\)",
+                q: "4) Виконайте дії (номер 5.24, п. 2):<br>\\(\\left(\\frac{m - n}{m + n}\\right)^3 \\cdot \\frac{m^2 + 2mn + n^2}{m^2 - 2mn + n^2}\\)",
                 options: [
-                    "\\(x + 3\\)",
-                    "\\(x - 3\\)",
-                    "\\(x + 1\\)",
-                    "\\(\\frac{1}{x+3}\\)"
+                    "\\(\\frac{m - n}{m + n}\\)",
+                    "\\(\\frac{m + n}{m - n}\\)",
+                    "\\(1\\)",
+                    "\\((m-n)(m+n)\\)"
                 ],
                 correct: 0
             },
             {
-                q: "Знайдіть значення виразу \\(\\frac{x^2 - 25}{x^2 - 4} \\cdot \\frac{x + 2}{x - 5}\\) при \\(x = 10\\)",
+                q: "5) Знайдіть значення виразу (номер 5.25, п. 2) при \\(a = 6\\):<br>\\(\\frac{a^3 + 8}{a^2 - 1} \\cdot \\frac{a^2 + a}{a^2 - 2a + 4}\\)",
                 options: [
-                    "\\(3\\)",
-                    "\\(1,5\\)",
-                    "\\(2\\)",
-                    "\\(5\\)"
+                    "\\(8\\)",
+                    "\\(6\\)",
+                    "\\(12\\)",
+                    "\\(4\\)"
+                ],
+                correct: 0
+            },
+            {
+                q: "6) Виконайте множення методом групування (номер 5.26, п. 1):<br>\\(\\frac{x^2 + ax - cx - ca}{x^2 - ax + cx - ac} \\cdot \\frac{x^2 + ac + xc + xa}{x^2 + ac - xc - xa}\\)",
+                options: [
+                    "\\(-1\\)",
+                    "\\(1\\)",
+                    "\\(\\frac{x+a}{x-c}\\)",
+                    "\\(\\frac{x-a}{x+c}\\)"
                 ],
                 correct: 0
             }
@@ -233,7 +241,6 @@
                 optionsList.appendChild(div);
             });
 
-            // Оновлюємо рендеринг формул через MathJax
             if (window.MathJax) {
                 MathJax.typeset();
             }
