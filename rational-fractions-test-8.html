@@ -12,8 +12,9 @@
         .student-info { background: #e8f4f8; border-left-color: #2980b9; display: flex; gap: 15px; flex-wrap: wrap; justify-content: space-between; align-items: center; }
         .student-info input { padding: 8px; font-size: 14px; border: 1px solid #ccc; border-radius: 4px; flex: 1; min-width: 200px; }
         #timer-box { font-size: 18px; font-weight: bold; color: #e74c3c; background: #fde8e8; padding: 8px 15px; border-radius: 4px; text-align: center; }
-        input[type="text"] { padding: 6px 10px; font-size: 14px; border: 1px solid #ccc; border-radius: 4px; width: 250px; margin-top: 5px; }
-        select { padding: 6px 10px; font-size: 14px; border: 1px solid #ccc; border-radius: 4px; width: 260px; margin-top: 5px; }
+        .options-group { margin-top: 10px; display: flex; flex-direction: column; gap: 8px; }
+        .options-group label { cursor: pointer; font-size: 15px; display: flex; align-items: center; gap: 8px; }
+        .options-group input[type="radio"] { transform: scale(1.2); cursor: pointer; }
         button { background: #27ae60; color: white; border: none; padding: 12px 20px; font-size: 16px; border-radius: 4px; cursor: pointer; display: block; width: 100%; margin-top: 20px; font-weight: bold; }
         button:hover { background: #219653; }
         #protocol { display: none; background: #fff; padding: 20px; margin-top: 20px; border-radius: 6px; border: 2px solid #27ae60; }
@@ -45,88 +46,134 @@
         <!-- 1 -->
         <div class="card">
             <p><b>1. Який із виразів є дробовим?</b><br>
-            1) \(\frac{1}{3}a^2b\); 2) \(\frac{x-y}{x}\); 3) \(\frac{c+2}{9}\); 4) \(p^2-p-19\).</p>
-            <select id="q1">
-                <option value="">-- Оберіть відповідь --</option>
-                <option value="1">1) 1</option>
-                <option value="2">2) 2</option>
-                <option value="3">3) 3</option>
-                <option value="4">4) 4</option>
-            </select>
+            1) \(\frac{1}{3}a^2b\); &nbsp;&nbsp; 2) \(\frac{x-y}{x}\); &nbsp;&nbsp; 3) \(\frac{c+2}{9}\); &nbsp;&nbsp; 4) \(p^2-p-19\).</p>
+            <div class="options-group">
+                <label><input type="radio" name="q1" value="1"> 1) Вираз 1</label>
+                <label><input type="radio" name="q1" value="2"> 2) Вираз 2</label>
+                <label><input type="radio" name="q1" value="3"> 3) Вираз 3</label>
+                <label><input type="radio" name="q1" value="4"> 4) Вираз 4</label>
+            </div>
         </div>
 
         <!-- 2 -->
         <div class="card">
             <p><b>2. Скоротіть дріб:</b> \(\frac{m^2}{mn}\) (при \(m \neq 0, n \neq 0\))</p>
-            <input type="text" id="q2" placeholder="Наприклад: m/n">
+            <div class="options-group">
+                <label><input type="radio" name="q2" value="A"> А) \(\frac{m}{n}\)</label>
+                <label><input type="radio" name="q2" value="B"> Б) \(\frac{n}{m}\)</label>
+                <label><input type="radio" name="q2" value="V"> В) \(m\)</label>
+                <label><input type="radio" name="q2" value="G"> Г) \(\frac{1}{n}\)</label>
+            </div>
         </div>
 
         <!-- 3 -->
         <div class="card">
             <p><b>3. Виконайте дію:</b> \(\frac{a-b}{n} + \frac{b}{n}\)</p>
-            <input type="text" id="q3" placeholder="Наприклад: a/n">
+            <div class="options-group">
+                <label><input type="radio" name="q3" value="A"> А) \(\frac{a}{n}\)</label>
+                <label><input type="radio" name="q3" value="B"> Б) \(\frac{a-2b}{n}\)</label>
+                <label><input type="radio" name="q3" value="V"> В) \(\frac{a}{2n}\)</label>
+                <label><input type="radio" name="q3" value="G"> Г) 1</label>
+            </div>
         </div>
 
         <!-- 4 -->
         <div class="card">
             <p><b>4. Знайдіть допустимі значення змінної у виразі:</b> \(\frac{5}{x(x-1)}\)</p>
-            <p><i>(Введіть через кому заборонені значення, напр.: 0, 1)</i></p>
-            <input type="text" id="q4" placeholder="Ваша відповідь">
+            <div class="options-group">
+                <label><input type="radio" name="q4" value="A"> А) Усі числа</label>
+                <label><input type="radio" name="q4" value="B"> Б) крім 0</label>
+                <label><input type="radio" name="q4" value="V"> В) крім 1</label>
+                <label><input type="radio" name="q4" value="G"> Г) крім 0 і 1</label>
+            </div>
         </div>
 
         <!-- 5 -->
         <div class="card">
             <p><b>5. Скоротіть дріб:</b> \(\frac{16am}{20bm}\)</p>
-            <input type="text" id="q5" placeholder="Наприклад: 4a/5b">
+            <div class="options-group">
+                <label><input type="radio" name="q5" value="A"> А) \(\frac{4a}{5b}\)</label>
+                <label><input type="radio" name="q5" value="B"> Б) \(\frac{4am}{5bm}\)</label>
+                <label><input type="radio" name="q5" value="V"> В) \(\frac{5a}{4b}\)</label>
+                <label><input type="radio" name="q5" value="G"> Г) \(\frac{4a}{5bm}\)</label>
+            </div>
         </div>
 
         <!-- 6 -->
         <div class="card">
             <p><b>6. Виконайте дію:</b> \(\frac{5x+y}{x^2y} + \frac{x-5y}{xy^2}\)</p>
-            <p><i>(Введіть чисельник при загальному знаменнику \(x^2y^2\), напр.: x^2+y^2)</i></p>
-            <input type="text" id="q6" placeholder="Ваша відповідь">
+            <div class="options-group">
+                <label><input type="radio" name="q6" value="A"> А) \(\frac{6x-4y}{x^2y^2}\)</label>
+                <label><input type="radio" name="q6" value="B"> Б) \(\frac{5x^2+xy-5y^2}{x^2y^2}\)</label>
+                <label><input type="radio" name="q6" value="V"> В) \(\frac{x^2+y^2}{x^2y^2}\)</label>
+                <label><input type="radio" name="q6" value="G"> Г) \(\frac{6x-4y}{xy}\)</label>
+            </div>
         </div>
 
         <!-- 7 -->
         <div class="card">
             <p><b>7. Спростіть вираз:</b> \(\frac{2b}{b-4} + \frac{b}{b+4} + \frac{2b^2}{16-b^2}\)</p>
-            <input type="text" id="q7" placeholder="Наприклад: 3b/(b-4) або числа">
+            <div class="options-group">
+                <label><input type="radio" name="q7" value="A"> А) \(\frac{b}{b-4}\)</label>
+                <label><input type="radio" name="q7" value="B"> Б) 1</label>
+                <label><input type="radio" name="q7" value="V"> В) \(\frac{3b}{b-4}\)</label>
+                <label><input type="radio" name="q7" value="G"> Г) \(\frac{b}{b+4}\)</label>
+            </div>
         </div>
 
         <!-- 8 -->
         <div class="card">
-            <p><b>8. Знайдіть цілу частину при діленні многочлена на одночлен:</b> вираз \(\frac{c^2 - c^3 + 5}{c^2}\). Введіть цілу частину:</p>
-            <input type="text" id="q8" placeholder="Наприклад: 1-c або подібне">
+            <p><b>8. Знайдіть результат ділення многочлена на одночлен:</b> вираз \(\frac{c^2 - c^3 + 5}{c^2}\)</p>
+            <div class="options-group">
+                <label><input type="radio" name="q8" value="A"> А) \(1 - c + \frac{5}{c^2}\)</label>
+                <label><input type="radio" name="q8" value="B"> Б) \(1 + c + \frac{5}{c^2}\)</label>
+                <label><input type="radio" name="q8" value="V"> В) \(-c + \frac{5}{c^2}\)</label>
+                <label><input type="radio" name="q8" value="G"> Г) \(1 - c^2 + 5\)</label>
+            </div>
         </div>
 
         <!-- 9 -->
         <div class="card">
             <p><b>9. Скільки точок перетину з віссю абсцис має графік функції</b> \(y = \frac{x^2 - 4x}{16 - 4x}\)?</p>
-            <select id="q9">
-                <option value="">-- Оберіть кількість --</option>
-                <option value="0">0 точок</option>
-                <option value="1">1 точка</option>
-                <option value="2">2 точки</option>
-            </select>
+            <div class="options-group">
+                <label><input type="radio" name="q9" value="0"> А) 0 точок</label>
+                <label><input type="radio" name="q9" value="1"> Б) 1 точка</label>
+                <label><input type="radio" name="q9" value="2"> В) 2 точки</label>
+                <label><input type="radio" name="q9" value="3"> Г) 4 точки</label>
+            </div>
         </div>
 
         <!-- 10 -->
         <div class="card">
             <p><b>10. Знайдіть область визначення виразу:</b> \(\frac{x^2 - 16}{\vert{}x + 1\vert{} - 5}\)</p>
-            <p><i>(Введіть винятки через кому, наприклад: -6, 4)</i></p>
-            <input type="text" id="q10" placeholder="Ваша відповідь">
+            <div class="options-group">
+                <label><input type="radio" name="q10" value="A"> А) крім 4 і -4</label>
+                <label><input type="radio" name="q10" value="B"> Б) крім -6 і 4</label>
+                <label><input type="radio" name="q10" value="V"> В) крім -1 і 5</label>
+                <label><input type="radio" name="q10" value="G"> Г) усі числа</label>
+            </div>
         </div>
 
         <!-- 11 -->
         <div class="card">
-            <p><b>11. Значення \(x\), за яких дріб з п. 10 дорівнює нулю:</b></p>
-            <input type="text" id="q11" placeholder="Ваша відповідь">
+            <p><b>11. Значення \(x\), за яких дріб з п. 10 дорівнює нулю (\(\frac{x^2 - 16}{\vert{}x + 1\vert{} - 5}\)):</b></p>
+            <div class="options-group">
+                <label><input type="radio" name="q11" value="A"> А) \(x = 4\) та \(x = -4\)</label>
+                <label><input type="radio" name="q11" value="B"> Б) лише \(x = 4\)</label>
+                <label><input type="radio" name="q11" value="V"> В) лише \(x = -4\)</label>
+                <label><input type="radio" name="q11" value="G"> Г) \(x = 4\), але \(x = -4\) не входить в ОДЗ</label>
+            </div>
         </div>
 
         <!-- 12 -->
         <div class="card">
             <p><b>12. Спростіть вираз:</b> \(\frac{3(a-2b)}{(a-3)(b-4)} - \frac{a^2-6b}{(3-a)(4-b)}\)</p>
-            <input type="text" id="q12" placeholder="Ваша відповідь">
+            <div class="options-group">
+                <label><input type="radio" name="q12" value="A"> А) 0</label>
+                <label><input type="radio" name="q12" value="B"> Б) 1</label>
+                <label><input type="radio" name="q12" value="V"> В) \(\frac{6b}{(a-3)(b-4)}\)</label>
+                <label><input type="radio" name="q12" value="G"> Г) \(-1\)</label>
+            </div>
         </div>
 
         <button onclick="finishTest()">Завершити тест і сформувати протокол</button>
@@ -142,6 +189,12 @@
     </div>
 
     <script>
+        // Функція для зчитування вибраної радіо-кнопки
+        function getSelectedRadio(name) {
+            const selected = document.querySelector(`input[name="${name}"]:checked`);
+            return selected ? selected.value : "";
+        }
+
         // Таймер на 30 хвилин
         let totalSeconds = 30 * 60;
         const timerInterval = setInterval(() => {
@@ -157,10 +210,6 @@
             totalSeconds--;
         }, 1000);
 
-        function cleanStr(str) {
-            return str.replace(/\s+/g, '').toLowerCase();
-        }
-
         function finishTest() {
             clearInterval(timerInterval);
             let name = document.getElementById('studentName').value.trim() || "Анонім";
@@ -169,74 +218,39 @@
             let score = 0;
             let detailsHtml = "<h4>Деталі перевірки:</h4><ul>";
 
-            // Еталони відповідей
-            // 1
-            let a1 = document.getElementById('q1').value;
-            if (a1 === '2') { score++; detailsHtml += "<li class='correct'>Завдання 1: Правильно</li>"; }
-            else { detailsHtml += "<li class='incorrect'>Завдання 1: Помилка (Правильно: 2)</li>"; }
+            // Еталони правильних відповідей:
+            // 1 -> '2', 2 -> 'A', 3 -> 'A', 4 -> 'G', 5 -> 'A', 6 -> 'B', 7 -> 'A', 8 -> 'A', 9 -> '0', 10 -> 'B', 11 -> 'V', 12 -> 'A'
+            const correctAnswers = {
+                q1: '2',
+                q2: 'A',
+                q3: 'A',
+                q4: 'G',
+                q5: 'A',
+                q6: 'B',
+                q7: 'A',
+                q8: 'A',
+                q9: '0',
+                q10: 'B',
+                q11: 'V',
+                q12: 'A'
+            };
 
-            // 2
-            let a2 = cleanStr(document.getElementById('q2').value);
-            if (a2 === 'm/n') { score++; detailsHtml += "<li class='correct'>Завдання 2: Правильно</li>"; }
-            else { detailsHtml += "<li class='incorrect'>Завдання 2: Помилка (Правильно: m/n)</li>"; }
-
-            // 3
-            let a3 = cleanStr(document.getElementById('q3').value);
-            if (a3 === 'a/n') { score++; detailsHtml += "<li class='correct'>Завдання 3: Правильно</li>"; }
-            else { detailsHtml += "<li class='incorrect'>Завдання 3: Помилка (Правильно: a/n)</li>"; }
-
-            // 4
-            let a4 = cleanStr(document.getElementById('q4').value);
-            if (a4 === '0,1' || a4 === '1,0') { score++; detailsHtml += "<li class='correct'>Завдання 4: Правильно</li>"; }
-            else { detailsHtml += "<li class='incorrect'>Завдання 4: Помилка (Правильно: 0, 1)</li>"; }
-
-            // 5
-            let a5 = cleanStr(document.getElementById('q5').value);
-            if (a5 === '4a/5b') { score++; detailsHtml += "<li class='correct'>Завдання 5: Правильно</li>"; }
-            else { detailsHtml += "<li class='incorrect'>Завдання 5: Помилка (Правильно: 4a/5b)</li>"; }
-
-            // 6
-            let a6 = cleanStr(document.getElementById('q6').value);
-            if (a6 === 'x^2+y^2' || a6 === 'y^2+x^2') { score++; detailsHtml += "<li class='correct'>Завдання 6: Правильно</li>"; }
-            else { detailsHtml += "<li class='incorrect'>Завдання 6: Помилка (Правильно: x^2+y^2)</li>"; }
-
-            // 7
-            let a7 = cleanStr(document.getElementById('q7').value);
-            if (a7 === '1' || a7 === 'b/(b-4)' || a7.includes('b')) { score++; detailsHtml += "<li class='correct'>Завдання 7: Правильно (зараховано)</li>"; }
-            else { detailsHtml += "<li class='incorrect'>Завдання 7: Помилка</li>"; }
-
-            // 8
-            let a8 = cleanStr(document.getElementById('q8').value);
-            if (a8.includes('1-c') || a8.includes('-c+1')) { score++; detailsHtml += "<li class='correct'>Завдання 8: Правильно</li>"; }
-            else { detailsHtml += "<li class='incorrect'>Завдання 8: Помилка</li>"; }
-
-            // 9
-            let a9 = document.getElementById('q9').value;
-            if (a9 === '0') { score++; detailsHtml += "<li class='correct'>Завдання 9: Правильно (при x=4 чисельник і знаменник одночасно дорівнюють 0, точка «виколота»)</li>"; }
-            else { detailsHtml += "<li class='incorrect'>Завдання 9: Помилка (Правильно: 0 точок, бо x=4 не входить в ОДЗ)</li>"; }
-
-            // 10
-            let a10 = cleanStr(document.getElementById('q10').value);
-            if (a10 === '-6,4' || a10 === '4,-6') { score++; detailsHtml += "<li class='correct'>Завдання 10: Правильно</li>"; }
-            else { detailsHtml += "<li class='incorrect'>Завдання 10: Помилка (Правильно: -6, 4)</li>"; }
-
-            // 11
-            let a11 = cleanStr(document.getElementById('q11').value);
-            if (a11 === '-4') { score++; detailsHtml += "<li class='correct'>Завдання 11: Правильно</li>"; }
-            else { detailsHtml += "<li class='incorrect'>Завдання 11: Помилка (Правильно: -4)</li>"; }
-
-            // 12
-            let a12 = cleanStr(document.getElementById('q12').value);
-            if (a12 === '0') { score++; detailsHtml += "<li class='correct'>Завдання 12: Правильно</li>"; }
-            else { detailsHtml += "<li class='incorrect'>Завдання 12: Помилка (Правильно: 0)</li>"; }
+            for (let i = 1; i <= 12; i++) {
+                let userAns = getSelectedRadio('q' + i);
+                if (userAns === correctAnswers['q' + i]) {
+                    score++;
+                    detailsHtml += `<li class='correct'>Завдання ${i}: Правильно</li>`;
+                } else {
+                    detailsHtml += `<li class='incorrect'>Завдання ${i}: Помилка</li>`;
+                }
+            }
 
             detailsHtml += "</ul>";
 
-            // Рекомендації залежно від балів (з розрахунку на 12-бальну шкалу або у відсотках)
-            let recommendationText = "";
-            let grade12 = Math.round((score / 12) * 11 + 1); // приблизна оцінка за 12-бальною
+            let grade12 = Math.round((score / 12) * 11 + 1);
             if (grade12 > 12) grade12 = 12;
 
+            let recommendationText = "";
             if (score >= 10) {
                 recommendationText = `<b>Рівень високий (${grade12} балів).</b> Чудовий результат! Ви чудово засвоїли перетворення раціональних дробів та знаходження ОДЗ. Продовжуйте в тому ж дусі!`;
             } else if (score >= 7) {
@@ -247,7 +261,6 @@
                 recommendationText = `<b>Початковий рівень (${grade12} балів).</b> Рекомендуємо уважно переглянути теоретичний конспект до §§ 1–4, розібрати приклади в підручнику О. С. Істера та спробувати пройти тренажер повторно.`;
             }
 
-            // Виведення протоколу
             document.getElementById('test-form').style.display = 'none';
             document.querySelector('.student-info').style.display = 'none';
             document.getElementById('protocol').style.display = 'block';
